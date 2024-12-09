@@ -19,8 +19,8 @@ const courseCard = new mongoose.Schema({
     }
 })
 
-mongoose.model("courseCard",courseCard);
+ const card = mongoose.model("courseCard",courseCard);
 
-exports.module = courseCard;
+module.exports = card;
 
 
