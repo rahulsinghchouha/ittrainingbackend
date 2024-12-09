@@ -1,13 +1,12 @@
 const studentForm = require('../models/studentDetails');
-const {successResponse,errorResponse,validationErrorWithData} = require("../helper/apiResponse");
+const { successResponse, errorResponse, validationErrorWithData } = require("../helper/apiResponse");
 
 exports.studentForm = async (req, res) => {
     const { name, email, phone, course, joiningTime, message } = req.body;
 
-    console.log("student details",name,email,phone,course,joiningTime,message);
     //data validation
     if (!name || !email || !phone || !course || !joiningTime || !message) {
-        validationErrorWithData(res,"data validation failed");
+        return validationErrorWithData(res, "data validation failed");
     }
     //enter the data into db
     try {
@@ -21,11 +20,11 @@ exports.studentForm = async (req, res) => {
                 message
             })
 
-       successResponse(res,"data submitted");
+       return successResponse(res, "data submitted");
     }
     catch (error) {
         console.log("error", error);
-      errorResponse(res,"data not submited please verify the data");
+        return errorResponse(res, "data not submited please verify the data");
     }
 }
 
