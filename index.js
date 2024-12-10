@@ -2,6 +2,7 @@ const express = require('express')
 const dbConnect = require('./config/dbConnect')
 const studentDetails = require("./routes/studentDetail");
 const adminRoute = require("./routes/adminRoute");
+const getRoute = require("./routes/getRequest");
 const cors = require("cors");
 const path = require('path');
 
@@ -34,6 +35,7 @@ app.use(cors(corsOptions));
 //routers
 app.use("/api/v1/student-details",studentDetails);
 app.use("/api/v1/admin",adminRoute);
+app.use("/api/v1/get",getRoute);
 
 
 

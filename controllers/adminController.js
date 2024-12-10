@@ -1,13 +1,15 @@
 const courseCard = require("../models/courseCard");
 const studentPlaced = require("../models/studentPlaced");
 const ourStats = require("../models/ourStats");
+const addExploreCategory = require("../models/exploreCategory");
+const ourPartners = require("../models/ourPartners");
 const { successResponse, errorResponse, validationErrorWithData } = require("../helper/apiResponse");
 
 
 exports.addCourseCard = async (req, res) => {
 
     const { category, heading, para } = req.body;
-    const img = req.file?.originalname;
+    const img = req.file?.filename;
 
     if (!category || !heading || !para || !img) {
         return validationErrorWithData(res, "card data validation failed");
@@ -27,11 +29,10 @@ exports.addCourseCard = async (req, res) => {
         return errorResponse(res, "card not added ")
     }
 }
-
 exports.studentPlaced = async (req, res) => {
 
     const { name, profile, experience } = req.body;
-    const img = req.file?.originalname;
+    const img = req.file?.filename;
     console.log(name, profile, experience, img);
     //validation
     if (!name || !profile || !experience || !img) {
@@ -80,11 +81,48 @@ exports.ourStats = async (req, res) => {
 
 
 }
-exports.exploreCategory = async(req,res) =>{
+exports.exploreCategory = async (req, res) => {
 
-    
-    console.log(req.body);
-    console.log("files---",req.files);
+    const { heading, para } = req.body;
+    const bgImage = req.files.bgImage[0].filename;
+    const img = req.files.img[0].filename;
 
+    //validation
+    if (!heading || !para || !bgImage || !img) {
+        validationErrorWithData(res, "All the fields required to create a card");
+    }
+
+    try {
+        await addExploreCategory.create({
+            heading,
+            para,
+            img,
+            bgImage
+        });
+
+        return successResponse(res, "explore Category Card added succesfully");
+
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "card not added please verify the data and try again");
+    }
+
+}
+exports.ourPartners = async (req, res) => {
+
+    const img = req.file.filename;
+   
+
+    if (!img) return validationErrorWithData(res, "img not found");
+
+    try {
+        await ourPartners.create({ img });
+        return successResponse(res, "partner added succesfully");
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "partner not added please try again");
+    }
 
 }
