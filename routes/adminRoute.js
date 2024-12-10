@@ -12,5 +12,6 @@ router.post("/explore-category", upload.fields([
     { name: "img", maxCount: 1 }      // img field
 ]), admin.exploreCategory);
 
-
 module.exports = router;
+
+

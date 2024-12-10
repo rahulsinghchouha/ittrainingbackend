@@ -1,6 +1,8 @@
 const courseCard = require('../models/courseCard');
 const studentPlaced = require('../models/studentPlaced');
 const ourPartners = require("../models/ourPartners");
+const exploreCategory = require("../models/exploreCategory");
+const ourStats = require("../models/ourStats");
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
 
@@ -39,3 +41,28 @@ exports.getPartners = async (req, res) => {
         errorResponse(res, "error to get the our partners");
     }
 }
+exports.getExploreCard = async (req,res) =>{
+    try{
+        const data = await exploreCategory.find();
+        successResponseWithData(res,"explore card get succesfully",data);
+    }
+    catch(error)
+    {
+        console.log(error);
+        errorResponse(res,"error to get explore card");
+
+    }
+}
+exports.getOurStats = async (req,res) =>{
+    try{
+        const data = await ourStats.find();
+        successResponseWithData(res,"our stats get succesfully",data);
+    }
+    catch(error)
+    {
+        console.log(error);
+        errorResponse(res,"error to get our stats card");
+    }
+}
+
+
