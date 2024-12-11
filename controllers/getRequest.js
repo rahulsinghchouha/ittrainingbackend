@@ -8,6 +8,7 @@ const { successResponse, errorResponse, validationErrorWithData, successResponse
 
 exports.getCourseCard = async (req, res) => {
     try {
+       
         const data = await courseCard.find();
 
         return successResponseWithData(res, "course card get succesfully", data);

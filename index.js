@@ -9,7 +9,7 @@ const path = require('path');
 const app = express();
 
 require("dotenv").config();
-const PORT = process.env.PORT || 4500
+const PORT = process.env.PORT || 5000
 
 //middleware for access the json data
 app.use(express.json());
