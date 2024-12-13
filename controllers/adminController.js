@@ -3,6 +3,8 @@ const studentPlaced = require("../models/studentPlaced");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
+const blogs = require("../models/blog");
+
 const { successResponse, errorResponse, validationErrorWithData } = require("../helper/apiResponse");
 
 
@@ -112,7 +114,7 @@ exports.exploreCategory = async (req, res) => {
 exports.ourPartners = async (req, res) => {
 
     const img = req.file.filename;
-   
+
 
     if (!img) return validationErrorWithData(res, "img not found");
 
@@ -123,6 +125,37 @@ exports.ourPartners = async (req, res) => {
     catch (error) {
         console.log(error);
         return errorResponse(res, "partner not added please try again");
+    }
+
+}
+exports.addBlog = async (req, res) => {
+
+    const { heading } = req.body;
+    const img = req.file.filename;
+    const today = new Date();
+
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    const monthName = months[today.getMonth()];
+
+    const year = today.getFullYear()
+    const date = `${monthName}, ${year}`;
+
+    if(!img || !heading || !date)
+        return validationErrorWithData(res,"blog data not found");
+
+    try {      
+        await blogs.create({
+            heading,
+            date,img
+        })
+        return successResponse(res,"Blog added succesfully");
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res,"Blog not added");
     }
 
 }

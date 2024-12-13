@@ -10,7 +10,6 @@ exports.getCourseCard = async (req, res) => {
     try {
        
         const data = await courseCard.find();
-
         return successResponseWithData(res, "course card get succesfully", data);
     }
     catch (error) {
@@ -22,7 +21,6 @@ exports.getCourseCard = async (req, res) => {
 exports.getStudentPlaced = async (req, res) => {
     try {
         const data = await studentPlaced.find();
-
         return successResponseWithData(res, "placed student get succesfully", data);
 
     }
