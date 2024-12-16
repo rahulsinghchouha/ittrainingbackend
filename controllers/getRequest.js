@@ -3,6 +3,7 @@ const studentPlaced = require('../models/studentPlaced');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");
+const blog = require("../models/blog")
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
 
@@ -10,7 +11,7 @@ exports.getCourseCard = async (req, res) => {
     try {
        
         const data = await courseCard.find();
-        return successResponseWithData(res, "course card get succesfully", data);
+         successResponseWithData(res, "course card get succesfully", data);
     }
     catch (error) {
         console.log(error);
@@ -21,7 +22,7 @@ exports.getCourseCard = async (req, res) => {
 exports.getStudentPlaced = async (req, res) => {
     try {
         const data = await studentPlaced.find();
-        return successResponseWithData(res, "placed student get succesfully", data);
+         successResponseWithData(res, "placed student get succesfully", data);
 
     }
     catch (error) {
@@ -32,7 +33,7 @@ exports.getStudentPlaced = async (req, res) => {
 exports.getPartners = async (req, res) => {
     try {
         const data = await ourPartners.find();
-        return successResponseWithData(res, "partners get succesfully", data);
+         successResponseWithData(res, "partners get succesfully", data);
 
     }
     catch (error) {
@@ -43,7 +44,7 @@ exports.getPartners = async (req, res) => {
 exports.getExploreCard = async (req,res) =>{
     try{
         const data = await exploreCategory.find();
-        successResponseWithData(res,"explore card get succesfully",data);
+        successResponseWithData(res,"explore card get succesfully return",data);
     }
     catch(error)
     {
@@ -61,6 +62,18 @@ exports.getOurStats = async (req,res) =>{
     {
         console.log(error);
         errorResponse(res,"error to get our stats card");
+    }
+}
+exports.getBlogs = async (req,res) =>{
+    try{
+            const data = await blog.find();
+            successResponseWithData(res,"Blogs get succesfully",data);
+    }
+    catch(error)
+    {
+        console.log(error);
+        errorResponse(res,"error to get the Blogs");
+
     }
 }
 
