@@ -19,12 +19,11 @@ exports.studentForm = async (req, res) => {
                 joiningTime,
                 message
             })
-
-       return successResponse(res, "data submitted");
+       return successResponse(res, "data submitted succesfully");
     }
     catch (error) {
         console.log("error", error);
-        return errorResponse(res, "data not submited please verify the data");
+        return  errorResponse(res, "data not submited please verify the data");
     }
 }
 

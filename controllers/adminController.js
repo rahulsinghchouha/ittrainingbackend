@@ -91,7 +91,7 @@ exports.exploreCategory = async (req, res) => {
 
     //validation
     if (!heading || !para || !bgImage || !img) {
-        validationErrorWithData(res, "All the fields required to create a card");
+      return  validationErrorWithData(res, "All the fields required to create a card");
     }
 
     try {
