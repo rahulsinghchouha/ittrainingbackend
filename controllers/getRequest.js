@@ -1,4 +1,4 @@
-const courseCard = require('../models/courseCard');
+const courseCard = require('../models/createCourse');
 const studentPlaced = require('../models/studentPlaced');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");

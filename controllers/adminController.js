@@ -1,4 +1,4 @@
-const courseCard = require("../models/courseCard");
+const courseCard = require("../models/createCourse");
 const studentPlaced = require("../models/studentPlaced");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
@@ -8,19 +8,40 @@ const blogs = require("../models/blog");
 const { successResponse, errorResponse, validationErrorWithData } = require("../helper/apiResponse");
 
 
-exports.addCourseCard = async (req, res) => {
+exports.addCourse = async (req, res) => {
 
-    const { category, heading, para } = req.body;
+    const { category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ } = req.body;
     const img = req.file?.filename;
 
-    if (!category || !heading || !para || !img) {
+    //    console.log("category ->",category);
+    //    console.log("courseName ->",courseName);
+    //    console.log("overview ->",overview);
+    //    console.log("keyAreas heading->",keyAreas[0].heading);
+    //    console.log("keyAreas details->",keyAreas[0].details);
+    //    console.log("toolsInHand ->",toolsInHand);
+    //    console.log("benefits ->",benefits);
+    //    console.log("courseCurriculum ->",courseCurriculum[0].heading);
+    //    console.log("courseCurriculum ->",courseCurriculum[0].details[0]);
+    //    console.log("keyHighLights ->",keyHighLights);
+    //    console.log("jobRoles ->",jobRoles);
+    //    console.log("fAQ ->",fAQ);
+    //    console.log("img ->",img);
+
+    if (!category || !courseName || !overview || !keyAreas.length || !toolsInHand.length || !benefits.length || !courseCurriculum.length || !keyHighLights.length || !jobRoles.length || !fAQ.length || !img) {
         return validationErrorWithData(res, "card data validation failed");
     }
     try {
         await courseCard.create({
             category,
-            heading,
-            para,
+            courseName,
+            overview,
+            keyAreas,
+            toolsInHand,
+            benefits,
+            courseCurriculum,
+            keyHighLights,
+            jobRoles,
+            fAQ,
             img
         })
 
@@ -91,7 +112,7 @@ exports.exploreCategory = async (req, res) => {
 
     //validation
     if (!heading || !para || !bgImage || !img) {
-      return  validationErrorWithData(res, "All the fields required to create a card");
+        return validationErrorWithData(res, "All the fields required to create a card");
     }
 
     try {
@@ -114,7 +135,6 @@ exports.exploreCategory = async (req, res) => {
 exports.ourPartners = async (req, res) => {
 
     const img = req.file.filename;
-
 
     if (!img) return validationErrorWithData(res, "img not found");
 
@@ -143,19 +163,18 @@ exports.addBlog = async (req, res) => {
     const year = today.getFullYear()
     const date = `${monthName}, ${year}`;
 
-    if(!img || !heading || !date)
-        return validationErrorWithData(res,"blog data not found");
+    if (!img || !heading || !date)
+        return validationErrorWithData(res, "blog data not found");
 
-    try {      
+    try {
         await blogs.create({
             heading,
-            date,img
+            date, img
         })
-        return successResponse(res,"Blog added succesfully");
+        return successResponse(res, "Blog added succesfully");
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res,"Blog not added");
+        return errorResponse(res, "Blog not added");
     }
-
 }
