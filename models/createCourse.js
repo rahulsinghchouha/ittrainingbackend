@@ -29,13 +29,28 @@ const courseSchema = new mongoose.Schema({
             }
         }
     ],
-    toolsInHand: {
-        type: [String],
+    toolsInHand: [
+        {
+        type: String,
         require: true,
+    }],
+    benefits: [
+        {
+            type: String,
+            require: true,
+        }
+    ],
+    eligibility:{
+        type:String,
+        require:true
     },
-    benefits: {
-        type: [String],
-        require: true,
+    courseDuration:{
+        type:String,
+        require:true
+    },
+    feeOptions:{
+        type:String,
+        require:true
     },
     courseCurriculum: [
         {
@@ -43,20 +58,22 @@ const courseSchema = new mongoose.Schema({
                 type: String,
                 require: true,
             },
-            details: {
-                type: [String],
+            details: [
+                {
+                type: String,
                 require: true,
-            },
+            }
+        ],
         }
     ],
-    keyHighLights: {
-        type: [String],
+    keyHighLights: [{
+        type: String,
         require: true,
-    },
-    jobRoles: {
-        type: [String],
+    }],
+    jobRoles: [{
+        type: String,
         require: true
-    },
+    }],
     fAQ: [
         {
             heading: {
@@ -64,11 +81,11 @@ const courseSchema = new mongoose.Schema({
                 require: true,
             },
             details: {
-                type: [String],
+                type: String,
                 require: true,
             },
-    }
-],
+        }
+    ],
 }, { timestamps: true })
 
 const course = mongoose.model("course", courseSchema);

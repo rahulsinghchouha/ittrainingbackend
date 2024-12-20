@@ -3,7 +3,7 @@ const admin = require("../controllers/adminController");
 const upload = require("../config/storeFile");
 
 
-router.post("/add-course-card", upload.single("img"), admin.addCourse);
+router.post("/add-course-card",  upload.single("img"),admin.addCourse);
 router.post("/student-placed", upload.single("img"), admin.studentPlaced);
 router.post("/add-partners", upload.single("img"), admin.ourPartners);
 router.post("/our-stats", admin.ourStats);

@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 
 const corsOptions = {
     origin:"http://localhost:3000",
-    methods:'GET,POST,DELETE,PUT,',
+    methods:'GET,POST,DELETE,PUT',
     allowedHeaders:'Content-Type,Authorization',
     credentials: true
 }
