@@ -6,6 +6,7 @@ const getRoute = require("./routes/getRequest");
 const cors = require("cors");
 const path = require('path');
 
+
 const app = express();
 
 require("dotenv").config();
@@ -42,7 +43,7 @@ app.set('view engine', 'ejs'); // Tells Express to use EJS for rendering views.
 
 //Route for show the view
 app.get("/", (req, res) => {
-    res.render("index",{title:"Home Page"});
+    res.render("index");
 });
 
 

@@ -5,7 +5,81 @@ const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
 const blogs = require("../models/blog");
 
-const { successResponse, errorResponse, validationErrorWithData } = require("../helper/apiResponse");
+const bcrypt = require("bcrypt");
+const admin = require("../models/admin");
+const { validationErrorWithData, successResponse, errorResponse, notFoundResponse } = require("../helper/apiResponse");
+
+const mailSender = require("../utils/mailSender");
+
+const {loginSuccess } = require("../mail/template/loginSuccess");
+
+
+//ADD ADMIN
+
+exports.addAdmin = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return validationErrorWithData(res, "data validation failed ");
+    }
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+
+        await admin.create({
+            email: email,
+            password: hashedPassword,
+        })
+        return successResponse(res, "Admin added succesfully");
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "Admin not added please try again");
+
+    }
+}
+
+// ADMIN LOGIN
+
+exports.adminLogin = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.render("index",{message:"Enter all the require fields"})
+    }
+
+    try {
+
+        const isAdmin = await admin.findOne({ email });
+       
+        if (!isAdmin) {
+         res.render("index",{message:"Admin not Found Please Enter a Valid Email"})
+        }
+
+        else {
+            const hashedPassword = isAdmin.password;
+         
+
+            const isPassword = await  bcrypt.compare(password,hashedPassword);
+            
+            if(isPassword)
+            {
+              const info = mailSender(email,"Login as Admin Succesfully",loginSuccess(email));           
+            //  console.log("Info",info);
+            res.render("dashboard")
+            }
+            else{
+                res.render("index",{message:"incorrect password"})
+            }
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.render("index",{message:"Oops! Email and/or password are incorrect"});
+    }
+}
 
 
 exports.addCourse = async (req, res) => {

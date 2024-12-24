@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <%= title %>
+       Home Page
     </title>
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
@@ -26,22 +26,27 @@
                 <h3 style="font-size: 24px; font-weight: 700; margin-top: 20px;">Sign In</h3>
 
                 <p style="margin-top: 5px;">Start managing your website</p>
-                <form>
-                <input style="margin-top: 20px;"
-                    class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
-                    type="email" placeholder="Email" />
+                <form method="post" action="/api/v1/admin/admin-login">
+                  
+                  <% if(message) { %>
+                    <p style="margin-top: 15px; color: red; "><%= message %></p>
+                  <% } %> 
+                  
+                    <input style="margin-top: 20px;" name="email" required="true"
+                        class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
+                        type="email" placeholder="Email" />
 
 
-                <input style="margin-top: 20px;"
-                    class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
-                    type="password" placeholder="Password" />
+                    <input style="margin-top: 20px;" name="password"  required="true"
+                        class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
+                        type="password" placeholder="Password" />
 
-                <button style="color: #1AAEF4; margin-top: 7px; font-size: 14px;"> Forgot Password </button>
+                    <button style="color: #1AAEF4; margin-top: 7px; font-size: 14px;"> Forgot Password </button>
 
-                <button
-                    style="background-color: #1AAEF4; padding: 8px; width: 100%; margin-top: 15px; border-radius: 10px; color: white; ">Sign
-                    In</button>
-                
+                    <button type="submit"
+                        style="background-color: #1AAEF4; padding: 8px; width: 100%; margin-top: 15px; border-radius: 10px; color: white; ">Sign
+                        In</button>
+
                 </form>
 
                 <div
@@ -49,10 +54,12 @@
                 </div>
 
                 <footer style="text-align: center; font-size: 16px; font-weight: 400; ">
-                   <p> Copyright <%= new Date().getFullYear() %>.  All Rights Reserved. </p>
-                
-                    <p style="margin-top: 15px; margin-bottom: 15px; font-size: 14px; font-weight: 400;">Unauthorized use, distribution, or reproduction of any part of this software is strictly prohibited without prior written permission from NDD. For inquiries, please contact cits@gmail.com.</p>
-                
+                    <p> Copyright <%= new Date().getFullYear() %>. All Rights Reserved. </p>
+
+                    <p style="margin-top: 15px; margin-bottom: 15px; font-size: 14px; font-weight: 400;">Unauthorized
+                        use, distribution, or reproduction of any part of this software is strictly prohibited without
+                        prior written permission from NDD. For inquiries, please contact cits@gmail.com.</p>
+
                 </footer>
             </div>
 
