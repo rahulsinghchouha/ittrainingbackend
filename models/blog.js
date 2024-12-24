@@ -5,15 +5,14 @@ const blogSchema = mongoose.Schema({
         type:String,
         require:true
     },
-    date:{
-        type:String,
-        require:true
-    },
+
     heading:{
         type:String,
         require:true
     }
-})
+    
+},
+{ timestamps: true })
 
 const blogs = mongoose.model("blogSchema",blogSchema);
 

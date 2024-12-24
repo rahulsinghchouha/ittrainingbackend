@@ -14,14 +14,12 @@ const PORT = process.env.PORT || 5000
 //middleware for access the json data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For parsing URL-encoded data
-app.use(express.static(path.join(__dirname,'public'))); 
+app.use(express.static(path.join(__dirname,'public'))); //serve static files images
 
 //db connect
 dbConnect();
 
-app.get("/", (req, res) => {
-    res.send("Welcome to the API. Use /api/v1/student-details or /api/v1/admin.");
-});
+
 //cors
 
 const corsOptions = {
@@ -36,6 +34,16 @@ app.use(cors(corsOptions));
 app.use("/api/v1/student-details",studentDetails);
 app.use("/api/v1/admin",adminRoute);
 app.use("/api/v1/get",getRoute);
+
+
+//EJS Setup
+
+app.set('view engine', 'ejs'); // Tells Express to use EJS for rendering views.
+
+//Route for show the view
+app.get("/", (req, res) => {
+    res.render("index",{title:"Home Page"});
+});
 
 
 

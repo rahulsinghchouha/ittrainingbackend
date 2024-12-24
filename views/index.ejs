@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="w-[100%]  ">
+        <div class="w-[1322px] mx-auto h-screen login-card">
+            <div class="w-[450px] border-[1px] border-solid  p-[15px]">
+                <figure class="mb-[16px] mx-auto flex justify-center">
+                    <img src="/It_training_logo.svg" />
+                </figure>
+
+                <h1 style="color: #1AAEF4; font-size: 24px; font-weight:500 ; margin-top: 20px;" class=" ">Start to
+                    Update It Training </h1>
+
+                <h3 style="font-size: 24px; font-weight: 700; margin-top: 20px;">Sign In</h3>
+
+                <p style="margin-top: 5px;">Start managing your website</p>
+                <form>
+                <input style="margin-top: 20px;"
+                    class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
+                    type="email" placeholder="Email" />
+
+
+                <input style="margin-top: 20px;"
+                    class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
+                    type="password" placeholder="Password" />
+
+                <button style="color: #1AAEF4; margin-top: 7px; font-size: 14px;"> Forgot Password </button>
+
+                <button
+                    style="background-color: #1AAEF4; padding: 8px; width: 100%; margin-top: 15px; border-radius: 10px; color: white; ">Sign
+                    In</button>
+                
+                </form>
+
+                <div
+                    style="margin-top: 30px; margin-bottom: 16px; width: 100%; height: 1px; background-color: #4848484a;">
+                </div>
+
+                <footer style="text-align: center; font-size: 16px; font-weight: 400; ">
+                   <p> Copyright <%= new Date().getFullYear() %>.  All Rights Reserved. </p>
+                
+                    <p style="margin-top: 15px; margin-bottom: 15px; font-size: 14px; font-weight: 400;">Unauthorized use, distribution, or reproduction of any part of this software is strictly prohibited without prior written permission from NDD. For inquiries, please contact cits@gmail.com.</p>
+                
+                </footer>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -17,21 +17,21 @@ exports.addCourse = async (req, res) => {
     const { category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ, eligibility, courseDuration, feeOptions } = req.body;
     const img = req.file?.filename;
 
-    console.log("category ->", category);
-    console.log("courseName ->", courseName);
-    console.log("overview ->", overview);
-    console.log("keyAreas heading->", keyAreas);
+    // console.log("category ->", category);
+    // console.log("courseName ->", courseName);
+    // console.log("overview ->", overview);
+    // console.log("keyAreas heading->", keyAreas);
 
-    console.log("toolsInHand ->", toolsInHand);
-    console.log("benefits ->", benefits);
-    console.log("benefits ->", eligibility);
-    console.log("benefits ->", courseDuration);
-    console.log("benefits ->", feeOptions);
-    console.log("courseCurriculum ->", courseCurriculum);
-    console.log("keyHighLights ->", keyHighLights);
-    console.log("jobRoles ->", jobRoles);
-    console.log("fAQ ->", fAQ);
-    console.log("img ->", img);
+    // console.log("toolsInHand ->", toolsInHand);
+    // console.log("benefits ->", benefits);
+    // console.log("benefits ->", eligibility);
+    // console.log("benefits ->", courseDuration);
+    // console.log("benefits ->", feeOptions);
+    // console.log("courseCurriculum ->", courseCurriculum);
+    // console.log("keyHighLights ->", keyHighLights);
+    // console.log("jobRoles ->", jobRoles);
+    // console.log("fAQ ->", fAQ);
+    // console.log("img ->", img);
 
     if (!img || !eligibility || !courseDuration || !feeOptions || !category || !courseName || !overview || !keyAreas || !toolsInHand || !benefits || !courseCurriculum || !keyHighLights || !jobRoles || !fAQ) {
         return validationErrorWithData(res, "card data validation failed");
