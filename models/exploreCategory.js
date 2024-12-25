@@ -21,3 +21,4 @@ const exploreCatSchema = new mongoose.Schema({
 const exploreCategory = mongoose.model("exploreCategory",exploreCatSchema);
 
 module.exports = exploreCategory;
+

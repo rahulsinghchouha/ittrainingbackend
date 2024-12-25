@@ -42,9 +42,17 @@ app.use("/api/v1/get",getRoute);
 app.set('view engine', 'ejs'); // Tells Express to use EJS for rendering views.
 
 //Route for show the view
-app.get("/", (req, res) => {
-    res.render("index");
+app.get("/login", (req, res) => {
+    res.render("index",{message:""});
 });
+
+app.get("/home", (req, res) => {
+    res.render("home");
+});
+app.get("/add-home", (req, res) => {
+    res.render("newHome");
+});
+
 
 
 
