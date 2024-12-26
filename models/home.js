@@ -45,10 +45,9 @@ const homeSchema = new mongoose.Schema({
 
     ourPartners: [
         {
-            img: {
-                type: String,
-                require: true,
-            }
+         type:mongoose.Schema.ObjectId,
+         ref:"ourPartners",
+         require:true,
         }
     ],
     exploreCategory: [{
@@ -69,11 +68,10 @@ const homeSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    ourStats: [{
-        type: mongoose.Schema.ObjectId,
-        ref: "ourStatsSchema",
-        require: true,
-    }],
+    ourStats: {
+      type:mongoose.Schema.ObjectId,
+      require: true,
+    },
     blogImg: {
         type: String,  require: true,
     },
@@ -85,8 +83,8 @@ const homeSchema = new mongoose.Schema({
     },
     jobReadyHead: { type: String, require: true },
     jobReadyPara: { type: String, require: true },
-    InterviewPrepHead: { type: String, require: true },
-    InterviewPrepPara: { type: String, require: true },
+    interviewPrepHead: { type: String, require: true },
+    interviewPrepPara: { type: String, require: true },
     mentorsHead: { type: String, require: true },
     mentorsPara: { type: String, require: true },
     careerCounsilHead: { type: String, require: true },

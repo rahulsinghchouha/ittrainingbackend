@@ -17,7 +17,7 @@ const exploreCatSchema = new mongoose.Schema({
         type:String,
         require:true
     }
-})
+},{timestamps:true})
 const exploreCategory = mongoose.model("exploreCategory",exploreCatSchema);
 
 module.exports = exploreCategory;

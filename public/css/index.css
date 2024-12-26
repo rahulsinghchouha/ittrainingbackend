@@ -26,3 +26,10 @@ h1{
     background-color: #1AAEF4;
     color: white;
 }
+a:active{
+    background-color: #1AAEF4;
+    color: white;
+}
+a.visited-active {
+    background-color: #1AAEF4;
+  }

@@ -53,8 +53,40 @@ app.get("/add-home", (req, res) => {
     res.render("newHome");
 });
 
+app.get("/course", (req, res) => {
+    res.render("courses");
+});
+app.get("/add-course", (req, res) => {
+    res.render("addCourse");
+});
 
 
+app.get("/our-testimonial", (req, res) => {
+    res.render("testimonial");
+});
+app.get("/new-testimonial", (req, res) => {
+    res.render("newTestimonial");
+});
+
+
+app.get("/dashboard", (req, res) => {
+    res.render("dashboard");
+});
+
+
+app.get("/blogs", (req, res) => {
+    res.render("blog");
+});
+
+
+app.get("/contact-us", (req, res) => {
+    res.render("contactUs");
+});
+
+
+app.get("/about-us", (req, res) => {
+    res.render("aboutUs");
+});
 
 app.listen(PORT,()=>{
     console.log("Hi i am listening on PORT",PORT);   

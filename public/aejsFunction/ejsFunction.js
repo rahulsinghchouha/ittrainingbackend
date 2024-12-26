@@ -16,8 +16,6 @@ function addKeyArea() {
                                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />`;
     
      container.appendChild(div);
-
-
 }
 
 function addTools()
@@ -142,3 +140,34 @@ function addFAQs() {
    container.appendChild(div);
 }
 
+function addHowToStart() {
+    const container = document.getElementById("howToStart-container"); 
+  const div = document.createElement("div");
+  div.innerHTML = `  <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+                                            >How To Start Heading : </label>
+                                        <input type="text" name="howToStart[][heading]"  required
+                                            placeholder="Key Heading"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+
+
+                                        <label
+                                            style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
+                                            >How To Start Details : </label>
+                                        <input type="text" name="howToStart[][details]"  required
+                                            placeholder="Key Details" 
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                               `;
+  
+   container.appendChild(div);
+}
+
+function addPartners()
+{
+       const container = document.getElementById("partner-container");
+
+    container.insertAdjacentHTML('beforeend', `
+       <input type="file" name="img" required
+                                            placeholder="Add Job Roles"
+                                            style=" margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                ` );
+}
