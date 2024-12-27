@@ -5,25 +5,23 @@ const mongoose = require("mongoose");
 const blogSchema = new mongoose.Schema({
     img: {
         type: String,
-        require: true
+        required: true
     },
-
     heading: {
         type: String,
-        require: true
+        required: true
     },
     details: {
         type: String,
-        require: true,
+        required: true,
     },
-
 },
     { timestamps: true })
 
 const bannerImgSchema = new mongoose.Schema({
     img: {
         type: String,
-        require: true,
+        required: true,
     }
 })
 
@@ -31,6 +29,6 @@ const blogs = mongoose.model("blogSchema", blogSchema);
 const bannerImg = mongoose.model("bannerImgBlog", bannerImgSchema);
 
 
-module.exports = blogs;
 
-module.exports = bannerImg;
+
+module.exports = { bannerImg ,blogs}

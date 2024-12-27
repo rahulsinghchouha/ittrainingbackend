@@ -3,26 +3,26 @@ const mongoose = require('mongoose');
 const studentPlaced = new mongoose.Schema({
     name :{
         type:String,
-        require:true
+        required:true
     },
     profile:{
         type:String,
-        require:true
+        required:true
     },
     img:{
         type:String,
-        require:true
+        required:true
     },
     experience:{
         type:String,
-        require:true
+        required:true
     }
 })
 
 const bannerImgSchema = new mongoose.Schema({
     img:{
         type:String,
-        require:true,
+        required:true,
     }
 })
 
@@ -31,6 +31,6 @@ const student = mongoose.model("studentPlaced",studentPlaced);
 
 const bannerImg = mongoose.model("bannerImgTestimonial",bannerImgSchema);
 
-module.exports = student;
+module.exports = {student,bannerImg};
 
-module.exports = bannerImg;
+
