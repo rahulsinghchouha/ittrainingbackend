@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const blogSchema = mongoose.Schema({
+
+const blogSchema = new mongoose.Schema({
     img:{
         type:String,
         require:true
@@ -9,7 +10,11 @@ const blogSchema = mongoose.Schema({
     heading:{
         type:String,
         require:true
-    }
+    },
+    details:{
+        type:String,
+        require:true,
+    },
     
 },
 { timestamps: true })

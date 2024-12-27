@@ -77,19 +77,46 @@ app.get("/dashboard", (req, res) => {
 app.get("/blogs", (req, res) => {
     res.render("blog");
 });
+app.get("/add-newBlog", (req, res) => {
+    res.render("addNewBlog");
+});
+app.get("/add-newTag", (req, res) => {
+    res.render("addNewTag");
+});
 
 
 app.get("/contact-us", (req, res) => {
     res.render("contactUs");
 });
 
+app.get("/add-contactUs", (req, res) => {
+    res.render("addContactUs");
+});
+
 
 app.get("/about-us", (req, res) => {
     res.render("aboutUs");
+});
+app.get("/add-aboutUs", (req, res) => {
+    res.render("addAboutUs");
+});
+
+
+
+app.get("/add-partners", (req, res) => {
+    res.render("addPartners");
+});
+
+app.get("/add-categories", (req, res) => {
+    res.render("addCategories");
+});
+app.get("/add-ourStats", (req, res) => {
+    res.render("addOurStats");
 });
 
 app.listen(PORT,()=>{
     console.log("Hi i am listening on PORT",PORT);   
 })
+
 
 
