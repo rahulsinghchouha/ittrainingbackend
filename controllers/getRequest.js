@@ -1,5 +1,5 @@
 const courseCard = require('../models/createCourse');
-const studentPlaced = require('../models/studentPlaced');
+const studentPlaced = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");

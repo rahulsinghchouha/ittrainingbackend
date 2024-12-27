@@ -88,9 +88,19 @@ const courseSchema = new mongoose.Schema({
     ],
 }, { timestamps: true })
 
+const bannerImgSchema = new mongoose.Schema({
+    img:{
+        type:String,
+        require:true,
+    }
+})
+
 const course = mongoose.model("course", courseSchema);
+
+const bannerImg = mongoose.model("bannerImgCourse",bannerImgSchema)
 
 module.exports = course;
 
+module.exports = bannerImg;
 
 

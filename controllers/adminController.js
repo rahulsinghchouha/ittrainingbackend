@@ -1,5 +1,5 @@
 const courseCard = require("../models/createCourse");
-const studentPlaced = require("../models/studentPlaced");
+const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
@@ -81,15 +81,30 @@ exports.adminLogin = async (req, res) => {
     }
 }
 
+exports.addHome = async(req,res) =>{
+
+console.log("Hi am a Home Page");
+
+console.log("----------req Body ------------",req.body);
+
+console.log("----------req Body ------------",req.files);
+
+
+console.log("how to start",req.body.howToStart[0]?.heading);
+}
+
+
 
 exports.addCourse = async (req, res) => {
     console.log("HYYYYYYYYYY");
+
+    console.log(req.body);
     // Logs the uploaded file
     //console.log("req body",req.body); // Logs additional form fields
 
 
-    const { category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ, eligibility, courseDuration, feeOptions } = req.body;
-    const img = req.file?.filename;
+    // const { category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ, eligibility, courseDuration, feeOptions } = req.body;
+    // const img = req.file?.filename;
 
     // console.log("category ->", category);
     // console.log("courseName ->", courseName);
@@ -107,22 +122,22 @@ exports.addCourse = async (req, res) => {
     // console.log("fAQ ->", fAQ);
     // console.log("img ->", img);
 
-    if (!img || !eligibility || !courseDuration || !feeOptions || !category || !courseName || !overview || !keyAreas || !toolsInHand || !benefits || !courseCurriculum || !keyHighLights || !jobRoles || !fAQ) {
-        return validationErrorWithData(res, "card data validation failed");
-    }
+    // if (!img || !eligibility || !courseDuration || !feeOptions || !category || !courseName || !overview || !keyAreas || !toolsInHand || !benefits || !courseCurriculum || !keyHighLights || !jobRoles || !fAQ) {
+    //     return validationErrorWithData(res, "card data validation failed");
+    // }
 
-    try {
-        await courseCard.create({
-            category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ, eligibility, courseDuration, feeOptions,
-            img
-        })
+    // try {
+    //     await courseCard.create({
+    //         category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ, eligibility, courseDuration, feeOptions,
+    //         img
+    //     })
 
-        return successResponse(res, "course card added succesfully");
-    }
-    catch (error) {
-        console.log("error", error);
-        return errorResponse(res, "card not added ")
-    }
+    //     return successResponse(res, "course card added succesfully");
+    // }
+    // catch (error) {
+    //     console.log("error", error);
+    //     return errorResponse(res, "card not added ")
+    // }
 }
 exports.studentPlaced = async (req, res) => {
 

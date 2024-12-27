@@ -56,16 +56,9 @@ const aboutUsSchema = new mongoose.Schema({
     },
 })
 
-const aboutUsBannerImage = new mongoose.Schema({
-    img:{
-        type:String,
-        require:true,
-    }
-})
 
 const aboutUs = mongoose.model("aboutUs",aboutUsSchema);
-const aboutUsBanImg = mongoose.model("aboutUsBannerImg",aboutUsBannerImage);
+
 
 
 module.exports = aboutUs;
-module.exports = aboutUsBanImg;

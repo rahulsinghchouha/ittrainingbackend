@@ -85,20 +85,20 @@
                         style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                         <div
                             style=" height: 640px; width: 100%; border: 2px; border-style: solid; border-color: gray; padding: 20px 20px; overflow-y: scroll;">
-                            <form style="display: flex; flex-direction: column; gap: 25px;">
+                            <form action="/api/v1/admin/add-home" encType="multipart/form-data" method="POST" style="display: flex; flex-direction: column; gap: 25px;">
 
 
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                         for="bannerHeading">Banner Heading : </label>
-                                    <input type="text" name="bannerHeading" id="bannerHeading"
+                                    <input required type="text" name="bannerHeading" id="bannerHeading"
                                         placeholder="Banner Heading"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                         for="bannerPara">Welcome Paragraph : </label>
-                                    <input type="text" name="bannerPara" id="bannerPara"
+                                    <input required type="text" name="bannerPara" id="bannerPara"
                                         placeholder="Welcome Paragraph  "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
 
@@ -107,14 +107,14 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                         for="bannerImage">Banner Image : </label>
-                                    <input type="file" name="bannerImage" id="bannerImage" placeholder="Banner Heading"
+                                    <input required type="file" name="bannerImage" id="bannerImage" placeholder="Banner Heading"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
 
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                         for="bannerBgImg">Banner Background Image : </label>
-                                    <input type="file" name=" bannerBgImg" id=" bannerBgImg"
+                                    <input required type="file" name="bannerBgImg" id=" bannerBgImg"
                                         placeholder="Banner Background Image"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
@@ -122,14 +122,14 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                         for="chooseCourseHead">Choose Your Course Heading : </label>
-                                    <input type="text" name="chooseCourseHead" id="chooseCourseHead"
+                                    <input required type="text" name="chooseCourseHead" id="chooseCourseHead"
                                         placeholder="Choose Your Course Heading "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                         for="chooseCoursePara">Choose Your Course Details : </label>
-                                    <input type="text" name="chooseCoursePara" id="chooseCoursePara"
+                                    <input required type="text" name="chooseCoursePara" id="chooseCoursePara"
                                         placeholder="Choose Your Course Details "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
@@ -139,7 +139,7 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 20px; margin-top: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">How To Uplift Your
                                         Career Heading : </label>
-                                    <input type="text" name="upliftYourCareerHead"
+                                    <input required type="text" name="upliftYourCareerHead"
                                         placeholder="Uplift Your Career Heading "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
@@ -147,7 +147,7 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin-top: 10px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">How To Uplift Your
                                         Career Details : </label>
-                                    <input type="text" name="upliftYourCareerPara"
+                                    <input required type="text" name="upliftYourCareerPara"
                                         placeholder="How To Uplift Your Career Details "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
@@ -172,7 +172,7 @@
                                     <div id="howToStart-container">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">How To Start
                                             Heading : </label>
-                                        <input type="text" name="howToStart[][heading]" required
+                                        <input required type="text" name="howToStart[0][heading]" 
                                             placeholder="Key Heading"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
 
@@ -180,17 +180,35 @@
                                         <label
                                             style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;">How
                                             To Start Details : </label>
-                                        <input type="text" name="howToStart[][details]" required
+                                        <input required type="text" name="howToStart[0][details]" 
                                             placeholder="Key Details"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     </div>
                                 </div>
 
-                               
+                                <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                    <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                         Maximize Your Career Heading : </label>
+                                    <input required type="text" name="maximizeCareerHead" placeholder="Maximize Your Career Heading"
+                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                </div>
+                                <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                    <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                         Maximize Your Career Details : </label>
+                                    <textarea id="maximizeyourCareerDetails" required type="text" name="maximizeCareerPara" placeholder="Maximize Your Career Details"
+                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" ></textarea>
+                                </div>
+                                <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                    <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                       Maximize Your Career Image : </label>
+                                    <input required type="file" name="maximizeCareerImg" placeholder="Maximize Your Career Image "
+                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                </div>
+
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                         Blog Side Image : </label>
-                                    <input type="file" name="blogImg" placeholder="Select Image "
+                                    <input required type="file" name="blogImg" placeholder="Select Image "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 
@@ -198,14 +216,14 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                          Blog Heading : </label>
-                                    <input type="text" name="blogHead" placeholder="Blog Heading "
+                                    <input required type="text" name="blogHead" placeholder="Blog Heading "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
 
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                          Blog Details : </label>
-                                    <input type="text" name="blogPara" placeholder="Blog Details"
+                                    <input required type="text" name="blogPara" placeholder="Blog Details"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
 
@@ -214,7 +232,7 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                         Job Ready Heading : </label>
-                                    <input type="text" name="jobReadyHead" placeholder="Job Ready Heading "
+                                    <input required type="text" name="jobReadyHead" placeholder="Job Ready Heading "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
 
@@ -223,40 +241,40 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                         Job Ready Details : </label>
-                                    <input type="text" name="jobReadyPara" placeholder="Job Ready Details"
+                                    <input required type="text" name="jobReadyPara" placeholder="Job Ready Details"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                         Interview Prepration Heading : </label>
-                                    <input type="text" name="interviewPrepHead" placeholder="Interview Prepration Heading"
+                                    <input required type="text" name="interviewPrepHead" placeholder="Interview Prepration Heading"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                       Interview Prepration Details : </label>
-                                    <input type="text" name="interviewPrepPara" placeholder="Interview Prepration Details"
+                                    <input required type="text" name="interviewPrepPara" placeholder="Interview Prepration Details"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                       Mentors Heading : </label>
-                                    <input type="text" name="mentorsHead" placeholder="Mentors Heading"
+                                    <input required type="text" name="mentorsHead" placeholder="Mentors Heading"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                       Mentors Details : </label>
-                                    <input type="text" name="mentorsPara" placeholder="Mentors Details"
+                                    <input required type="text" name="mentorsPara" placeholder="Mentors Details"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                       Career Counsil Heading : </label>
-                                    <input type="text" name="careerCounsilHead" placeholder="Career Counsil Heading "
+                                    <input required type="text" name="careerCounsilHead" placeholder="Career Counsil Heading "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                
@@ -264,28 +282,33 @@
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                       Career Counsil Details : </label>
-                                    <input type="text" name="careerCounsilPara" placeholder="Career Counsil Details"
+                                    <input required type="text" name="careerCounsilPara" placeholder="Career Counsil Details"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                       Before College Heading </label>
-                                    <input type="text" name="beforeCollegeHead" placeholder="Before College Heading"
+                                    <input required type="text" name="beforeCollegeHead" placeholder="Before College Heading"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                       Before College Details </label>
-                                    <input type="text" name="beforeCollegePara" placeholder="Before College Heading"
+                                    <input required type="text" name="beforeCollegePara" placeholder="Before College Heading"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
                                 
                                 <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                         Before College Side Image </label>
-                                    <input type="file" name="beforeCollegeImg" placeholder="Before College Side Image"
+                                    <input required type="file" name="beforeCollegeImg" placeholder="Before College Side Image"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
+
+                                <button type="submit" style=" font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 10px; border-radius: 5px; ">
+                                    Submit
+                                </button>
+
                             </form>
                         </div>
 

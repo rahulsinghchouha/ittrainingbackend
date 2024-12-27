@@ -18,6 +18,19 @@ const studentPlaced = new mongoose.Schema({
         require:true
     }
 })
+
+const bannerImgSchema = new mongoose.Schema({
+    img:{
+        type:String,
+        require:true,
+    }
+})
+
+
 const student = mongoose.model("studentPlaced",studentPlaced);
 
+const bannerImg = mongoose.model("bannerImgTestimonial",bannerImgSchema);
+
 module.exports = student;
+
+module.exports = bannerImg;

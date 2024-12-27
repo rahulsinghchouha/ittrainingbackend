@@ -1,3 +1,5 @@
+let index = 1;
+
 function addKeyArea() {
       const container = document.getElementById("keyAreas-container"); 
     const div = document.createElement("div");
@@ -145,7 +147,7 @@ function addHowToStart() {
   const div = document.createElement("div");
   div.innerHTML = `  <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                             >How To Start Heading : </label>
-                                        <input type="text" name="howToStart[][heading]"  required
+                                        <input type="text" name="howToStart[${index}][heading]"  required
                                             placeholder="Key Heading"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
 
@@ -153,12 +155,14 @@ function addHowToStart() {
                                         <label
                                             style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
                                             >How To Start Details : </label>
-                                        <input type="text" name="howToStart[][details]"  required
+                                        <input type="text" name="howToStart[${index}][details]"  required
                                             placeholder="Key Details" 
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                `;
   
    container.appendChild(div);
+
+   index++;
 }
 
 function addPartners()
