@@ -14,10 +14,11 @@ router.post("/explore-category", upload.fields([
     { name: "img", maxCount: 1 }      // img field
 ]), admin.exploreCategory);
 
-//add Home
+//add Home 
 router.post("/add-home",upload.fields([
 {name:"bannerImage", maxCount:1},
 {name:"bannerBgImg", maxCount:1},
+{name:"maximizeCareerImg", maxCount:1},
 {name:"blogImg", maxCount:1},
 {name:"beforeCollegeImg", maxCount:1}
 

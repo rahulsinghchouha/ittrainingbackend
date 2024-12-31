@@ -1,6 +1,7 @@
+let howToStartIndex = 1;
 
 function addKeyArea() {
-      const container = document.getElementById("keyAreas-container"); 
+    const container = document.getElementById("keyAreas-container");
     const div = document.createElement("div");
     div.innerHTML = ` <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                                     for="keyheading">Key Heading : </label>
@@ -15,13 +16,12 @@ function addKeyArea() {
                                                 <input type="text" name="keyAreas[][details]" id="keydetails"
                                                     placeholder="Key Details" id="keydetails"
                                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />`;
-    
-     container.appendChild(div);
+
+    container.appendChild(div);
 }
 
-function addTools()
-{
-   
+function addTools() {
+
 
     const container = document.getElementById("toolsInHand-container");
 
@@ -29,18 +29,17 @@ function addTools()
         <input type="text" name="toolsInHand[]"  required
                                                 placeholder="Tools In Hand"
                                                 style="margin-top:15px;  border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px; display:block" />`
-      );
+    );
 
 }
 
-function addBenefits()
-{
+function addBenefits() {
 
-console.log("i am benefits");
+    console.log("i am benefits");
 
-const container = document.getElementById("courseBenefits-container");
+    const container = document.getElementById("courseBenefits-container");
 
-container.insertAdjacentHTML('beforeend',` <input type="text" name="benefits[]"  required
+    container.insertAdjacentHTML('beforeend', ` <input type="text" name="benefits[]"  required
                                             placeholder=" Course Benefit"
                                             style=" margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />`);
 
@@ -49,7 +48,7 @@ container.insertAdjacentHTML('beforeend',` <input type="text" name="benefits[]" 
 function addCourseCurriculum() {
     console.log("Hi i am in key Areas");
     const container = document.getElementById("courseCurriculum-container");
-   // console.log(container);
+    // console.log(container);
     const div = document.createElement("div");
     div.innerHTML = `    <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                                 >Curriculum Heading : </label>
@@ -79,13 +78,12 @@ function addCourseCurriculum() {
                                                 </div>
                                             </div>`;
 
-     container.appendChild(div);
+    container.appendChild(div);
 
 }
 
-function addCurriculumDetails()
-{
-   
+function addCurriculumDetails() {
+
 
     const container = document.getElementById("courseDetails-container");
 
@@ -93,12 +91,11 @@ function addCurriculumDetails()
       <input type="text" name="courseCurriculum[][details][]"
                                                                     required placeholder=" Course Curriculum"
                                                                     style="margin-top:15px;  border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />`
-      );
+    );
 }
 
-function addKeyHighLights()
-{
-   
+function addKeyHighLights() {
+
 
     const container = document.getElementById("keyHighLights-container");
 
@@ -108,9 +105,8 @@ function addKeyHighLights()
                                                     style="margin-top: 15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />` );
 }
 
-function addJobRoles()
-{
-       const container = document.getElementById("jobRoles-container");
+function addJobRoles() {
+    const container = document.getElementById("jobRoles-container");
 
     container.insertAdjacentHTML('beforeend', `
        <input type="text" name="jobRoles[]" required
@@ -121,9 +117,9 @@ function addJobRoles()
 
 
 function addFAQs() {
-    const container = document.getElementById("faqs-container"); 
-  const div = document.createElement("div");
-  div.innerHTML = `  <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+    const container = document.getElementById("faqs-container");
+    const div = document.createElement("div");
+    div.innerHTML = `  <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                                     for="faqheading">FAQ’s Heading : </label>
                                                 <input type="text" name="fAQ[][heading]" id="faqheading" required
                                                     placeholder="FAQ’s Heading"
@@ -137,18 +133,18 @@ function addFAQs() {
                                                     placeholder="FAQ’s Details" id="faqdetails"
                                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     `;
-  
-   container.appendChild(div);
+
+    container.appendChild(div);
 }
 
 function addHowToStart() {
 
     console.log("ADD TO START");
-    const container = document.getElementById("howToStart-container"); 
-  const div = document.createElement("div");
-  div.innerHTML = `  <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+    const container = document.getElementById("howToStart-container");
+    const div = document.createElement("div");
+    div.innerHTML = `  <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                             >How To Start Heading : </label>
-                                        <input type="text" name="howToStart[][heading]"  required
+                                        <input type="text" name="howToStart[${howToStartIndex}][heading]"  required
                                             placeholder="Key Heading"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
 
@@ -156,17 +152,17 @@ function addHowToStart() {
                                         <label
                                             style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
                                             >How To Start Details : </label>
-                                        <input type="text" name="howToStart[][details]"  required
+                                        <input type="text" name="howToStart[${howToStartIndex}][details]"  required
                                             placeholder="Key Details" 
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                `;
-  
-   container.appendChild(div);
+
+    container.appendChild(div);
+    howToStartIndex = howToStartIndex + 1;
 }
 
-function addPartners()
-{
-       const container = document.getElementById("partner-container");
+function addPartners() {
+    const container = document.getElementById("partner-container");
 
     container.insertAdjacentHTML('beforeend', `
        <input type="file" name="img" required

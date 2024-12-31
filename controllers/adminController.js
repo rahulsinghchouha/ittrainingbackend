@@ -90,7 +90,7 @@ console.log("----------req Body ------------",req.body);
 console.log("----------req Body ------------",req.files);
 
 
-console.log("how to start",req.body.howToStart[0]?.heading);
+
 }
 
 
