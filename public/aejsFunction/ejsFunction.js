@@ -1,11 +1,12 @@
 let howToStartIndex = 1;
-let addKeyAreaIndex = 1;
+let addKeyAreaIndex = 0;
 let faqIndex = 1;
 let courseCurricullumIndex = 0;
 
+
 function addCourseCurriculum() {
 
-  
+
     const curriculumContainer = document.getElementById("curricullum-container");
 
     const headingBlock = document.createElement('div');
@@ -55,11 +56,15 @@ function removeDetails(button) {
     button.parentElement.remove();
 }
 
-
 function addKeyArea() {
-    const container = document.getElementById("keyAreas-container");
-    const div = document.createElement("div");
-    div.innerHTML = ` <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+
+    const keyAreaContainer = document.getElementById("keyArea-container");
+
+    const keyAreaBlock = document.createElement('div');
+
+    keyAreaBlock.classList.add('key-area-block');
+
+    keyAreaBlock.innerHTML = `<label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                                     for="keyheading">Key Heading : </label>
                                                 <input type="text" name="keyAreas[${addKeyAreaIndex}][heading]" id="keyheading"
                                                     placeholder="Key Heading"
@@ -71,11 +76,39 @@ function addKeyArea() {
                                                     for="keydetails">Key Details : </label>
                                                 <input type="text" name="keyAreas[${addKeyAreaIndex}][details]" id="keydetails"
                                                     placeholder="Key Details" id="keydetails"
-                                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />`;
+                                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                                <div>
+                   <button type="button" onClick="addDetail(${courseCurricullumIndex})" style="border: 1px; border-style: solid; padding: 0 4px; ">Add More Details </button>
+                   <button type="button" onClick="removeHeading(this)" style="border: 1px; border-style: solid; padding: 0 4px; ">Remove Heading </button>
 
-    container.appendChild(div);
-    addKeyAreaIndex++;
+                                                </div>
+                                                    
+                                                    `
+
+    keyAreaContainer.appendChild(keyAreaBlock);
+
 }
+
+// function addKeyArea() {
+//     const container = document.getElementById("keyAreas-container");
+//     const div = document.createElement("div");
+//     div.innerHTML = ` <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+//                                                     for="keyheading">Key Heading : </label>
+//                                                 <input type="text" name="keyAreas[${addKeyAreaIndex}][heading]" id="keyheading"
+//                                                     placeholder="Key Heading"
+//                                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+
+
+//                                                 <label
+//                                                     style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
+//                                                     for="keydetails">Key Details : </label>
+//                                                 <input type="text" name="keyAreas[${addKeyAreaIndex}][details]" id="keydetails"
+//                                                     placeholder="Key Details" id="keydetails"
+//                                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />`;
+
+//     container.appendChild(div);
+//     addKeyAreaIndex++;
+// }
 
 function addTools() {
 
