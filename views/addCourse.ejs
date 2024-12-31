@@ -85,7 +85,7 @@
 
                 <div style="margin-left: 200px; margin-top: 15px;">
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
-                        <div style="margin: 5px; border: 2px; border-style: solid;  padding: 10px;">
+                        <div style="margin: 5px; border: 2px; border-style: solid; padding: 10px;">
                             <div>
                                 <form action="" method="POST" enctype="multipart/form-data">
                                     <label
@@ -102,12 +102,13 @@
                                 </form>
                             </div>
                         </div>
-                        <div style="border: 2px; border-style: solid; border-color: green; margin-top: 50px; ">
+                        <div style=" margin-top: 50px; ">
                             <h1
                                 style="font-size: 26px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
                                 Add Course : </h1>
                                 
                             <form action="/api/v1/admin/add-course" method="POST" enctype="multipart/form-data">
+                                
                                 <div style="margin-left: 20px; margin-top: 20px;">
                                     <div style="display: flex;  flex-direction: column;  gap: 10px;  padding: 15px;">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
@@ -136,6 +137,7 @@
                                         <option value="Software App Development">Software App Development </option>
 
                                     </select>
+                                </div>
                                 </div>
                                 <div style="margin-left: 20px; margin-top: 20px; padding: 15px;">
 
@@ -269,57 +271,20 @@
                                 </div>
 
                                 <!--  courseCurriculum -->
-                                <div style="margin: 20px; border: 2px; border-style: solid;  padding: 15px;">
-                                    <div
-                                        style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                                        <h1
-                                            style="font-size: 20px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
-                                            Add Course Curriculum : </h1>
 
-                                        <div style="display: flex; gap: 10px; margin-right: 20px;">
-                                            <label for="addcoursecurriculum"
-                                                style="color: gray; font-weight: 600; display: block; cursor: pointer;">Add
-                                                More Curriculum</label>
-                                            <button type="button" id="addcoursecurriculum"
-                                                style="border: 1px; border-style: solid; padding: 0px 4px;"
-                                                onclick="addCourseCurriculum()">+</button>
-                                        </div>
+                                <div  style="margin: 20px; border: 2px; border-style: solid;  padding: 15px;">
+                                    <h1 style="font-size: 20px; font-weight: 400; color: #1AAEF4; font-weight: 800;">Course Curriculum </h1>
+
+                                    <div id="curricullum-container">
+                                        <!-- here we add our course curricull container -->
 
                                     </div>
-                                    <div id="courseCurriculum-container">
-                                        <div>
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">Curriculum
-                                                Heading : </label>
-                                            <input required type="text" name="courseCurriculum[][heading]" 
-                                                placeholder="Curriculum Heading"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-                                            <div style="padding: 20px;">
-                                                <div
-                                                    style="margin: 20px; border: 2px; border-style: solid;  padding: 15px;">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        <label
-                                                            style="display:block;  font-size: 20px; font-weight: 700; color: #1AAEF4; margin-top: 20px; margin-left:20px ;">
-                                                            Curriculum Details : </label>
-                                                        <div
-                                                            style="display: flex; gap: 10px; margin-right: 20px; align-items: baseline;">
-                                                            <label for="addmorecurriculumdetails"
-                                                                style="color: gray; font-weight: 600; display: block; cursor: pointer;">Add
-                                                                More Details</label>
-                                                            <button type="button" id="addmorecurriculumdetails"
-                                                                style="border: 1px; border-style: solid; padding: 0 4px; "
-                                                                onclick="addCurriculumDetails()">+</button>
-                                                        </div>
-                                                    </div>
-                                                    <div id="courseDetails-container">
-                                                        <input required type="text" name="courseCurriculum[][details][]" 
-                                                            placeholder=" Course Curriculum"
-                                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <button   style="border: 1px; border-style: solid; padding: 0 4px; " type="button" onclick="addCourseCurriculum()">Add Curriculum</button>
+
                                 </div>
+
+
+                              
                                 <!-- keyHighLights -->
                                 <div style="margin: 20px; border: 2px; border-style: solid;  padding: 15px;">
                                     <div style="display: flex; justify-content: space-between;">
@@ -384,7 +349,7 @@
                                     <div id="faqs-container">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                             for="faqheading">FAQ’s Heading : </label>
-                                        <input type="text" name="fAQ[][heading]" id="faqheading" required
+                                        <input type="text" name="fAQ[0][heading]" id="faqheading" required
                                             placeholder="FAQ’s Heading"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
 
@@ -392,7 +357,7 @@
                                         <label
                                             style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
                                             for="faqdetails">FAQ’s Details : </label>
-                                        <input type="text" name="fAQ[][details]" required placeholder="FAQ’s Details"
+                                        <input type="text" name="fAQ[0][details]" required placeholder="FAQ’s Details"
                                             id="faqdetails"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     </div>

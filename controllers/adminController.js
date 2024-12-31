@@ -99,6 +99,11 @@ exports.addCourse = async (req, res) => {
     console.log("HYYYYYYYYYY");
 
     console.log(req.body);
+
+    req.body.courseCurriculum.forEach(item => {
+        console.log("Heading:", item.heading);
+        console.log("Details:", item.details);
+      });
     // Logs the uploaded file
     //console.log("req body",req.body); // Logs additional form fields
 

@@ -1,5 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Curriculum</title>
+    <style>
+        .heading-block {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .details-container {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Course Curriculum</h1>
+    <form action="/api/v1/admin/add-course" method="POST">
+        <div id="curriculum-container">
+            <!-- Dynamic Headings and Details will be added here -->
+        </div>
+        <button type="button" onclick="addHeading()">Add New Heading</button>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        let headingIndex = 0;
+
+        // Function to add a new heading block
+        function addHeading() {
+            const curriculumContainer = document.getElementById('curriculum-container');
+
+            const headingBlock = document.createElement('div');
+            headingBlock.classList.add('heading-block');
+
+            headingBlock.innerHTML = `
+                <label>Heading:</label>
+                <input type="text" name="courseCurriculum[${headingIndex}][heading]" required>
+                <div class="details-container" id="details-container-${headingIndex}">
+                    <label>Details:</label>
+                    <input type="text" name="courseCurriculum[${headingIndex}][details][]" required>
+                </div>
+                <button  type="button" onclick="addDetail(${headingIndex})" style="border: 1px; border-style: solid; padding: 0 4px;">Add More Details</button>
+                <button  type="button" onclick="removeHeading(this)" style="border: 1px; border-style: solid; padding: 0 4px;">Remove Heading</button>
+            `;
+
+            curriculumContainer.appendChild(headingBlock);
+            headingIndex++;
+        }
+
+        // Function to add more details for a specific heading
+        function addDetail(index) {
+            const detailsContainer = document.getElementById(`details-container-${index}`);
+            const detailInput = document.createElement('div');
+
+            detailInput.innerHTML = `
+                <input type="text" name="courseCurriculum[${index}][details][]" required>
+                <button type="button" onclick="removeDetail(this)" style="border: 1px; border-style: solid; padding: 0 4px;" >Remove Detail</button>
+            `;
+
+            detailsContainer.appendChild(detailInput);
+        }
+
+        // Function to remove a heading block
+        function removeHeading(button) {
+            button.parentElement.remove();
+        }
+
+        // Function to remove a detail input field
+        function removeDetail(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -137,4 +260,4 @@
 
 </body>
 
-</html>
+</html> -->
