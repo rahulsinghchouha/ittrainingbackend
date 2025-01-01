@@ -83,31 +83,21 @@
                 <div style=" margin-top: 60px; display: flex; justify-content: center;">
                     <div
                         style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
-                        <div
-                            style=" height: 640px; width: 100%; border: 2px; border-style: solid; border-color: gray; padding: 20px 20px; overflow-y: scroll;">
-                             <!--  ourPartners -->
-                            <form action="">
-                             <div style="margin: 20px;   padding: 15px;">
-                                <div style="display: flex; justify-content: space-between;">
+                        <div style=" width: 100%;  padding: 20px 20px; ">
+                            <!--  ourPartners -->
+                            <form action="/api/v1/admin/add-partners" method="POST" enctype="multipart/form-data">
+                                <div style="margin: 20px;   padding: 15px;">
                                     <label
-                                        style="display:block;  font-size: 20px; font-weight: 700; color: #1AAEF4; margin-top: 20px; margin-left:20px ;">
+                                        style="display:block;  font-size: 20px; font-weight: 700; color: #1AAEF4; margin-top: 20px; ">
                                         Add Partner : </label>
-                                    <div
-                                        style="display: flex; gap: 10px; margin-right: 20px; align-items: baseline;">
-                                        <label for="Partner"
-                                            style="color: gray; font-weight: 600; display: block; cursor: pointer;">Add
-                                            More Partner</label>
-                                        <button type="button" id="Partner"
-                                            style="border: 1px; border-style: solid; padding: 0 4px; "
-                                            onclick="addPartners()">+</button>
-                                    </div>
-                                </div>
-                                <div id="partner-container">
                                     <input type="file" name="img" required
-                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                        style="margin-top: 10px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+
+                                    <button type="submit"
+                                        style="padding: 5px 10px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 90%; color: white; ">Submit</button>
+
                                 </div>
-                            </div>
-                        </form>
+                            </form>
 
                         </div>
 

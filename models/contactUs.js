@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 const contactUsSchema = new mongoose.Schema({
-
+    
     bannerImg: {
         type: String,
         required: true,
@@ -15,15 +15,19 @@ const contactUsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    contactUsDetails: {
+    contactUsPara: {
         type: String,
         required: true,
+    },
+    contactUsNumber: {
+        type: Number,
+        required: true,
+    },
+    contactUsEmail:{
+        type:String,
+        require:true,
     },
     officeAddress: {
-        type: String,
-        required: true,
-    },
-    contactDetails: {
         type: String,
         required: true,
     },

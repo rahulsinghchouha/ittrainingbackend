@@ -3,7 +3,7 @@ const {student} = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");
-const blog = require("../models/blog")
+const {blogs} = require("../models/blog")
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
 
@@ -66,7 +66,7 @@ exports.getOurStats = async (req,res) =>{
 }
 exports.getBlogs = async (req,res) =>{
     try{
-            const data = await blog.find();
+            const data = await blogs.find();
             successResponseWithData(res,"Blogs get succesfully",data);
     }
     catch(error)

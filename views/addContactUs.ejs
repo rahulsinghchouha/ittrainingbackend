@@ -17,7 +17,7 @@
         <div style="display: flex; box-sizing: border-box; ">
 
             <div
-                style=" width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
+                style=" position: fixed; width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
 
                 <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
                     class=" w-[100%] border-b-2 border-solid border-red-700">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 88%;">
+            <div style="width: 88%; margin-left: 12%;">
 
                 <div
                     style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid; display: flex; justify-content: center; align-items: center;">
@@ -80,15 +80,15 @@
                         Add Contact Details</h1>
                 </div>
 
-                <div style=" margin-top: 60px; display: flex; justify-content: center;">
+                <div style="  display: flex; justify-content: center; margin-bottom: 20px;">
                     <div
                         style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                         <div
-                            style=" height: 640px; width: 100%; border: 2px; border-style: solid; border-color: gray; padding: 20px 20px; overflow-y: scroll;">
+                            style=" width: 100%; padding: 20px 20px; ">
                              
-                                <div style=" margin-top: 20px; ">
+                                <div >
                                     <h1
-                                        style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); margin-top: 20px; margin-left:20px ;">
+                                        style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); ">
                                         New Details : </h1>
                                         
                                     <form>
@@ -113,7 +113,7 @@
                                         <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                             <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Contact Us Details : </label>
-                                            <input type="text" name="contactUsDetails" placeholder="Contact Us Details"
+                                            <input type="text" name=" contactUsPara" placeholder="Contact Us Details"
                                                 style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
                                         </div>    
                                         <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
@@ -124,8 +124,14 @@
                                         </div>                 
                                         <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                             <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                                Contact Details : </label>
-                                            <input type="text" name="contactDetails" placeholder="Contact Details"
+                                                Contact Us Number : </label>
+                                            <input type="number" name="contactUsNumber" placeholder="Contact Us Number"
+                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
+                                        </div>  
+                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                                Contact Us Email : </label>
+                                            <input type="email" name="contactUsEmail" placeholder="Contact Us Email"
                                                 style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
                                         </div>  
                                         <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
@@ -133,7 +139,10 @@
                                             Office Timing : </label>
                                             <input type="text" name="officeTiming" placeholder="Office Timing"
                                                 style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>  
+                                        </div> 
+                                        
+                                        <button type="submit" style="padding: 8px 20px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 85%; color: white; ">Submit</button>
+                                        
                                     </form>
 
                                 </div>

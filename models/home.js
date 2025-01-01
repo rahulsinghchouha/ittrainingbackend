@@ -45,11 +45,11 @@ const homeSchema = new mongoose.Schema({
 
     ourPartners: [
         {
-         type:mongoose.Schema.ObjectId,
-         ref:"ourPartners",
-         require:true,
-        }
-    ],
+            type: mongoose.Schema.ObjectId,
+            ref: "ourPartners",
+            require: true,
+        }],
+
     exploreCategory: [{
         type: mongoose.Schema.ObjectId,
         ref: "exploreCategory",
@@ -64,22 +64,34 @@ const homeSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    classRoomTraining: {
+        type: String,
+        require: true,
+    },
+    industrialTraining: {
+        type: String,
+        require: true,
+    },
+    corporateTraining: {
+        type: String,
+        require: true,
+    },
     maximizeCareerImg: {
         type: String,
         require: true,
     },
     ourStats: {
-      type:mongoose.Schema.ObjectId,
-      require: true,
+        type: mongoose.Schema.ObjectId,
+        require: true,
     },
     blogImg: {
-        type: String,  require: true,
+        type: String, require: true,
     },
     blogHead: {
-        type: String,  require: true,
+        type: String, require: true,
     },
     blogPara: {
-        type: String,  require: true,
+        type: String, require: true,
     },
     jobReadyHead: { type: String, require: true },
     jobReadyPara: { type: String, require: true },

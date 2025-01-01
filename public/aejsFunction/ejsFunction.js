@@ -135,9 +135,11 @@ function addFAQs() {
 
 function addHowToStart() {
 
-    console.log("ADD TO START");
-    const container = document.getElementById("howToStart-container");
+
+    const container = document.getElementById("howToStart-container_");
     const div = document.createElement("div");
+    div.style.width = '100%';
+
     div.innerHTML = `  <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                             >How To Start Heading : </label>
                                         <input type="text" name="howToStart[${howToStartIndex}][heading]"  required
@@ -151,18 +153,36 @@ function addHowToStart() {
                                         <input type="text" name="howToStart[${howToStartIndex}][details]"  required
                                             placeholder="Key Details" 
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-                               `;
+                              
+                               <button type="button" onClick="removeHeading(this)" style="margin-top:10px; background-color:red; color:white; border: 2px; border-style: solid; border-color:black; padding: 0 4px;">Remove This Field</button>
+   
+                                            `;
 
     container.appendChild(div);
-    howToStartIndex = howToStartIndex + 1;
+    howToStartIndex++;
 }
 
-function addPartners() {
-    const container = document.getElementById("partner-container");
+function addYourImaginory(){
 
-    container.insertAdjacentHTML('beforeend', `
-       <input type="file" name="img" required
-                                            placeholder="Add Job Roles"
-                                            style=" margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-                                ` );
+    const imaginoryContainer = document.getElementById("addYourImaginory-container");
+
+    const div = document.createElement('div');
+
+    div.style.width = '100%';
+
+    div.innerHTML = `<input type="text" name="addYourImaginory[]" required placeholder="Add course we offer" style="margin-top: 15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+        <button type="button" onClick="removeHeading(this)" style="margin-top:10px; background-color:red; color:white; border: 2px; border-style: solid; border-color:black; padding: 0 4px;">Delete detail</button>
+  `;
+
+  imaginoryContainer.appendChild(div);
+
 }
+// function addPartners() {
+//     const container = document.getElementById("partner-container");
+
+//     container.insertAdjacentHTML('beforeend', `
+//        <input type="file" name="img" required
+//                                             placeholder="Add Job Roles"
+//                                             style=" margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+//                                 ` );
+// }

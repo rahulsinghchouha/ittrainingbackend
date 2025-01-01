@@ -1,4 +1,6 @@
-const courseCard = require("../models/createCourse");
+const { course } = require("../models/createCourse");
+const home = require("../models/home");
+
 const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
@@ -7,11 +9,11 @@ const blogs = require("../models/blog");
 
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
-const { validationErrorWithData, successResponse, errorResponse, notFoundResponse } = require("../helper/apiResponse");
+const { validationErrorWithData, successResponse, errorResponse, notFoundResponse, successResponseWithData } = require("../helper/apiResponse");
 
 const mailSender = require("../utils/mailSender");
 
-const {loginSuccess } = require("../mail/template/loginSuccess");
+const { loginSuccess } = require("../mail/template/loginSuccess");
 
 
 //ADD ADMIN
@@ -47,102 +49,100 @@ exports.adminLogin = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.render("index",{message:"Enter all the require fields"})
+        res.render("index", { message: "Enter all the require fields" })
     }
 
     try {
 
         const isAdmin = await admin.findOne({ email });
-       
+
         if (!isAdmin) {
-         res.render("index",{message:"Admin not Found Please Enter a Valid Email"})
+            res.render("index", { message: "Admin not Found Please Enter a Valid Email" })
         }
 
         else {
             const hashedPassword = isAdmin.password;
-         
 
-            const isPassword = await  bcrypt.compare(password,hashedPassword);
-            
-            if(isPassword)
-            {
-              const info = mailSender(email,"Login as Admin Succesfully",loginSuccess(email));           
-            //  console.log("Info",info);
-            res.render("dashboard")
+
+            const isPassword = await bcrypt.compare(password, hashedPassword);
+
+            if (isPassword) {
+                const info = mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
+                //  console.log("Info",info);
+                res.render("dashboard")
             }
-            else{
-                res.render("index",{message:"incorrect password"})
+            else {
+                res.render("index", { message: "incorrect password" })
             }
         }
     }
     catch (error) {
         console.log(error);
-        res.render("index",{message:"Oops! Email and/or password are incorrect"});
+        res.render("index", { message: "Oops! Email and/or password are incorrect" });
     }
 }
 
-exports.addHome = async(req,res) =>{
+exports.addHome = async (req, res) => {
 
-console.log("Hi am a Home Page");
+    // 1. Get the data
+    const { bannerHeading, bannerPara, chooseCourseHead, chooseCoursePara, upliftYourCareerHead, upliftYourCareerPara,
+        howToStart, maximizeCareerHead, maximizeCareerPara, classRoomTraining, industrialTraining, corporateTraining, blogHead, blogPara,
+        jobReadyHead, jobReadyPara, interviewPrepHead, interviewPrepPara, mentorsHead, mentorsPara, careerCounsilHead, careerCounsilPara, beforeCollegeHead,
+        beforeCollegePara } = req.body;
 
-console.log("----------req Body ------------",req.body);
+    const { bannerImage, bannerBgImg, maximizeCareerImg, blogImg, beforeCollegeImg } = req.files;
 
-console.log("----------req Body ------------",req.files);
+        //2. validate the data 
+    if (!bannerHeading || !bannerPara || !chooseCourseHead || !chooseCoursePara || !upliftYourCareerHead || !upliftYourCareerPara
+        || !howToStart || !maximizeCareerHead || !maximizeCareerPara || !classRoomTraining || !industrialTraining || !corporateTraining || !blogHead || !blogPara
+        || !jobReadyHead || !jobReadyPara || !interviewPrepHead || !interviewPrepPara || !mentorsHead || !mentorsPara || !careerCounsilHead || !careerCounsilPara || !beforeCollegeHead
+        || !beforeCollegePara || !bannerImage || !bannerBgImg || !maximizeCareerImg || !blogImg || !beforeCollegeImg) {
+        console.log("Validation error all the fields require for the home page");
+        return validationErrorWithData(res, "Please enter all the fields chek how to start field");
+    }
 
+    const filterHowToStart = howToStart.filter(value => value != undefined && value != null);
 
+    const homeData = {
+        bannerHeading, bannerPara, chooseCourseHead, chooseCoursePara, upliftYourCareerHead, upliftYourCareerPara,
+        maximizeCareerHead, maximizeCareerPara, classRoomTraining, industrialTraining, corporateTraining, blogHead, blogPara,
+        jobReadyHead, jobReadyPara, interviewPrepHead, interviewPrepPara, mentorsHead, mentorsPara, careerCounsilHead, careerCounsilPara, beforeCollegeHead,
+        beforeCollegePara,
+        howToStart: filterHowToStart,
+        bannerImage: bannerImage[0]?.filename,
+        bannerBgImg: bannerBgImg[0]?.filename,
+        maximizeCareerImg: maximizeCareerImg[0]?.filename,
+        blogImg: blogImg[0]?.filename,
+        beforeCollegeImg: beforeCollegeImg[0]?.filename,
+    }
 
+    //update the data 
+    try {
+        const existingHome = await home.findOne({});
+
+        if (existingHome) {
+            await home.findByIdAndUpdate(existingHome._id, { $set: homeData }, { new: true });
+            return successResponseWithData(res, "Home Added Succesfully");
+        }
+        else {
+            const newHome = new home(homeData);
+            await newHome.save();
+            return successResponseWithData(res, "Home Added Succesfully");
+        }
+
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "home not added please Enter valid data and submit again")
+
+    }
 }
-
-
 
 exports.addCourse = async (req, res) => {
     console.log("HYYYYYYYYYY");
 
     console.log(req.body);
 
-    // req.body.courseCurriculum.forEach(item => {
-    //     console.log("Heading:", item.heading);
-    //     console.log("Details:", item.details);
-    //   });
-    // Logs the uploaded file
-    //console.log("req body",req.body); // Logs additional form fields
-
-
-    // const { category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ, eligibility, courseDuration, feeOptions } = req.body;
-    // const img = req.file?.filename;
-
-    // console.log("category ->", category);
-    // console.log("courseName ->", courseName);
-    // console.log("overview ->", overview);
-    // console.log("keyAreas heading->", keyAreas);
-
-    // console.log("toolsInHand ->", toolsInHand);
-    // console.log("benefits ->", benefits);
-    // console.log("benefits ->", eligibility);
-    // console.log("benefits ->", courseDuration);
-    // console.log("benefits ->", feeOptions);
-    // console.log("courseCurriculum ->", courseCurriculum);
-    // console.log("keyHighLights ->", keyHighLights);
-    // console.log("jobRoles ->", jobRoles);
-    // console.log("fAQ ->", fAQ);
-    // console.log("img ->", img);
-
-    // if (!img || !eligibility || !courseDuration || !feeOptions || !category || !courseName || !overview || !keyAreas || !toolsInHand || !benefits || !courseCurriculum || !keyHighLights || !jobRoles || !fAQ) {
-    //     return validationErrorWithData(res, "card data validation failed");
-    // }
-
-    // try {
-    //     await courseCard.create({
-    //         category, courseName, overview, keyAreas, toolsInHand, benefits, courseCurriculum, keyHighLights, jobRoles, fAQ, eligibility, courseDuration, feeOptions,
-    //         img
-    //     })
-
-    //     return successResponse(res, "course card added succesfully");
-    // }
-    // catch (error) {
-    //     console.log("error", error);
-    //     return errorResponse(res, "card not added ")
-    // }
 }
 exports.studentPlaced = async (req, res) => {
 
@@ -225,19 +225,24 @@ exports.exploreCategory = async (req, res) => {
 
 }
 exports.ourPartners = async (req, res) => {
-
+    console.log("i am a partner");
+    console.log(req.file);
     const img = req.file.filename;
 
-    if (!img) return validationErrorWithData(res, "img not found");
+    //img validation
+    //insert image in the our partner section
+    //add the partner id to the home section
 
-    try {
-        await ourPartners.create({ img });
-        return successResponse(res, "partner added succesfully");
-    }
-    catch (error) {
-        console.log(error);
-        return errorResponse(res, "partner not added please try again");
-    }
+    // if (!img) return validationErrorWithData(res, "img not found");
+
+    // try {
+    //     await ourPartners.create({ img });
+    //     return successResponse(res, "partner added succesfully");
+    // }
+    // catch (error) {
+    //     console.log(error);
+    //     return errorResponse(res, "partner not added please try again");
+    // }
 
 }
 exports.addBlog = async (req, res) => {
