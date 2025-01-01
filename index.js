@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 4000
 //middleware for access the json data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For parsing URL-encoded data
+//app.use(upload.array()); // for parsing multipart/form-data
 app.use(express.static(path.join(__dirname,'public'))); //serve static files images
 
 //db connect

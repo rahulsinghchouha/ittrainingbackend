@@ -1,5 +1,5 @@
-const courseCard = require('../models/createCourse');
-const studentPlaced = require('../models/testimonial');
+const {course} = require('../models/createCourse');
+const {student} = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");
@@ -10,7 +10,7 @@ const { successResponse, errorResponse, validationErrorWithData, successResponse
 exports.getCourseCard = async (req, res) => {
     try {
        
-        const data = await courseCard.find();
+        const data = await course.find();
          successResponseWithData(res, "course card get succesfully", data);
     }
     catch (error) {
@@ -21,7 +21,7 @@ exports.getCourseCard = async (req, res) => {
 }
 exports.getStudentPlaced = async (req, res) => {
     try {
-        const data = await studentPlaced.find();
+        const data = await student.find();
          successResponseWithData(res, "placed student get succesfully", data);
 
     }
