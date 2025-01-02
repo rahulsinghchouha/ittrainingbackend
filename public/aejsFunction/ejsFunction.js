@@ -1,7 +1,7 @@
 let howToStartIndex = 1;
 let addKeyAreaIndex = 1;
-let courseCurricullumIndex = 0;
-let faqIndex = 0;
+let courseCurricullumIndex = 1;
+let faqIndex = 1;
 
 
 

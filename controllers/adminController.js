@@ -139,11 +139,48 @@ exports.addHome = async (req, res) => {
 }
 
 exports.addCourse = async (req, res) => {
-    console.log("HYYYYYYYYYY");
+   
+    const { courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ } = req.body;
 
-    console.log(req.body);
+    const img = req.file?.filename;
 
+    const filterKeyAreas = keyAreas?.filter(value => value != undefined && value != null);
+    const filterCourseCurricullum = courseCurricullum?.filter(value => value != undefined && value != null);
+    const filterFAQ = fAQ?.filter(value => value != undefined && value != null);
+
+         console.log(filterKeyAreas, filterCourseCurricullum, filterFAQ);
+
+        // console.log(courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ, img);
+
+    if(!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !eligibility || !courseDuration || !feeOptions || !filterCourseCurricullum || !keyHighLights || !jobRoles || !filterFAQ|| !img){
+        return validationErrorWithData(res, "Enter all the required fields  to create a course");
+    }
+
+    try{
+        await course.create({  
+            courseName,
+            img,
+            category,
+            overview,   
+            keyAreas: filterKeyAreas,
+            toolsInHand,
+            benefits,
+            eligibility,
+            courseDuration,
+            feeOptions,
+            courseCurriculum: filterCourseCurricullum,
+            keyHighLights,
+            jobRoles,
+            fAQ: filterFAQ,
+         })
+         return successResponse(res, "Course added succesfully");
+    }
+    catch(error){
+        console.log(error);
+        return errorResponse(res, "Course not added please add valid field and try again");
+    }
 }
+
 exports.addStudentPlaced = async (req, res) => {
 
     const { name, profile, experience } = req.body;
