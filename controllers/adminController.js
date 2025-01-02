@@ -5,7 +5,7 @@ const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
-const blogs = require("../models/blog");
+const {blogs} = require("../models/blog");
 
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
@@ -284,32 +284,21 @@ exports.addOurPartners = async (req, res) => {
 
 }
 exports.addBlog = async (req, res) => {
-
-    const { heading } = req.body;
-    const img = req.file.filename;
-    const today = new Date();
-
-    const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    const monthName = months[today.getMonth()];
-
-    const year = today.getFullYear()
-    const date = `${monthName}, ${year}`;
-
-    if (!img || !heading || !date)
-        return validationErrorWithData(res, "blog data not found");
-
-    try {
+    const { heading, details} = req.body;
+    const img = req.file?.filename;
+    if (!heading || !details || !img) {
+        return validationErrorWithData(res, "All the fields required to create a blog");
+    }
+    try{
         await blogs.create({
             heading,
-            date, img
+            details,
+            img
         })
-        return successResponse(res, "Blog added succesfully");
+        return successResponse(res, "blog added succesfully");
     }
-    catch (error) {
+    catch(error){
         console.log(error);
-        return errorResponse(res, "Blog not added");
+        return errorResponse(res, "blog not added please try again");
     }
 }

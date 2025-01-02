@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +8,9 @@
     <title>Dashboard</title>
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
-    <script src="/aejsFunction/ejsFunction.js"> </script>
-
+    
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    
 </head>
 
 <body>
@@ -17,7 +19,7 @@
         <div style="display: flex; box-sizing: border-box; ">
 
             <div
-                style=" width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
+                style="position: fixed; width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
 
                 <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
                     class=" w-[100%] border-b-2 border-solid border-red-700">
@@ -72,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 88%;">
+            <div style="width: 88%; margin-left: 12%;">
 
                 <div
                     style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid; display: flex; justify-content: center; align-items: center;">
@@ -80,61 +82,105 @@
                         Add New Blog</h1>
                 </div>
 
-                <div style=" margin-top: 60px; display: flex; justify-content: center;">
+                <div style=" margin-top: 0px; display: flex; justify-content: center;">
                     <div
                         style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
-                        <div
-                            style=" height: 640px; width: 100%; border: 2px; border-style: solid; border-color: gray; padding: 20px 20px; overflow-y: scroll;">
-                            <div style="margin: 5px; border: 2px; border-style: solid;  padding: 10px;">
-                           
+                        <div style="  width: 100%;  padding: 20px 20px; ">
+                            <div style="margin: 0px;  padding: 10px;">
+
                                 <div>
-                                    <label
-                                        style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; display: block;"
-                                        >Banner Image : </label>
-                                    <input type="file" name="" required
-                                        placeholder="Banner Image" 
-                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                    <form>
+                                        <label
+                                            style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; display: block;">Banner
+                                            Image : </label>
+                                        <input type="file" name="" required placeholder="Banner Image"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                        <button type="submit"
+                                            style=" border:2px; border-style: solid; border-color: black; margin-left: 90%; margin-top: 20px; width: 10%; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 0px; border-radius: 5px; ">
+                                            Submit
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                                <div style=" margin-top: 20px; ">
-                                    <h1
-                                        style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); margin-top: 20px; margin-left:20px ;">
-                                        New Blog : </h1>
+                            <div style=" margin-top: 20px; margin-bottom: 20px; ">
+                                <h1 style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6);">
+                                    New Blog : </h1>
 
-                                    <form>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Add Blog Image : </label>
-                                            <input type="file" name="img" placeholder="Add Blog Image"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                             Add Blog Heading : </label>
-                                            <input type="text" name="heading" placeholder="Add Blog Heading"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                <form method="POST" action="/api/v1/admin/add-blogs" enctype="multipart/form-data">
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Add Blog Image : </label>
+                                        <input type="file" name="img" placeholder="Add Blog Image"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Add Blog Heading : </label>
+                                        <input type="text" name="heading" placeholder="Add Blog Heading"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Add Blog Details : </label>
-                                            <input type="text" name="details" placeholder="Add Blog Details"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>                   
-                                    </form>
-
-                                </div>
-
-                      
-
+                                        <textarea class="editor" type="text" name="details"
+                                            placeholder="Add Blog Details"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
+                                    </div>
+                                    <button type="submit"
+                                        style=" border:2px; border-style: solid; border-color: black; margin-left: 80%; margin-top: 20px; width: 20%; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 0px; border-radius: 5px; ">
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
+        <script src="/aejsFunction/ejsFunction.js"> </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                initializeCKEditor('editor');
+            });
+        
+            function initializeCKEditor(className) {
+                const editors = document.querySelectorAll(`.${className}`);
+        
+                editors.forEach((element) => {
+                    ClassicEditor.create(element, {
+                        toolbar: [
+                            'heading', '|',
+                            'bold', 'italic', 'underline', '|',
+                            'specialCharacters', '|', // Special Characters toolbar button
+                            'undo', 'redo',
+                        ],
+                        specialCharacters: {
+                            categories: [
+                                {
+                                    name: 'Arrows', // Category name
+                                    characters: [
+                                        '←', '→', '↑', '↓', '↔', '↕', '↩', '↪', '⇐', '⇒', '⇑', '⇓', '⇔', '⇕',
+                                    ],
+                                },
+                            ],
+                        },
+                    })
+                    .then(editor => {
+                        console.log('Editor is ready!', editor);
+                    })
+                    .catch(error => {
+                        console.error('Error initializing editor:', error);
+                    });
+                });
+            }
+        </script>
+        
 
     </div>
 
 </body>
 
-</html>
+</html> 
