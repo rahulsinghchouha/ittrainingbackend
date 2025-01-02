@@ -92,7 +92,7 @@ exports.addHome = async (req, res) => {
 
     const { bannerImage, bannerBgImg, maximizeCareerImg, blogImg, beforeCollegeImg } = req.files;
 
-        //2. validate the data 
+    //2. validate the data 
     if (!bannerHeading || !bannerPara || !chooseCourseHead || !chooseCoursePara || !upliftYourCareerHead || !upliftYourCareerPara
         || !howToStart || !maximizeCareerHead || !maximizeCareerPara || !classRoomTraining || !industrialTraining || !corporateTraining || !blogHead || !blogPara
         || !jobReadyHead || !jobReadyPara || !interviewPrepHead || !interviewPrepPara || !mentorsHead || !mentorsPara || !careerCounsilHead || !careerCounsilPara || !beforeCollegeHead
@@ -144,7 +144,7 @@ exports.addCourse = async (req, res) => {
     console.log(req.body);
 
 }
-exports.studentPlaced = async (req, res) => {
+exports.addStudentPlaced = async (req, res) => {
 
     const { name, profile, experience } = req.body;
     const img = req.file?.filename;
@@ -171,8 +171,7 @@ exports.studentPlaced = async (req, res) => {
 
     }
 }
-exports.ourStats = async (req, res) => {
-    console.log("our stats", req.body);
+exports.addOurStats = async (req, res) => {
 
     const { mentors, experience, placedStudent, yearsOfJourney } = req.body;
 
@@ -180,15 +179,25 @@ exports.ourStats = async (req, res) => {
         return validationErrorWithData(res, "our stats data not found");
     }
 
-    try {
-        await ourStats.create({
-            mentors,
-            experience,
-            placedStudent,
-            yearsOfJourney
-        })
+    const newStats = {
+        mentors,
+        experience,
+        placedStudent,
+        yearsOfJourney
+    }
 
-        return successResponse(res, "status added succesfully");
+    try {
+
+        const stats = await ourStats.findOne({});
+
+        if (stats) {
+            await ourStats.findByIdAndUpdate(stats._id, { $set: newStats }, { new: true });
+            return successResponse(res, "stats updated succesfully");
+        }
+        else {
+            await ourStats.create(newStats);
+            return successResponse(res, "status added succesfully");
+    }
     }
     catch (error) {
         return errorResponse(res, "stats not saved please try again");
@@ -196,13 +205,12 @@ exports.ourStats = async (req, res) => {
 
 
 }
-exports.exploreCategory = async (req, res) => {
+exports.addExploreCategory = async (req, res) => {
 
     const { heading, para } = req.body;
-    const bgImage = req.files.bgImage[0].filename;
-    const img = req.files.img[0].filename;
-
-    //validation
+    const bgImage = req.files?.bgImage[0]?.filename;
+    const img = req.files?.img[0]?.filename;
+       
     if (!heading || !para || !bgImage || !img) {
         return validationErrorWithData(res, "All the fields required to create a card");
     }
@@ -214,9 +222,7 @@ exports.exploreCategory = async (req, res) => {
             img,
             bgImage
         });
-
         return successResponse(res, "explore Category Card added succesfully");
-
     }
     catch (error) {
         console.log(error);
@@ -224,25 +230,20 @@ exports.exploreCategory = async (req, res) => {
     }
 
 }
-exports.ourPartners = async (req, res) => {
-    console.log("i am a partner");
-    console.log(req.file);
-    const img = req.file.filename;
+exports.addOurPartners = async (req, res) => {
 
-    //img validation
-    //insert image in the our partner section
-    //add the partner id to the home section
+    const img = req?.file?.filename;
 
-    // if (!img) return validationErrorWithData(res, "img not found");
+    if (!img) return validationErrorWithData(res, "img not found");
 
-    // try {
-    //     await ourPartners.create({ img });
-    //     return successResponse(res, "partner added succesfully");
-    // }
-    // catch (error) {
-    //     console.log(error);
-    //     return errorResponse(res, "partner not added please try again");
-    // }
+    try {    
+            await ourPartners.create({img: img});
+            return successResponse(res, "partner added succesfully");
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "partner not added please try again");
+    }
 
 }
 exports.addBlog = async (req, res) => {

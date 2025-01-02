@@ -1,7 +1,8 @@
 let howToStartIndex = 1;
-let addKeyAreaIndex = 0;
-let faqIndex = 0;
+let addKeyAreaIndex = 1;
 let courseCurricullumIndex = 0;
+let faqIndex = 0;
+
 
 
 function addCourseCurriculum() {

@@ -6,13 +6,13 @@ const upload = require("../config/storeFile");
 router.post("/add-admin",admin.addAdmin);
 router.post("/admin-login",admin.adminLogin);
 router.post("/add-course",upload.single("img"),admin.addCourse);
-router.post("/student-placed", upload.single("img"), admin.studentPlaced);
-router.post("/add-partners", upload.single("img"), admin.ourPartners);
-router.post("/our-stats", admin.ourStats);
+router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);
+router.post("/add-partners", upload.single("img"), admin.addOurPartners);
+router.post("/our-stats", admin.addOurStats);
 router.post("/explore-category", upload.fields([
     { name: "bgImage", maxCount: 1 }, // bgImage field
     { name: "img", maxCount: 1 }      // img field
-]), admin.exploreCategory);
+]), admin.addExploreCategory);
 
 //add Home 
 router.post("/add-home",upload.fields([

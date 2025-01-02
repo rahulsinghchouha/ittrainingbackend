@@ -15,12 +15,6 @@ const homeSchema = new mongoose.Schema({
 
     chooseCoursePara: { type: String, require: true },
 
-    courseCard: [{
-        type: mongoose.Schema.ObjectId,
-        ref: "course",
-        require: true,
-    }],
-
     upliftYourCareerHead: { type: String, require: true },
 
     upliftYourCareerPara: { type: String, require: true },
@@ -37,24 +31,6 @@ const homeSchema = new mongoose.Schema({
             }
         }
     ],
-    studentPlaced: [{
-        type: mongoose.Schema.ObjectId,
-        ref: "studentPlaced",
-        require: true,
-    }],
-
-    ourPartners: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: "ourPartners",
-            require: true,
-        }],
-
-    exploreCategory: [{
-        type: mongoose.Schema.ObjectId,
-        ref: "exploreCategory",
-        require: true,
-    }],
 
     maximizeCareerHead: {
         type: String,
@@ -78,10 +54,6 @@ const homeSchema = new mongoose.Schema({
     },
     maximizeCareerImg: {
         type: String,
-        require: true,
-    },
-    ourStats: {
-        type: mongoose.Schema.ObjectId,
         require: true,
     },
     blogImg: {
