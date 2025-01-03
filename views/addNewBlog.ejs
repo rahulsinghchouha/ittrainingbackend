@@ -8,9 +8,9 @@
     <title>Dashboard</title>
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
-    
-    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
 </head>
 
 <body>
@@ -123,7 +123,7 @@
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Add Blog Details : </label>
-                                        <textarea class="editor" type="text" name="details"
+                                        <textarea id="editor" type="text" name="details"
                                             placeholder="Add Blog Details"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
                                     </div>
@@ -139,46 +139,25 @@
                 </div>
             </div>
         </div>
-        <script src="/aejsFunction/ejsFunction.js"> </script>
-
+       
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                initializeCKEditor('editor');
+            $('#editor').trumbowyg({
+              btns: [
+                ['viewHTML'],
+                ['formatting'],
+                ['strong', 'em', 'underline', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['table'],
+                ['foreColor', 'backColor'],
+                ['fullscreen']
+              ]
             });
-        
-            function initializeCKEditor(className) {
-                const editors = document.querySelectorAll(`.${className}`);
-        
-                editors.forEach((element) => {
-                    ClassicEditor.create(element, {
-                        toolbar: [
-                            'heading', '|',
-                            'bold', 'italic', 'underline', '|',
-                            'specialCharacters', '|', // Special Characters toolbar button
-                            'undo', 'redo',
-                        ],
-                        specialCharacters: {
-                            categories: [
-                                {
-                                    name: 'Arrows', // Category name
-                                    characters: [
-                                        '←', '→', '↑', '↓', '↔', '↕', '↩', '↪', '⇐', '⇒', '⇑', '⇓', '⇔', '⇕',
-                                    ],
-                                },
-                            ],
-                        },
-                    })
-                    .then(editor => {
-                        console.log('Editor is ready!', editor);
-                    })
-                    .catch(error => {
-                        console.error('Error initializing editor:', error);
-                    });
-                });
-            }
-        </script>
-        
-
+          </script>
+       
     </div>
 
 </body>
