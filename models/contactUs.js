@@ -11,14 +11,6 @@ const contactUsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    contactUsSubHead: {
-        type: String,
-        required: true,
-    },
-    contactUsPara: {
-        type: String,
-        required: true,
-    },
     contactUsNumber: {
         type: Number,
         required: true,

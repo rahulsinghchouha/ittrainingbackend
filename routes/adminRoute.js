@@ -30,15 +30,15 @@ router.post("/add-about-us",upload.fields([
     {name:"yourImaginationImg",maxCount:1},
     {name:"ourJourneyImg",maxCount:1},
     {name:"ourBeliefImg",maxCount:1},
-    {name:"ourMissionImg",maxCount:1},
+    {name:"ourMissionImg",maxCount:1},]), admin.addAboutUS);
 
-
-
-
-]))
-
-
+//add blog
 router.post("/add-blogs",upload.single("img"),admin.addBlog);
+
+//contact us
+router.post("/add-contact-us",upload.single("bannerImg"),admin.addContactUs);
+
+
 
 module.exports = router;
 

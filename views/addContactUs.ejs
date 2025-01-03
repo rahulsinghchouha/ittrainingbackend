@@ -9,6 +9,11 @@
     <link href="/css/index.css" rel="stylesheet">
     <script src="/aejsFunction/ejsFunction.js"> </script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
+
+
 </head>
 
 <body>
@@ -91,7 +96,7 @@
                                         style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); ">
                                         New Details : </h1>
                                         
-                                    <form>
+                                    <form method="POST" enctype="multipart/form-data" action="/api/v1/admin/add-contact-us">
                                         <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                             <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                                Banner Image : </label>
@@ -100,22 +105,10 @@
                                         </div>
                                         <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                             <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Contact Us Heading : </label>
-                                            <input type="text" name="contactUsHead" placeholder="Contact Us Heading"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                             Contact Us Sub Heading : </label>
-                                            <input type="text" name="contactUsSubHead" placeholder="Contact Us Sub Heading "
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                            Contact Us Details : </label>
-                                            <input type="text" name=" contactUsPara" placeholder="Contact Us Details"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>    
+                                               Contact Us Heading sub heading and details : </label>
+                                            <textarea type="text" name="contactUsHead" placeholder="Contact Us Heading" class="editor"
+                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" ></textarea>
+                                        </div>                                         
                                         <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                             <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Office Address : </label>
@@ -155,6 +148,23 @@
                 </div>
             </div>
         </div>
+        <script>
+            $('.editor').trumbowyg({
+                btns: [
+                    ['viewHTML'],
+                    ['formatting'],
+                    ['strong', 'em', 'underline', 'del'],
+                    ['superscript', 'subscript'],
+                    ['link'],
+                    ['insertImage'],
+                    ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                    ['unorderedList', 'orderedList'],
+                    ['table'],
+                    ['foreColor', 'backColor'],
+                    ['fullscreen']
+                ]
+            });
+        </script>
 
     </div>
 

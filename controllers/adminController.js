@@ -1,5 +1,7 @@
 const { course } = require("../models/createCourse");
 const home = require("../models/home");
+const aboutUS = require("../models/aboutUs");
+const contactUs = require("../models/contactUs");
 
 const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
@@ -26,6 +28,8 @@ exports.addAdmin = async (req, res) => {
         return validationErrorWithData(res, "data validation failed ");
     }
     try {
+
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
 
@@ -104,11 +108,10 @@ exports.addHome = async (req, res) => {
 
     const filterHowToStart = howToStart.filter(value => value != undefined && value != null);
 
-    const homeData = {
+    const newhomeData = {
         bannerHeading, chooseCourseHead, upliftYourCareerHead,
         maximizeCareerHead, blogHead,
         jobReadyHead, interviewPrepHead, mentorsHead, careerCounsilHead, beforeCollegeHead,
-
         howToStart: filterHowToStart,
         bannerImage: bannerImage[0]?.filename,
         bannerBgImg: bannerBgImg[0]?.filename,
@@ -119,18 +122,18 @@ exports.addHome = async (req, res) => {
 
     //update the data 
     try {
-        const existingHome = await home.findOne({});
+        //agr home hai then user ne new home ki request send kr di
+        const homeData = await home.findOne({});
 
-        if (existingHome) {
-            await home.findByIdAndUpdate(existingHome._id, { $set: homeData }, { new: true });
-            return successResponseWithData(res, "Home Added Succesfully");
+        if (homeData) {
+            await home.findByIdAndUpdate(homeData._id, { $set: newhomeData }, { new: true });
+            return successResponse(res, "home updated succesfully");
         }
         else {
-            const newHome = new home(homeData);
+            const newHome = new home(newhomeData);
             await newHome.save();
             return successResponseWithData(res, "Home Added Succesfully");
         }
-
     }
     catch (error) {
         console.log(error);
@@ -184,23 +187,56 @@ exports.addCourse = async (req, res) => {
 }
 
 // ADD ABOUT US
-exports.addAboutUS = async(req,res)=>{
-    console.log(req.body);
-    console.log(req.files);
+exports.addAboutUS = async (req, res) => {
 
+    const { yourImaginationHead, totalStudentJoined, ourJourneyHead, ourBeliefsHead, ourMissionHead, missionDetails, visionDetails, valuesDetails } = req.body;
 
+    const { bannerImage, yourImaginationImg, ourJourneyImg, ourBeliefImg, ourMissionImg } = req.files;
 
+    console.log(yourImaginationHead, totalStudentJoined, ourJourneyHead, ourBeliefsHead, ourMissionHead, missionDetails, visionDetails, valuesDetails, bannerImage, yourImaginationImg, ourJourneyImg, ourBeliefImg, ourMissionImg)
 
+    if (!yourImaginationHead || !totalStudentJoined || !ourJourneyHead || !ourBeliefsHead || !ourMissionHead || !missionDetails || !visionDetails || !valuesDetails
+        || !bannerImage || !yourImaginationImg || !ourJourneyImg || !ourBeliefImg || !ourMissionImg) {
+        return validationErrorWithData(res, "Please Enter all the valid data and try");
+    }
 
+    const aboutUsData = {
+        yourImaginationHead,
+        totalStudentJoined,
+        ourJourneyHead,
+        ourBeliefsHead,
+        ourMissionHead,
+        missionDetails,
+        visionDetails,
+        valuesDetails,
+        bannerImage: bannerImage[0]?.filename,
+        yourImaginationImg: yourImaginationImg[0]?.filename,
+        ourJourneyImg: ourJourneyImg[0]?.filename,
+        ourBeliefImg: ourBeliefImg[0]?.filename,
+        ourMissionImg: ourMissionImg[0]?.filename,
+    }
 
+    try {
+        const aboutData = await aboutUS.findOne({});
+        //agr about hai then user ne new about ki request send kr di
+        if (aboutData) {
+            await aboutUS.findByIdAndUpdate(aboutData._id, { $set: aboutUsData }, { new: true });
+            return successResponse(res, "about us updated succesfully");
+        }
+        else {
+            const newabout = new aboutUS(aboutUsData);
+            await aboutUS.save(newabout);
+            return successResponse(res, "about us created sucesfully");
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "about us not added please enter a valid data and try again");
+    }
 
 }
 
-
-
-
-
-
+//ADD Testimonial
 exports.addStudentPlaced = async (req, res) => {
 
     const { name, profile, experience } = req.body;
@@ -228,6 +264,53 @@ exports.addStudentPlaced = async (req, res) => {
 
     }
 }
+
+//ADD Contact US
+exports.addContactUs = async (req, res) => {
+
+    const { contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming } = req.body;
+
+    const bannerImg = req.file.filename;
+
+    console.log(contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming, bannerImg);
+
+    //validation
+    if (!contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming || !bannerImg) {
+        return validationErrorWithData(res, "enter all the require field and try again");
+    }
+
+    //new object
+    const newContact = {
+        contactUsHead,
+        officeAddress,
+        contactUsNumber,
+        contactUsEmail,
+        officeTiming,
+        bannerImg
+    }
+
+
+    try {
+//if available 
+        const contactData = await contactUs.findOne({});
+
+        if (contactData) {
+            await contactUs.findByIdAndUpdate(contactData._id, { $set: newContact }, { new: true });
+            return successResponseWithData(res, "contact data added succesfully");
+        }
+        else {
+            const newContactData = new contactUs(contactData);
+            await contactUs.save(newContactData);
+        }
+
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "contact us not added please verify the data and try again");
+    }
+}
+
+
 exports.addOurStats = async (req, res) => {
 
     const { mentors, experience, placedStudent, yearsOfJourney } = req.body;

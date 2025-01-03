@@ -4,6 +4,7 @@ const getRequest = require("../controllers/getRequest");
 
 router.get("/get-home",getRequest.getHome);
 router.get("/course-card",getRequest.getCourseCard);
+router.get("/get-about-us",getRequest.getAboutUs);
 router.get("/student-placed",getRequest.getStudentPlaced);
 router.get("/get-partners",getRequest.getPartners);
 router.get("/get-explore-card",getRequest.getExploreCard);
