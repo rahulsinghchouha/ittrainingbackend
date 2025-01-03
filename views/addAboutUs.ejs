@@ -9,6 +9,10 @@
     <link href="/css/index.css" rel="stylesheet">
     <script src="/aejsFunction/ejsFunction.js"> </script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
+
 </head>
 
 <body>
@@ -83,146 +87,128 @@
                 <div style=" margin-top: 60px; display: flex; justify-content: center;">
                     <div
                         style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
-                        <div
-                            style="  width: 100%;  padding: 20px 20px; ">
-                             <!-- ADD Categorise -->
-                           
-                                                      
-                                
-                                <!-- Our Stats -->
-                                <div style=" margin-top: 20px; margin-bottom: 20px; ">
-                                    <h1
-                                        style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); margin-top: 20px; ">
-                                        About Us : </h1>
+                        <div style="  width: 100%;  padding: 20px 20px; ">
+                            <!-- ADD Categorise -->
 
-                                    <form>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Add Banner Image : </label>
-                                            <input type="file" name="bannerImage" placeholder="Add Banner Image "
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Your Imaginatio Side Image : </label>
-                                            <input type="file" name="yourImaginationImg" placeholder="Your Imaginatio Side Image "
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                              Your Imagination Heading : </label>
-                                            <input type="text" name="yourImaginationHead" placeholder="Your Imagination Heading"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Your Imagination Details : </label>
-                                            <input type="text" name="yourImaginationPara" placeholder="Your Imagination Details"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0" />
-                                        </div>
-                                        <div style=" margin: 20px; border: 2px; border-style: solid;  padding: 15px;" id="keyHighLightsContainer">
 
-                                            <div
-                                                style="width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-                                                <h1
-                                                    style="font-size: 20px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
-                                                    Add Your Imagination Course We Offer : </h1>
-                
-                                                <div id="addYourImaginory-container"
-                                                    style="width: 100%; display: flex; flex-direction: column;">
-                                                </div>
-                
-                                                <button
-                                                    style="margin-top: 10px; border: 2px; border-style: solid; border-color:black; background-color: green; color: white; padding: 0 4px; "
-                                                    type="button" onclick="addYourImaginory()">Add More</button>
-                
-                                            </div>
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Number Of Student Joined  : </label>
-                                            <input type="number" name="totalStudentJoined" placeholder=" Total Student Joined" min="0"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
 
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Our Journry Heading  : </label>
-                                            <input type="text" name="ourJourneyHead" placeholder="Our Journry Heading"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Our Journry Details  : </label>
-                                            <input type="text" name="ourJourneyPara" placeholder="Our Journry Details"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
-                                        
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                               Our Journry Img  : </label>
-                                            <input type="file" name="ourJourneyImg" placeholder="Our Journry Img"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
-                                        
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                                Our Belief Heading : </label>
-                                            <input type="text" name="ourBeliefsHead" placeholder="Our Belief Heading"
-                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
-                                        </div>
-                                        <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                            <!-- Our Stats -->
+                            <div style=" margin-top: 20px; margin-bottom: 20px; ">
+                                <h1
+                                    style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); margin-top: 20px; ">
+                                    About Us : </h1>
+
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                            Our Belief Details : </label>
-                                        <input type="text" name="ourBeliefPara" placeholder="Our Belief Details :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
+                                            Add Banner Image : </label>
+                                        <input type="file" name="bannerImage" placeholder="Add Banner Image "
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
                                     </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Your Imaginatio Side Image : </label>
+                                        <input type="file" name="yourImaginationImg"
+                                            placeholder="Your Imaginatio Side Image "
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Your Imagination right side content : </label>
+                                        <textarea class="editor" type="text" name="yourImaginationHead"
+                                            placeholder="Your Imagination Heading & Details"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
+                                    </div>
+
+
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Number Of Student Joined : </label>
+                                        <input type="number" name="totalStudentJoined"
+                                            placeholder=" Total Student Joined" min="0"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Our Journry Heading & datails : </label>
+                                        <textarea class="editor" type="text" name="ourJourneyHead"
+                                            placeholder="Our Journry Heading & Details"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
+                                    </div>
+
+
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Our Journry Img : </label>
+                                        <input type="file" name="ourJourneyImg" placeholder="Our Journry Img"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Our Belief Heading & details: </label>
+                                        <textarea class="editor" type="text" name="ourBeliefsHead" placeholder="Our Belief Heading & Details"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
+                                    </div>
+                                   
 
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Our Belief Image : </label>
-                                        <input type="file" name=" ourBeliefImg" placeholder="Our Belief Details :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
+                                        <input type="file" name="ourBeliefImg" placeholder="Our Belief Details :"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
                                     </div>
 
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                            Our Mission Heading : </label>
-                                        <input type="text" name="ourMissionHead" placeholder="Our Mission Heading :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
+                                            Our Mission Heading: </label>
+                                        <input type="text" name="ourMissionHead" placeholder="Our Mission Heading "
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                             />
                                     </div>
-                                    
+
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Our Mission Img : </label>
                                         <input type="file" name="ourMissionImg" placeholder="Our Mission Image :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
                                     </div>
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Our Mission Details : </label>
-                                        <input type="text" name="missionDetails" placeholder="Our Mission Details :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
+                                        <textarea class="editor" type="text" name="missionDetails" placeholder="Our Mission Details :"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" ></textarea>
                                     </div>
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Our Vision Details : </label>
-                                        <input type="text" name="visionDetails" placeholder="Our Vision Details :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
+                                        <textarea class="editor" type="text" name="visionDetails" placeholder="Our Vision Details :"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" ></textarea>
                                     </div>
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Our Values Details : </label>
-                                        <input type="text" name="valuesDetails" placeholder="Our Values Details :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" min="0"/>
+                                        <textarea class="editor" type="text" name="valuesDetails" placeholder="Our Values Details :"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" ></textarea>
                                     </div>
-                                    <button type="submit" style="padding: 5px 10px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 90%; color: white; ">Submit</button>
+                                    <button type="submit"
+                                        style="padding: 5px 10px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 90%; color: white; ">Submit</button>
 
-                                    </form>
+                                </form>
 
-                                </div>
+                            </div>
 
-                      
+
 
                         </div>
 
@@ -230,6 +216,23 @@
                 </div>
             </div>
         </div>
+        <script>
+            $('.editor').trumbowyg({
+                btns: [
+                    ['viewHTML'],
+                    ['formatting'],
+                    ['strong', 'em', 'underline', 'del'],
+                    ['superscript', 'subscript'],
+                    ['link'],
+                    ['insertImage'],
+                    ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                    ['unorderedList', 'orderedList'],
+                    ['table'],
+                    ['foreColor', 'backColor'],
+                    ['fullscreen']
+                ]
+            });
+        </script>
 
     </div>
 

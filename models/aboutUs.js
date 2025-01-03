@@ -14,16 +14,6 @@ const aboutUsSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    yourImaginationPara: {
-        type: String,
-        require: true,
-    },
-    yourImaginationCourseOffer:[
-        {
-            type: String,
-            require: true,
-        }
-    ],
     totalStudentJoined:{
         type:Number,
         require:true,
@@ -32,10 +22,7 @@ const aboutUsSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    ourJourneyPara: {
-        type: String,
-        require: true,
-    },
+   
     ourJourneyImg: {
         type: String,
         require: true,
@@ -44,10 +31,7 @@ const aboutUsSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    ourBeliefPara: {
-        type: String,
-        require: true,
-    },
+   
     ourBeliefImg: {
         type: String,
         require: true,

@@ -24,6 +24,20 @@ router.post("/add-home",upload.fields([
 
 ]), admin.addHome);
 
+// ADD ABOUT US
+router.post("/add-about-us",upload.fields([
+    {name:"bannerImage",maxCount:1},
+    {name:"yourImaginationImg",maxCount:1},
+    {name:"ourJourneyImg",maxCount:1},
+    {name:"ourBeliefImg",maxCount:1},
+    {name:"ourMissionImg",maxCount:1},
+
+
+
+
+]))
+
+
 router.post("/add-blogs",upload.single("img"),admin.addBlog);
 
 module.exports = router;

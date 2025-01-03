@@ -82,6 +82,7 @@ exports.adminLogin = async (req, res) => {
     }
 }
 
+// ADD HOME
 exports.addHome = async (req, res) => {
 
     // 1. Get the data
@@ -138,6 +139,7 @@ exports.addHome = async (req, res) => {
     }
 }
 
+//ADD COURSE
 exports.addCourse = async (req, res) => {
 
     const { courseName, category, overview, keyAreas, toolsInHand, benefits, eligibility, courseDuration, feeOptions, courseCurricullum, keyHighLights, jobRoles, fAQ } = req.body;
@@ -180,6 +182,24 @@ exports.addCourse = async (req, res) => {
         return errorResponse(res, "Course not added please add valid field and try again");
     }
 }
+
+// ADD ABOUT US
+exports.addAboutUS = async(req,res)=>{
+    console.log(req.body);
+    console.log(req.files);
+
+
+
+
+
+
+
+}
+
+
+
+
+
 
 exports.addStudentPlaced = async (req, res) => {
 
