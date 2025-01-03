@@ -5,7 +5,7 @@ const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
-const {blogs} = require("../models/blog");
+const { blogs } = require("../models/blog");
 
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
@@ -85,18 +85,18 @@ exports.adminLogin = async (req, res) => {
 exports.addHome = async (req, res) => {
 
     // 1. Get the data
-    const { bannerHeading, bannerPara, chooseCourseHead, chooseCoursePara, upliftYourCareerHead, upliftYourCareerPara,
-        howToStart, maximizeCareerHead, maximizeCareerPara, classRoomTraining, industrialTraining, corporateTraining, blogHead, blogPara,
-        jobReadyHead, jobReadyPara, interviewPrepHead, interviewPrepPara, mentorsHead, mentorsPara, careerCounsilHead, careerCounsilPara, beforeCollegeHead,
-        beforeCollegePara } = req.body;
+    const { bannerHeading, chooseCourseHead, upliftYourCareerHead,
+        howToStart, maximizeCareerHead, blogHead,
+        jobReadyHead, interviewPrepHead, mentorsHead, careerCounsilHead, beforeCollegeHead,
+    } = req.body;
 
     const { bannerImage, bannerBgImg, maximizeCareerImg, blogImg, beforeCollegeImg } = req.files;
 
     //2. validate the data 
-    if (!bannerHeading || !bannerPara || !chooseCourseHead || !chooseCoursePara || !upliftYourCareerHead || !upliftYourCareerPara
-        || !howToStart || !maximizeCareerHead || !maximizeCareerPara || !classRoomTraining || !industrialTraining || !corporateTraining || !blogHead || !blogPara
-        || !jobReadyHead || !jobReadyPara || !interviewPrepHead || !interviewPrepPara || !mentorsHead || !mentorsPara || !careerCounsilHead || !careerCounsilPara || !beforeCollegeHead
-        || !beforeCollegePara || !bannerImage || !bannerBgImg || !maximizeCareerImg || !blogImg || !beforeCollegeImg) {
+    if (!bannerHeading || !chooseCourseHead || !upliftYourCareerHead
+        || !howToStart || !maximizeCareerHead || !blogHead
+        || !jobReadyHead || !interviewPrepHead || !mentorsHead || !careerCounsilHead || !beforeCollegeHead
+        || !bannerImage || !bannerBgImg || !maximizeCareerImg || !blogImg || !beforeCollegeImg) {
         console.log("Validation error all the fields require for the home page");
         return validationErrorWithData(res, "Please enter all the fields chek how to start field");
     }
@@ -104,10 +104,10 @@ exports.addHome = async (req, res) => {
     const filterHowToStart = howToStart.filter(value => value != undefined && value != null);
 
     const homeData = {
-        bannerHeading, bannerPara, chooseCourseHead, chooseCoursePara, upliftYourCareerHead, upliftYourCareerPara,
-        maximizeCareerHead, maximizeCareerPara, classRoomTraining, industrialTraining, corporateTraining, blogHead, blogPara,
-        jobReadyHead, jobReadyPara, interviewPrepHead, interviewPrepPara, mentorsHead, mentorsPara, careerCounsilHead, careerCounsilPara, beforeCollegeHead,
-        beforeCollegePara,
+        bannerHeading, chooseCourseHead, upliftYourCareerHead,
+        maximizeCareerHead, blogHead,
+        jobReadyHead, interviewPrepHead, mentorsHead, careerCounsilHead, beforeCollegeHead,
+
         howToStart: filterHowToStart,
         bannerImage: bannerImage[0]?.filename,
         bannerBgImg: bannerBgImg[0]?.filename,
@@ -139,8 +139,8 @@ exports.addHome = async (req, res) => {
 }
 
 exports.addCourse = async (req, res) => {
-   
-    const { courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ } = req.body;
+
+    const { courseName, category, overview, keyAreas, toolsInHand, benefits, eligibility, courseDuration, feeOptions, courseCurricullum, keyHighLights, jobRoles, fAQ } = req.body;
 
     const img = req.file?.filename;
 
@@ -148,20 +148,20 @@ exports.addCourse = async (req, res) => {
     const filterCourseCurricullum = courseCurricullum?.filter(value => value != undefined && value != null);
     const filterFAQ = fAQ?.filter(value => value != undefined && value != null);
 
-         console.log(filterKeyAreas, filterCourseCurricullum, filterFAQ);
+    console.log(filterKeyAreas, filterCourseCurricullum, filterFAQ);
 
-        // console.log(courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ, img);
+    // console.log(courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ, img);
 
-    if(!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !eligibility || !courseDuration || !feeOptions || !filterCourseCurricullum || !keyHighLights || !jobRoles || !filterFAQ|| !img){
+    if (!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !eligibility || !courseDuration || !feeOptions || !filterCourseCurricullum || !keyHighLights || !jobRoles || !filterFAQ || !img) {
         return validationErrorWithData(res, "Enter all the required fields  to create a course");
     }
 
-    try{
-        await course.create({  
+    try {
+        await course.create({
             courseName,
             img,
             category,
-            overview,   
+            overview,
             keyAreas: filterKeyAreas,
             toolsInHand,
             benefits,
@@ -172,10 +172,10 @@ exports.addCourse = async (req, res) => {
             keyHighLights,
             jobRoles,
             fAQ: filterFAQ,
-         })
-         return successResponse(res, "Course added succesfully");
+        })
+        return successResponse(res, "Course added succesfully");
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return errorResponse(res, "Course not added please add valid field and try again");
     }
@@ -234,7 +234,7 @@ exports.addOurStats = async (req, res) => {
         else {
             await ourStats.create(newStats);
             return successResponse(res, "status added succesfully");
-    }
+        }
     }
     catch (error) {
         return errorResponse(res, "stats not saved please try again");
@@ -247,7 +247,7 @@ exports.addExploreCategory = async (req, res) => {
     const { heading, para } = req.body;
     const bgImage = req.files?.bgImage[0]?.filename;
     const img = req.files?.img[0]?.filename;
-       
+
     if (!heading || !para || !bgImage || !img) {
         return validationErrorWithData(res, "All the fields required to create a card");
     }
@@ -273,9 +273,9 @@ exports.addOurPartners = async (req, res) => {
 
     if (!img) return validationErrorWithData(res, "img not found");
 
-    try {    
-            await ourPartners.create({img: img});
-            return successResponse(res, "partner added succesfully");
+    try {
+        await ourPartners.create({ img: img });
+        return successResponse(res, "partner added succesfully");
     }
     catch (error) {
         console.log(error);
@@ -284,12 +284,12 @@ exports.addOurPartners = async (req, res) => {
 
 }
 exports.addBlog = async (req, res) => {
-    const { heading, details} = req.body;
+    const { heading, details } = req.body;
     const img = req.file?.filename;
     if (!heading || !details || !img) {
         return validationErrorWithData(res, "All the fields required to create a blog");
     }
-    try{
+    try {
         await blogs.create({
             heading,
             details,
@@ -297,7 +297,7 @@ exports.addBlog = async (req, res) => {
         })
         return successResponse(res, "blog added succesfully");
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return errorResponse(res, "blog not added please try again");
     }

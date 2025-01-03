@@ -4,8 +4,27 @@ const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");
 const {blogs} = require("../models/blog")
+const home = require('../models/home');
+
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
+
+
+exports.getHome = async (req,res) =>{
+    try{
+        const data = await home.findOne({});
+            successResponseWithData(res,"home data get succesfully",data);
+    }
+    catch(error)
+    {
+        console.log(error);
+        errorResponse(res,"error to get home data");
+    }
+}
+
+
+
+
 
 exports.getCourseCard = async (req, res) => {
     try {

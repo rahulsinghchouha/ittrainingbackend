@@ -5,20 +5,16 @@ const homeSchema = new mongoose.Schema({
 
     bannerHeading: { type: String, require: true },
 
-    bannerPara: { type: String, require: true },
-
+   
     bannerImage: { type: String, require: true },
 
     bannerBgImg: { type: String, require: true },
 
     chooseCourseHead: { type: String, require: true },
 
-    chooseCoursePara: { type: String, require: true },
-
     upliftYourCareerHead: { type: String, require: true },
 
-    upliftYourCareerPara: { type: String, require: true },
-
+   
     howToStart: [
         {
             heading: {
@@ -36,22 +32,8 @@ const homeSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    maximizeCareerPara: {
-        type: String,
-        require: true,
-    },
-    classRoomTraining: {
-        type: String,
-        require: true,
-    },
-    industrialTraining: {
-        type: String,
-        require: true,
-    },
-    corporateTraining: {
-        type: String,
-        require: true,
-    },
+    
+    
     maximizeCareerImg: {
         type: String,
         require: true,
@@ -62,19 +44,17 @@ const homeSchema = new mongoose.Schema({
     blogHead: {
         type: String, require: true,
     },
-    blogPara: {
-        type: String, require: true,
-    },
+    
     jobReadyHead: { type: String, require: true },
-    jobReadyPara: { type: String, require: true },
+   
     interviewPrepHead: { type: String, require: true },
-    interviewPrepPara: { type: String, require: true },
+   
     mentorsHead: { type: String, require: true },
-    mentorsPara: { type: String, require: true },
+   
     careerCounsilHead: { type: String, require: true },
-    careerCounsilPara: { type: String, require: true },
+   
     beforeCollegeHead: { type: String, require: true },
-    beforeCollegePara: { type: String, require: true },
+  
     beforeCollegeImg: { type: String, require: true },
 });
 
