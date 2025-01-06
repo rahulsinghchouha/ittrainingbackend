@@ -267,18 +267,13 @@ exports.addStudentPlaced = async (req, res) => {
 
 //ADD Contact US
 exports.addContactUs = async (req, res) => {
-
-    const { contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming } = req.body;
-
-    const bannerImg = req.file.filename;
-
-    console.log(contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming, bannerImg);
-
-    //validation
+    const { contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming } = req.body
+    const bannerImg = req.file?.filename;
+    // console.log(contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming, bannerImg);
+    // validation
     if (!contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming || !bannerImg) {
         return validationErrorWithData(res, "enter all the require field and try again");
     }
-
     //new object
     const newContact = {
         contactUsHead,
@@ -288,10 +283,8 @@ exports.addContactUs = async (req, res) => {
         officeTiming,
         bannerImg
     }
-
-
     try {
-//if available 
+        //if available 
         const contactData = await contactUs.findOne({});
 
         if (contactData) {
@@ -299,8 +292,9 @@ exports.addContactUs = async (req, res) => {
             return successResponseWithData(res, "contact data added succesfully");
         }
         else {
-            const newContactData = new contactUs(contactData);
-            await contactUs.save(newContactData);
+            const newContactData = new contactUs(newContact);
+            await newContactData.save();
+            return successResponseWithData(res, "contact data added succesfully");
         }
 
     }

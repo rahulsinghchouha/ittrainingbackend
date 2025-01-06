@@ -9,6 +9,8 @@ const aboutUs = require("../models/aboutUs");
 
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
+const { TbWashDryP } = require('react-icons/tb');
+const contactUs = require('../models/contactUs');
 
 
 exports.getHome = async (req, res) => {
@@ -25,7 +27,6 @@ exports.getHome = async (req, res) => {
 
 exports.getCourseCard = async (req, res) => {
     try {
-
         const data = await course.find();
         successResponseWithData(res, "course card get succesfully", data);
     }
@@ -33,11 +34,9 @@ exports.getCourseCard = async (req, res) => {
         console.log(error);
         errorResponse(res, "error to get the course card");
     }
-
 }
 
 exports.getAboutUs = async (req, res) => {
-
     try {
         const data = await aboutUs.findOne({});
         successResponseWithData(res, "about us data get succesfuly", data);
@@ -102,4 +101,15 @@ exports.getBlogs = async (req, res) => {
     }
 }
 
+exports.getContactUs = async(req,res) =>{
+    try{
+            const data = await contactUs.findOne({});
+            successResponseWithData(res,"Contact us get Succesfully",data);
+    }
+    catch(error)
+    {
+        console.log(error);
+        errorResponse(res,"error To fetch the data");
+    }
+}
 
