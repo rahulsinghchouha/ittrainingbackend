@@ -168,24 +168,7 @@
                     ['foreColor', 'backColor'],
                     ['fullscreen']
                 ]
-            });
-            // Handle content replacement efficiently
-            $('.editor').on('tbwchange', function () {
-                // Get the current content
-                const editorContent = $('.editor').trumbowyg('html');
-
-                // Check if there are <a> tags before replacing anything
-                if (editorContent.includes('<a ')) {
-                    const updatedContent = editorContent.replace(
-                        /<a href="([^"]*)">(.*?)<\/a>/g,
-                        '<Link to="$1">$2</Link>'
-                    );
-
-                    // Only update the editor if the content has actually changed
-                    if (editorContent !== updatedContent) {
-                        $('.editor').trumbowyg('html', updatedContent);
-                    }
-                }
+                
             });
         </script>
 

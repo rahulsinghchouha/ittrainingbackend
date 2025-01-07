@@ -341,27 +341,42 @@ exports.addOurStats = async (req, res) => {
 }
 exports.addExploreCategory = async (req, res) => {
 
-    const { heading, para } = req.body;
-    const bgImage = req.files?.bgImage[0]?.filename;
-    const img = req.files?.img[0]?.filename;
+    //console.log("req Body ---->",req.body);
 
-    if (!heading || !para || !bgImage || !img) {
-        return validationErrorWithData(res, "All the fields required to create a card");
-    }
+    console.log("request files", req.files)
 
-    try {
-        await addExploreCategory.create({
-            heading,
-            para,
-            img,
-            bgImage
-        });
-        return successResponse(res, "explore Category Card added succesfully");
-    }
-    catch (error) {
-        console.log(error);
-        return errorResponse(res, "card not added please verify the data and try again");
-    }
+    const {heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill} = req.body;
+
+    console.log("heading->",heading);
+    console.log("para->",para);
+    console.log("categoryDetailsWhy->",categoryDetailsWhy);
+    console.log("importance->",importance);
+    console.log("detailsCard->",detailsCard);
+    console.log("impPara->",impPara);
+    console.log("processGrowthandSkill->",processGrowthandSkill);
+
+
+    // const { heading, para } = req.body;
+    // const bgImage = req.files?.bgImage[0]?.filename;
+    // const img = req.files?.img[0]?.filename;
+
+    // if (!heading || !para || !bgImage || !img) {
+    //     return validationErrorWithData(res, "All the fields required to create a card");
+    // }
+
+    // try {
+    //     await addExploreCategory.create({
+    //         heading,
+    //         para,
+    //         img,
+    //         bgImage
+    //     });
+    //     return successResponse(res, "explore Category Card added succesfully");
+    // }
+    // catch (error) {
+    //     console.log(error);
+    //     return errorResponse(res, "card not added please verify the data and try again");
+    // }
 
 }
 exports.addOurPartners = async (req, res) => {

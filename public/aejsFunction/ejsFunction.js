@@ -2,6 +2,7 @@ let howToStartIndex = 1;
 let addKeyAreaIndex = 1;
 let courseCurricullumIndex = 1;
 let faqIndex = 1;
+let categoryCardIndex = 1;
 
 
 
@@ -163,7 +164,7 @@ function addHowToStart() {
     howToStartIndex++;
 }
 
-function addYourImaginory(){
+function addYourImaginory() {
 
     const imaginoryContainer = document.getElementById("addYourImaginory-container");
 
@@ -175,9 +176,68 @@ function addYourImaginory(){
         <button type="button" onClick="removeHeading(this)" style="margin-top:10px; background-color:red; color:white; border: 2px; border-style: solid; border-color:black; padding: 0 4px;">Delete detail</button>
   `;
 
-  imaginoryContainer.appendChild(div);
+    imaginoryContainer.appendChild(div);
 
 }
+function addCardCategory() {
+    const addCardContainer = document.getElementById("category-card-container");
+    const addCardBlock = document.createElement('div');
+    addCardBlock.classList.add('key-area-block');
+    addCardBlock.style.width = '100%';
+    addCardBlock.style.marginTop = '30px';
+
+    addCardBlock.innerHTML = `
+                                                    <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+                                                        for="bg-color">Add Background color of card :</label>
+                                                    <input type="text" name="detailsCard[${categoryCardIndex}][bgColor]" id="bg-color"
+                                                        placeholder="Enter Background color property" required
+                                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                                    <label
+                                                        style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
+                                                        for="cardImg">Card Img :</label>
+                                                    <input type="file" name="detailsCard[${categoryCardIndex}][img]" id="cardImg"
+                                                        placeholder="Card Img" required
+                                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                                    <label
+                                                        style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
+                                                        for="cardImg">Enter Card Heading and details :</label>
+                                                    <textarea  class="editor" type="text" name="detailsCard[${categoryCardIndex}][cardHeadandDetail]"
+                                                        id="cardImg" placeholder="Enter Card Heading and details"
+                                                        required
+                                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" ></textarea>
+        <button type="button" onClick="removeHeading(this)" style="margin-top:10px; background-color:red; color:white; border: 2px; border-style: solid; border-color:black; padding: 0 4px;">Remove This Card</button>
+    `;
+    addCardContainer.appendChild(addCardBlock);
+    categoryCardIndex++;
+
+    $('.editor').trumbowyg({
+        btns: [
+            ['viewHTML'],
+            ['formatting'],
+            ['strong', 'em', 'underline', 'del'],
+            ['superscript', 'subscript'],
+            ['link'],
+            ['insertImage'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+            ['unorderedList', 'orderedList'],
+            ['table'],
+            ['foreColor', 'backColor'],
+            ['fullscreen']
+        ]
+        
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
 // function addPartners() {
 //     const container = document.getElementById("partner-container");
 

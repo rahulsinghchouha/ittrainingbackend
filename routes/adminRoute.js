@@ -9,10 +9,19 @@ router.post("/add-course",upload.single("img"),admin.addCourse);
 router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);
 router.post("/add-partners", upload.single("img"), admin.addOurPartners);
 router.post("/our-stats", admin.addOurStats);
-router.post("/explore-category", upload.fields([
-    { name: "bgImage", maxCount: 1 }, // bgImage field
-    { name: "img", maxCount: 1 }      // img field
-]), admin.addExploreCategory);
+
+
+// router.post("/explore-category", upload.fields([
+//     { name: "bgImage", maxCount: 1 }, // bgImage field
+//     { name: "img", maxCount: 1 },
+//     { name: "bannerImg", maxCount: 1 }, 
+//     { name: "detailsCard[][img]"  }      
+// ]), admin.addExploreCategory);
+
+router.post( "/explore-category",upload.any(), // Accept any files
+    admin.addExploreCategory
+  );
+  
 
 //add Home 
 router.post("/add-home",upload.fields([
