@@ -341,10 +341,8 @@ exports.addOurStats = async (req, res) => {
 }
 exports.addExploreCategory = async (req, res) => {
 
-    //console.log("req Body ---->",req.body);
-
     const files = req.files;
-    // console.log(files);
+
     const { heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill } = req.body;
 
     //  Initialize variables for bgImage, img, bannerImg, and detailsCards
@@ -352,13 +350,12 @@ exports.addExploreCategory = async (req, res) => {
     let bgImage = null;
     let img = null;
     let bannerImg = null;
+    let categoryDetailsImg=null;
     const detailsCardImg = [];
 
 
     // Iterate over files once to categorize them
     files.forEach(file => {
-
-        //  console.log("particular file",file);
 
         if (file.fieldname === "bgImage") {
             bgImage = file.filename;
@@ -368,6 +365,9 @@ exports.addExploreCategory = async (req, res) => {
         }
         else if (file.fieldname === "bannerImg") {
             bannerImg = file.filename;
+        }
+        else if (file.fieldname === "categoryDetailsImg") {
+            categoryDetailsImg = file.filename;
         }
         else if (file.fieldname.startsWith("detailsCard[")) {
             // Handle detailsCard images using regex
@@ -382,21 +382,30 @@ exports.addExploreCategory = async (req, res) => {
 
     const filterDetailsCard = detailsCard.filter(value => value != undefined && value != null);
 
-    for(let i=0; i<filterDetailsCard.length && i < filterDetailsCardImg.length; i++)
-    {
+    for (let i = 0; i < filterDetailsCard.length && i < filterDetailsCardImg.length; i++) {
         filterDetailsCard[i].img = filterDetailsCardImg[i];
     }
 
-   console.log("filter card with img",filterDetailsCard);
 
-  
+    // validation then we create this 
+    if (!heading || !categoryDetailsImg || !para || !categoryDetailsWhy || !importance || !impPara || !processGrowthandSkill || !filterDetailsCard || !bgImage || !img || !bannerImg || !filterDetailsCardImg) {
+        return validationErrorWithData(res, "Please Enter All the field Sinceriously then try again");
+    }
+
 
     try {
         await addExploreCategory.create({
             heading,
             para,
+            bgImage,
             img,
-            bgImage
+            bannerImg,
+            categoryDetailsImg,
+            categoryDetailsWhy,
+            importance,
+            detailsCard: filterDetailsCard,
+            impPara,
+            processGrowthandSkill
         });
         return successResponse(res, "explore Category Card added succesfully");
     }

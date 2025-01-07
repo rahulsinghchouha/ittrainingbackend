@@ -22,7 +22,12 @@ const exploreCatSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+  
     categoryDetailsWhy: {
+        type: String,
+        require: true
+    },
+    categoryDetailsImg: {
         type: String,
         require: true
     },

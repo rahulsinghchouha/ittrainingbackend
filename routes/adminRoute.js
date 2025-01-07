@@ -27,9 +27,8 @@ router.post("/our-stats", admin.addOurStats);
 //     { name: "detailsCard[9][img]",maxCount:1} 
 // ]), admin.addExploreCategory);
 
-router.post( "/explore-category",upload.any(), // Accept any files
-    admin.addExploreCategory
-  );
+
+router.post( "/explore-category",upload.any(), admin.addExploreCategory);
   
 
 //add Home 
