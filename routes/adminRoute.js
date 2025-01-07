@@ -15,7 +15,16 @@ router.post("/our-stats", admin.addOurStats);
 //     { name: "bgImage", maxCount: 1 }, // bgImage field
 //     { name: "img", maxCount: 1 },
 //     { name: "bannerImg", maxCount: 1 }, 
-//     { name: "detailsCard[][img]"  }      
+//     { name: "detailsCard[0][img]",maxCount:1},
+//     { name: "detailsCard[1][img]",maxCount:1},
+//     { name: "detailsCard[2][img]",maxCount:1},
+//     { name: "detailsCard[3][img]",maxCount:1}, 
+//     { name: "detailsCard[4][img]",maxCount:1}, 
+//     { name: "detailsCard[5][img]",maxCount:1}, 
+//     { name: "detailsCard[6][img]",maxCount:1}, 
+//     { name: "detailsCard[7][img]",maxCount:1}, 
+//     { name: "detailsCard[8][img]",maxCount:1}, 
+//     { name: "detailsCard[9][img]",maxCount:1} 
 // ]), admin.addExploreCategory);
 
 router.post( "/explore-category",upload.any(), // Accept any files

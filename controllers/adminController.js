@@ -343,40 +343,67 @@ exports.addExploreCategory = async (req, res) => {
 
     //console.log("req Body ---->",req.body);
 
-    console.log("request files", req.files)
+    const files = req.files;
+    // console.log(files);
+    const { heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill } = req.body;
 
-    const {heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill} = req.body;
+    //  Initialize variables for bgImage, img, bannerImg, and detailsCards
 
-    console.log("heading->",heading);
-    console.log("para->",para);
-    console.log("categoryDetailsWhy->",categoryDetailsWhy);
-    console.log("importance->",importance);
-    console.log("detailsCard->",detailsCard);
-    console.log("impPara->",impPara);
-    console.log("processGrowthandSkill->",processGrowthandSkill);
+    let bgImage = null;
+    let img = null;
+    let bannerImg = null;
+    const detailsCardImg = [];
 
 
-    // const { heading, para } = req.body;
-    // const bgImage = req.files?.bgImage[0]?.filename;
-    // const img = req.files?.img[0]?.filename;
+    // Iterate over files once to categorize them
+    files.forEach(file => {
 
-    // if (!heading || !para || !bgImage || !img) {
-    //     return validationErrorWithData(res, "All the fields required to create a card");
-    // }
+        //  console.log("particular file",file);
 
-    // try {
-    //     await addExploreCategory.create({
-    //         heading,
-    //         para,
-    //         img,
-    //         bgImage
-    //     });
-    //     return successResponse(res, "explore Category Card added succesfully");
-    // }
-    // catch (error) {
-    //     console.log(error);
-    //     return errorResponse(res, "card not added please verify the data and try again");
-    // }
+        if (file.fieldname === "bgImage") {
+            bgImage = file.filename;
+        }
+        else if (file.fieldname === "img") {
+            img = file.filename;
+        }
+        else if (file.fieldname === "bannerImg") {
+            bannerImg = file.filename;
+        }
+        else if (file.fieldname.startsWith("detailsCard[")) {
+            // Handle detailsCard images using regex
+            const indexMatch = file.fieldname.match(/detailsCard\[(\d+)\]\[img\]/);
+            if (indexMatch) {
+                const index = parseInt(indexMatch[1], 10);
+                detailsCardImg[index] = file.filename; // Store by index
+            }
+        }
+    });
+    const filterDetailsCardImg = detailsCardImg.filter(value => value != undefined && value != null);
+
+    const filterDetailsCard = detailsCard.filter(value => value != undefined && value != null);
+
+    for(let i=0; i<filterDetailsCard.length && i < filterDetailsCardImg.length; i++)
+    {
+        filterDetailsCard[i].img = filterDetailsCardImg[i];
+    }
+
+   console.log("filter card with img",filterDetailsCard);
+
+  
+
+    try {
+        await addExploreCategory.create({
+            heading,
+            para,
+            img,
+            bgImage
+        });
+        return successResponse(res, "explore Category Card added succesfully");
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "card not added please verify the data and try again");
+    }
 
 }
 exports.addOurPartners = async (req, res) => {
