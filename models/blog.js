@@ -31,4 +31,4 @@ const bannerImg = mongoose.model("bannerImgBlog", bannerImgSchema);
 
 
 
-module.exports = { bannerImg ,blogs}
+module.exports = { bannerImg, blogs }
