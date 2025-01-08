@@ -3,26 +3,26 @@ const mongoose = require('mongoose');
 const studentPlaced = new mongoose.Schema({
     name :{
         type:String,
-        required:true
+        require:true
     },
     profile:{
         type:String,
-        required:true
+        require:true
     },
     img:{
         type:String,
-        required:true
+        require:true
     },
     experience:{
         type:String,
-        required:true
+        require:true
     }
 })
 
 const bannerImgSchema = new mongoose.Schema({
     img:{
         type:String,
-        required:true,
+        require:true,
     }
 })
 

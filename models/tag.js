@@ -1,27 +1,15 @@
 const mongoose = require("mongoose");
 
-
 const tagSchema = new mongoose.Schema({
-    tagName:{
+    tag:{
         type:String,
         require:true,
-    },
-    tagImage:{
-        type:String,
-        require:true,
-    },
-    tagHeading:{
-        type:String,
-        require:true,
-    },
-    tagDetails:{
-        type:String,
-        require:true,
+        unique: true
     }
 })
 
-const tag = mongoose.model("tag",tagSchema);
+const tags = mongoose.model("tagSchema",tagSchema);
 
-module.exports = tag;
+module.exports = tags;
 
 

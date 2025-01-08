@@ -2,6 +2,7 @@ const { course } = require("../models/createCourse");
 const home = require("../models/home");
 const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
+const tags = require("../models/tag");
 
 const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
@@ -11,7 +12,7 @@ const { blogs } = require("../models/blog");
 
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
-const { validationErrorWithData, successResponse, errorResponse, notFoundResponse, successResponseWithData } = require("../helper/apiResponse");
+const { validationErrorWithData, successResponse, errorResponse, notFoundResponse, successResponseWithData, duplicateDataError } = require("../helper/apiResponse");
 
 const mailSender = require("../utils/mailSender");
 
@@ -449,4 +450,27 @@ exports.addBlog = async (req, res) => {
         console.log(error);
         return errorResponse(res, "blog not added please try again");
     }
+}
+exports.addTag = async(req,res) =>{
+    
+    const {tag} = req.body;
+
+    if(!tag)
+    {
+        return validationErrorWithData(res,"data not found Please Enter a valid data");
+    }
+
+    try{
+        await tags.create({tag});
+        return successResponse(res,"Tag added Succesfully");
+    }
+    catch(error)
+    {
+        if(error.code === 11000)
+        {
+          return  duplicateDataError(res,"Cant add duplicate data ");
+        }
+       return errorResponse(res,"Please Enter a valid data and try again");
+    }
+
 }

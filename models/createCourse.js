@@ -3,86 +3,86 @@ const mongoose = require("mongoose")
 const courseSchema = new mongoose.Schema({
     category: {
         type: String,
-        required: true,
+        require: true,
     },
     img: {
         type: String,
-        required: true
+        require: true
     },
     courseName: {
         type: String,
-        required: true
+        require: true
     },
     overview: {
         type: String,
-        required: true
+        require: true
     },
     keyAreas: [
         {
             heading: {
                 type: String,
-                required: true,
+                require: true,
             },
             details: {
                 type: String,
-                required: true
+                require: true
             }
         }
     ],
     toolsInHand: [
         {
         type: String,
-        required: true,
+        require: true,
     }],
     benefits: [
         {
             type: String,
-            required: true,
+            require: true,
         }
     ],
     eligibility:{
         type:String,
-        required:true
+        require:true
     },
     courseDuration:{
         type:String,
-        required:true
+        require:true
     },
     feeOptions:{
         type:String,
-        required:true
+        require:true
     },
     courseCurriculum: [
         {
             heading: {
                 type: String,
-                required: true,
+                require: true,
             },
             details: [
                 {
                 type: String,
-                required: true,
+                require: true,
             }
         ],
         }
     ],
     keyHighLights: [{
         type: String,
-        required: true,
+        require: true,
     }],
     jobRoles: [{
         type: String,
-        required: true
+        require: true
     }],
     fAQ: [
         {
             heading: {
                 type: String,
-                required: true,
+                require: true,
             },
             details: {
                 type: String,
-                required: true,
+                require: true,
             },
         }
     ],
@@ -91,7 +91,7 @@ const courseSchema = new mongoose.Schema({
 const bannerImgSchema = new mongoose.Schema({
     img:{
         type:String,
-        required:true,
+        require:true,
     }
 })
 
