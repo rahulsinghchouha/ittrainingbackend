@@ -2,7 +2,7 @@ const { course } = require("../models/createCourse");
 const home = require("../models/home");
 const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
-const tags = require("../models/tag");
+const {tags} = require("../models/tag");
 
 const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");

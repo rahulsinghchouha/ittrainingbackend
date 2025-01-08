@@ -29,8 +29,8 @@ const bannerImgSchema = new mongoose.Schema({
 
 const student = mongoose.model("studentPlaced",studentPlaced);
 
-const bannerImg = mongoose.model("bannerImgTestimonial",bannerImgSchema);
+const bannerImgTestimonial = mongoose.model("bannerImgTestimonial",bannerImgSchema);
 
-module.exports = {student,bannerImg};
+module.exports = {student,bannerImgTestimonial};
 
 

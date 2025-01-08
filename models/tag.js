@@ -7,9 +7,21 @@ const tagSchema = new mongoose.Schema({
         unique: true
     }
 })
+const bannerImgSchema = new mongoose.Schema({
+    img:{
+        type:String,
+        required:true,
+    }
+})
 
 const tags = mongoose.model("tagSchema",tagSchema);
 
-module.exports = tags;
+
+
+
+const bannerImgTag = mongoose.model("bannerImgTag",bannerImgSchema)
+
+
+module.exports = { bannerImgTag,tags}
 
 

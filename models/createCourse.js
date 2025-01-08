@@ -97,10 +97,10 @@ const bannerImgSchema = new mongoose.Schema({
 
 const course = mongoose.model("course", courseSchema);
 
-const bannerImg = mongoose.model("bannerImgCourse",bannerImgSchema)
+const bannerImgCourse = mongoose.model("bannerImgCourse",bannerImgSchema)
 
 
 
-module.exports = {bannerImg,course}
+module.exports = {bannerImgCourse,course}
 
 
