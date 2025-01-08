@@ -124,19 +124,8 @@
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;" for="category">
                                         Add Category :
                                     </label>
-                                    <select id="category" name="category"
-                                        style="border: 1px; border-style: solid; padding: 10px 10px;">
-                                        <option value="Graphic Designing">Graphic Designing</option>
-                                        <option value="Web Designing">Web Designing
-                                        </option>
-                                        <option value="UI/UX Designing">UI/UX Designing</option>
-                                        <option value="Digital Marketing ">Digital Marketing </option>
-                                        <option value="Web Development">Web Development </option>
-                                        <option value="Animation">Animation
-                                        </option>
-                                        <option value="Mobile App Development">Mobile App Development </option>
-                                        <option value="Software App Development">Software App Development </option>
-
+                                    <select id="category-selector" name="category" 
+                                                        style="border: 1px; border-style: solid; padding: 10px 10px;">
                                     </select>
                                 </div>
 
@@ -380,7 +369,9 @@
                                         <div id="jobRoles-container"
                                             style="width: 100%; display: flex; flex-direction: column;">
                                             <div style="width:100%">
-                                                <input type="text" name="jobRoles[]" required placeholder="Add Job Roles" style="margin-top: 15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                                <input type="text" name="jobRoles[]" required
+                                                    placeholder="Add Job Roles"
+                                                    style="margin-top: 15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
 
 
                                             </div>
@@ -407,10 +398,17 @@
 
                                         <div id="faqs-container"
                                             style="width: 100%; display: flex; flex-direction: column;">
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;" for="faqheading">FAQ’s Heading :</label>
-                                            <input type="text" name="fAQ[0][heading]" id="faqheading" required placeholder="FAQ’s Heading" style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;" for="faqdetails">FAQ’s Details :</label>
-                                            <input type="text" name="fAQ[0][details]" required placeholder="FAQ’s Details" id="faqdetails" style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+                                                for="faqheading">FAQ’s Heading :</label>
+                                            <input type="text" name="fAQ[0][heading]" id="faqheading" required
+                                                placeholder="FAQ’s Heading"
+                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                            <label
+                                                style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
+                                                for="faqdetails">FAQ’s Details :</label>
+                                            <input type="text" name="fAQ[0][details]" required
+                                                placeholder="FAQ’s Details" id="faqdetails"
+                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                         </div>
 
                                         <button
@@ -436,6 +434,38 @@
 
 
         </div>
+        <script>
+            let categories = null;
+            fetch('/api/v1/get/get-explore-card')
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json()
+                })  // Parse the response body as JSON)
+                .then((data) => {
+                    categories = data?.data;
+                    addOptions();
+                })
+                .catch((error) => console.log("error to get the category", error));
+
+                function addOptions(){
+                    const selector = document.querySelector("#category-selector");
+                    console.log(selector);
+                    categories.forEach(category => {
+
+                        const option = document.createElement('option');
+
+                        option.style.width="100%";
+                        option.value = category?.heading;
+                        option.innerText = category?.heading;
+
+                        selector.appendChild(option);
+                    });
+
+                }
+
+        </script>
 
     </div>
 
