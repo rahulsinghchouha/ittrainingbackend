@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const tagSchema = new mongoose.Schema({
     tag:{
         type:String,
-        require:true,
+        required:true,
         unique: true
     }
 })

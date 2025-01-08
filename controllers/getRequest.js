@@ -6,7 +6,7 @@ const ourStats = require("../models/ourStats");
 const { blogs } = require("../models/blog")
 const home = require('../models/home');
 const aboutUs = require("../models/aboutUs");
-
+const tagModel = require("../models/tag");
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
 const { TbWashDryP } = require('react-icons/tb');
@@ -100,16 +100,29 @@ exports.getBlogs = async (req, res) => {
 
     }
 }
-
-exports.getContactUs = async(req,res) =>{
-    try{
-            const data = await contactUs.findOne({});
-            successResponseWithData(res,"Contact us get Succesfully",data);
+exports.getTags = async (req, res) => {
+    try {
+        // console.log("tag controller call");
+        const data = await tagModel.find();
+        // console.log("tag data", data);
+        return successResponseWithData(res, "data get succesfully", data);
     }
-    catch(error)
-    {
+    catch (error) {
         console.log(error);
-        errorResponse(res,"error To fetch the data");
+        return errorResponse(res, "data not get please try again");
     }
 }
 
+
+exports.getContactUs = async (req, res) => {
+    try {
+
+        const data = await contactUs.findOne({});
+
+        successResponseWithData(res, "Contact us get Succesfully", data);
+    }
+    catch (error) {
+        console.log(error);
+        errorResponse(res, "error To fetch the data");
+    }
+}

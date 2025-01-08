@@ -4,19 +4,19 @@ const ourStatsSchema = new mongoose.Schema({
 
     mentors:{
         type:Number,
-        require:true,
+        required:true,
     },
     experience:{
         type:Number,
-        require:true,
+        required:true,
     },
     placedStudent:{
         type:Number,
-        require:true,
+        required:true,
     },
     yearsOfJourney:{
         type:Number,
-        require:true
+        required:true
     }
 })
 

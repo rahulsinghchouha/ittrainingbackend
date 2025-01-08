@@ -5,27 +5,27 @@ const contactUsSchema = new mongoose.Schema({
     
     bannerImg: {
         type: String,
-        require: true,
+        required: true,
     },
     contactUsHead: {
         type: String,
-        require: true,
+        required: true,
     },
     contactUsNumber: {
         type: Number,
-        require: true,
+        required: true,
     },
     contactUsEmail:{
         type:String,
-        require:true,
+        required:true,
     },
     officeAddress: {
         type: String,
-        require: true,
+        required: true,
     },
     officeTiming: {
         type: String,
-        require: true,
+        required: true,
     },
 })
 

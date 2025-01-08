@@ -4,58 +4,58 @@ const aboutUsSchema = new mongoose.Schema({
 
     bannerImage: {
         type: String,
-        require: true,
+        required: true,
     },
     yourImaginationImg: {
         type: String,
-        require: true
+        required: true
     },
     yourImaginationHead: {
         type: String,
-        require: true
+        required: true
     },
     totalStudentJoined:{
         type:Number,
-        require:true,
+        required:true,
     },
     ourJourneyHead: {
         type: String,
-        require: true,
+        required: true,
     },
    
     ourJourneyImg: {
         type: String,
-        require: true,
+        required: true,
     },
     ourBeliefsHead: {
         type: String,
-        require: true,
+        required: true,
     },
    
     ourBeliefImg: {
         type: String,
-        require: true,
+        required: true,
     },
     ourMissionHead: {
         type: String,
-        equire: true,
+        required: true,
     },
 
     ourMissionImg: {
         type: String,
-        require: true,
+        required: true,
     },
     missionDetails: {
         type: String,
-        require: true,
+        required: true,
     },
     visionDetails: {
         type: String,
-        require: true,
+        required: true,
     },
     valuesDetails: {
         type: String,
-        require: true,
+        required: true,
     },
 })
 

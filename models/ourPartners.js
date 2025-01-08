@@ -4,7 +4,7 @@ const ourPartnersSchema = new mongoose.Schema({
     img: 
         {
         type: String,
-        require: true
+        required: true
     },
 
 });

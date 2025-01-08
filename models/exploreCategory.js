@@ -3,61 +3,61 @@ const mongoose = require("mongoose");
 const exploreCatSchema = new mongoose.Schema({
     bgImage: {
         type: String,
-        require: true
+        required: true
     },
     img: {
         type: String,
-        require: true
+        required: true
     },
     heading: {
         type: String,
-        require: true,
+        required: true,
     },
     para: {
         type: String,
-        require: true
+        required: true
     },
     // Extra needed for the category details page
     bannerImg: {
         type: String,
-        require: true
+        required: true
     },
   
     categoryDetailsWhy: {
         type: String,
-        require: true
+        required: true
     },
     categoryDetailsImg: {
         type: String,
-        require: true
+        required: true
     },
     importance: {
         type: String,
-        require: true,
+        required: true,
     },
     detailsCard: [
         {
             bgColor: {
                 type: String,
-                require: true,
+                required: true,
             },
             img: {
                 type: String,
-                require: true,
+                required: true,
             },
             cardHeadandDetail: {
                 type: String,
-                require: true,
+                required: true,
             },
         }
     ],
     impPara: {
         type: String,
-        require: true,
+        required: true,
     },
     processGrowthandSkill: {
         type: String,
-        require: true
+        required: true
     }
 }, { timestamps: true })
 const exploreCategory = mongoose.model("exploreCategory", exploreCatSchema);

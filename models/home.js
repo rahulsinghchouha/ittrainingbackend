@@ -3,59 +3,59 @@ const mongoose = require("mongoose");
 
 const homeSchema = new mongoose.Schema({
 
-    bannerHeading: { type: String, require: true },
+    bannerHeading: { type: String, required: true },
 
    
-    bannerImage: { type: String, require: true },
+    bannerImage: { type: String, required: true },
 
-    bannerBgImg: { type: String, require: true },
+    bannerBgImg: { type: String, required: true },
 
-    chooseCourseHead: { type: String, require: true },
+    chooseCourseHead: { type: String, required: true },
 
-    upliftYourCareerHead: { type: String, require: true },
+    upliftYourCareerHead: { type: String, required: true },
 
    
     howToStart: [
         {
             heading: {
                 type: String,
-                require: true,
+                required: true,
             },
             details: {
                 type: String,
-                require: true
+                required: true
             }
         }
     ],
 
     maximizeCareerHead: {
         type: String,
-        require: true,
+        required: true,
     },
     
     
     maximizeCareerImg: {
         type: String,
-        require: true,
+        required: true,
     },
     blogImg: {
-        type: String, require: true,
+        type: String, required: true,
     },
     blogHead: {
-        type: String, require: true,
+        type: String, required: true,
     },
     
-    jobReadyHead: { type: String, require: true },
+    jobReadyHead: { type: String, required: true },
    
-    interviewPrepHead: { type: String, require: true },
+    interviewPrepHead: { type: String, required: true },
    
-    mentorsHead: { type: String, require: true },
+    mentorsHead: { type: String, required: true },
    
-    careerCounsilHead: { type: String, require: true },
+    careerCounsilHead: { type: String, required: true },
    
-    beforeCollegeHead: { type: String, require: true },
+    beforeCollegeHead: { type: String, required: true },
   
-    beforeCollegeImg: { type: String, require: true },
+    beforeCollegeImg: { type: String, required: true },
 });
 
 const home = mongoose.model("home", homeSchema);

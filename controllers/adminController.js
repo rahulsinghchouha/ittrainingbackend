@@ -351,7 +351,7 @@ exports.addExploreCategory = async (req, res) => {
     let bgImage = null;
     let img = null;
     let bannerImg = null;
-    let categoryDetailsImg=null;
+    let categoryDetailsImg = null;
     const detailsCardImg = [];
 
 
@@ -433,16 +433,21 @@ exports.addOurPartners = async (req, res) => {
 
 }
 exports.addBlog = async (req, res) => {
-    const { heading, details } = req.body;
+    const { heading, details, tags } = req.body;
     const img = req.file?.filename;
-    if (!heading || !details || !img) {
+
+    const filterTags = [...new Set(tags)];
+    
+    if (!heading || !details || !img || !filterTags) {
         return validationErrorWithData(res, "All the fields required to create a blog");
     }
+   
     try {
         await blogs.create({
             heading,
             details,
-            img
+            img,
+            tags: filterTags
         })
         return successResponse(res, "blog added succesfully");
     }
@@ -451,26 +456,23 @@ exports.addBlog = async (req, res) => {
         return errorResponse(res, "blog not added please try again");
     }
 }
-exports.addTag = async(req,res) =>{
-    
-    const {tag} = req.body;
+exports.addTag = async (req, res) => {
 
-    if(!tag)
-    {
-        return validationErrorWithData(res,"data not found Please Enter a valid data");
+    const { tag } = req.body;
+
+    if (!tag) {
+        return validationErrorWithData(res, "data not found Please Enter a valid data");
     }
 
-    try{
-        await tags.create({tag});
-        return successResponse(res,"Tag added Succesfully");
+    try {
+        await tags.create({ tag });
+        return successResponse(res, "Tag added Succesfully");
     }
-    catch(error)
-    {
-        if(error.code === 11000)
-        {
-          return  duplicateDataError(res,"Cant add duplicate data ");
+    catch (error) {
+        if (error.code === 11000) {
+            return duplicateDataError(res, "Cant add duplicate data ");
         }
-       return errorResponse(res,"Please Enter a valid data and try again");
+        return errorResponse(res, "Please Enter a valid data and try again");
     }
 
 }

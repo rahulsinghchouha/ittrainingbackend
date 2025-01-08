@@ -5,20 +5,20 @@ const mongoose = require("mongoose");
 const blogSchema = new mongoose.Schema({
     img: {
         type: String,
-        require: true
+        required: true
     },
     heading: {
         type: String,
-        require: true
+        required: true
     },
     details: {
         type: String,
-        require: true,
+        required: true,
     },
     tags: [
         {
             type: String,
-            require: true,
+            required: true,
         }
     ]
 },
