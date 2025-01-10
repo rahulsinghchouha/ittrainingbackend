@@ -1,4 +1,4 @@
-const { course } = require('../models/createCourse');
+const { course, bannerImgCourse } = require('../models/createCourse');
 const { student } = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
@@ -6,10 +6,10 @@ const ourStats = require("../models/ourStats");
 const { blogs } = require("../models/blog")
 const home = require('../models/home');
 const aboutUs = require("../models/aboutUs");
-const tagModel = require("../models/tag");
+const { tags } = require("../models/tag");
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
-const { TbWashDryP } = require('react-icons/tb');
+
 const contactUs = require('../models/contactUs');
 
 
@@ -33,6 +33,16 @@ exports.getCourseCard = async (req, res) => {
     catch (error) {
         console.log(error);
         errorResponse(res, "error to get the course card");
+    }
+}
+exports.getCourseBanner = async (req, res) => {
+    try {
+        const data = await bannerImgCourse.findOne({});
+        successResponseWithData(res, "course banner get succesfully", data);
+    }
+    catch(error) {
+        console.log(error);
+        return errorResponse(res, "Error to get the data");
     }
 }
 
@@ -103,7 +113,7 @@ exports.getBlogs = async (req, res) => {
 exports.getTags = async (req, res) => {
     try {
         // console.log("tag controller call");
-        const data = await tagModel.find();
+        const data = await tags.find();
         // console.log("tag data", data);
         return successResponseWithData(res, "data get succesfully", data);
     }

@@ -1,8 +1,8 @@
-const { course } = require("../models/createCourse");
+const { course, bannerImgCourse } = require("../models/createCourse");
 const home = require("../models/home");
 const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
-const {tags} = require("../models/tag");
+const { tags } = require("../models/tag");
 
 const studentPlaced = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
@@ -186,6 +186,33 @@ exports.addCourse = async (req, res) => {
         return errorResponse(res, "Course not added please add valid field and try again");
     }
 }
+exports.addCourseBannerImage = async (req, res) => {
+    const img = req.file?.filename;
+    if (!img) {
+        return validationErrorWithData(res, "img not found");
+    }
+    const newImg = {
+        img
+    }
+    try {
+        const bannerData = await bannerImgCourse.findOne({});
+        
+        if (bannerData) {
+            await bannerImgCourse.findByIdAndUpdate(bannerData._id, { $set: newImg }, { new: true });
+            return successResponse(res, "img updated succesfully");
+        }
+        else {
+            await bannerImgCourse.create({ img });
+            return successResponse(res, "img added succesfully");
+        }
+    }
+    catch (error) {
+        console.log(error);
+        return errorResponse(res, "img not added please try again");
+    }
+}
+
+
 
 // ADD ABOUT US
 exports.addAboutUS = async (req, res) => {
@@ -433,19 +460,19 @@ exports.addOurPartners = async (req, res) => {
 
 }
 exports.addBlog = async (req, res) => {
-    const { heading, details, tags } = req.body;
+    const { heading, details, tags, blogCategory } = req.body;
     const img = req.file?.filename;
 
     const filterTags = [...new Set(tags)];
-    
-    if (!heading || !details || !img || !filterTags) {
+
+    if (!heading || !details || !img || !filterTags || !blogCategory) {
         return validationErrorWithData(res, "All the fields required to create a blog");
     }
-   
     try {
         await blogs.create({
             heading,
             details,
+            blogCategory,
             img,
             tags: filterTags
         })
@@ -455,6 +482,7 @@ exports.addBlog = async (req, res) => {
         console.log(error);
         return errorResponse(res, "blog not added please try again");
     }
+
 }
 exports.addTag = async (req, res) => {
 

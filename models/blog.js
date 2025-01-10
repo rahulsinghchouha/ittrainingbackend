@@ -11,6 +11,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    blogCategory: {
+        type:String,
+        required:true
+    },
     details: {
         type: String,
         required: true,

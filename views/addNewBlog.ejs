@@ -119,7 +119,17 @@
                                         <input type="text" name="heading" placeholder="Add Blog Heading"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     </div>
-                                    <!-- Tools in hand container -->
+                                    <!-- Blog Category -->
+                                    <div style="margin-top: 20px; padding: 15px;"
+                                        id="addCategoryContainer">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Add Blog Category :
+                                        </label>
+                                        <select id="category-selector" name="blogCategory"
+                                            style="border: 1px; border-style: solid; padding: 10px 10px;">
+                                        </select>
+                                    </div>
+                                    <!-- Tag container -->
                                     <div style="margin: 20px; border: 2px; border-style: solid;  padding: 15px;">
                                         <div
                                             style="width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
@@ -215,9 +225,9 @@
                 })
             }
 
-             function removeHeading(button) {
-                    button.parentElement.remove();
-                }
+            function removeHeading(button) {
+                button.parentElement.remove();
+            }
             function addMoreTags() {
 
                 const tagsContainer = document.querySelector('#tags-container');
@@ -244,6 +254,36 @@
             }
 
         </script>
+        <script>
+            let categories = null;
+            fetch('/api/v1/get/get-explore-card')
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json()
+                })  // Parse the response body as JSON)
+                .then((data) => {
+                    categories = data?.data;
+                    addOptions();
+                })
+                .catch((error) => console.log("error to get the category", error));
+
+            function addOptions() {
+                const selector = document.querySelector("#category-selector");
+                console.log(selector);
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.style.width = "100%";
+                    option.value = category?.heading;
+                    option.innerText = category?.heading;
+
+                    selector.appendChild(option);
+                });
+            }
+        </script>
+
+
 
     </div>
 
