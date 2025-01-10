@@ -4,7 +4,7 @@ const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
 const { tags } = require("../models/tag");
 
-const studentPlaced = require("../models/testimonial");
+const {student} = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
@@ -146,7 +146,7 @@ exports.addHome = async (req, res) => {
 //ADD COURSE
 exports.addCourse = async (req, res) => {
 
-    const { courseName, category, overview, keyAreas, toolsInHand, benefits, eligibility, courseDuration, feeOptions, courseCurricullum, keyHighLights, jobRoles, fAQ } = req.body;
+    const { courseName, category, overview, keyAreas, toolsInHand, benefits,  courseCurricullum, keyHighLights, certificate, jobRoles, fAQ } = req.body;
 
     const img = req.file?.filename;
 
@@ -154,11 +154,11 @@ exports.addCourse = async (req, res) => {
     const filterCourseCurricullum = courseCurricullum?.filter(value => value != undefined && value != null);
     const filterFAQ = fAQ?.filter(value => value != undefined && value != null);
 
-    console.log(filterKeyAreas, filterCourseCurricullum, filterFAQ);
+    //console.log(filterKeyAreas, filterCourseCurricullum, filterFAQ);
 
     // console.log(courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ, img);
 
-    if (!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !eligibility || !courseDuration || !feeOptions || !filterCourseCurricullum || !keyHighLights || !jobRoles || !filterFAQ || !img) {
+    if (!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !filterCourseCurricullum || !keyHighLights || !certificate ||!jobRoles || !filterFAQ || !img) {
         return validationErrorWithData(res, "Enter all the required fields  to create a course");
     }
 
@@ -170,12 +170,10 @@ exports.addCourse = async (req, res) => {
             overview,
             keyAreas: filterKeyAreas,
             toolsInHand,
-            benefits,
-            eligibility,
-            courseDuration,
-            feeOptions,
+            benefits,    
             courseCurriculum: filterCourseCurricullum,
             keyHighLights,
+            certificate,
             jobRoles,
             fAQ: filterFAQ,
         })
@@ -196,7 +194,7 @@ exports.addCourseBannerImage = async (req, res) => {
     }
     try {
         const bannerData = await bannerImgCourse.findOne({});
-        
+
         if (bannerData) {
             await bannerImgCourse.findByIdAndUpdate(bannerData._id, { $set: newImg }, { new: true });
             return successResponse(res, "img updated succesfully");
@@ -221,7 +219,7 @@ exports.addAboutUS = async (req, res) => {
 
     const { bannerImage, yourImaginationImg, ourJourneyImg, ourBeliefImg, ourMissionImg } = req.files;
 
-    console.log(yourImaginationHead, totalStudentJoined, ourJourneyHead, ourBeliefsHead, ourMissionHead, missionDetails, visionDetails, valuesDetails, bannerImage, yourImaginationImg, ourJourneyImg, ourBeliefImg, ourMissionImg)
+    //console.log(yourImaginationHead, totalStudentJoined, ourJourneyHead, ourBeliefsHead, ourMissionHead, missionDetails, visionDetails, valuesDetails, bannerImage, yourImaginationImg, ourJourneyImg, ourBeliefImg, ourMissionImg)
 
     if (!yourImaginationHead || !totalStudentJoined || !ourJourneyHead || !ourBeliefsHead || !ourMissionHead || !missionDetails || !visionDetails || !valuesDetails
         || !bannerImage || !yourImaginationImg || !ourJourneyImg || !ourBeliefImg || !ourMissionImg) {
@@ -253,7 +251,7 @@ exports.addAboutUS = async (req, res) => {
         }
         else {
             const newabout = new aboutUS(aboutUsData);
-            await aboutUS.save(newabout);
+            await newabout.save();
             return successResponse(res, "about us created sucesfully");
         }
     }
@@ -266,7 +264,6 @@ exports.addAboutUS = async (req, res) => {
 
 //ADD Testimonial
 exports.addStudentPlaced = async (req, res) => {
-
     const { name, profile, experience } = req.body;
     const img = req.file?.filename;
     console.log(name, profile, experience, img);
@@ -276,20 +273,17 @@ exports.addStudentPlaced = async (req, res) => {
     }
 
     try {
-        await studentPlaced.create({
+        await student.create({
             name,
             experience,
             img,
             profile
         })
-
-        return successResponse(res, "placed student stored succesfully");
+        return successResponse(res, "placed student added succesfully");
     }
     catch (error) {
         console.log("Error", error);
-
-        return errorResponse(res, "student not submited please try again");
-
+        return errorResponse(res, "student not added please try again");
     }
 }
 

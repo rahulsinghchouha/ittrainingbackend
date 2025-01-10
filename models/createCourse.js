@@ -34,24 +34,11 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true,
     }],
-    benefits: [
+    benefits: 
         {
             type: String,
             required: true,
-        }
-    ],
-    eligibility:{
-        type:String,
-        required:true
-    },
-    courseDuration:{
-        type:String,
-        required:true
-    },
-    feeOptions:{
-        type:String,
-        required:true
-    },
+        },
     courseCurriculum: [
         {
             heading: {
@@ -70,6 +57,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
         required: true,
     }],
+    certificate : {
+        type:String,
+        required :true,
+    },
     jobRoles: [{
         type: String,
         required: true
@@ -98,8 +89,6 @@ const bannerImgSchema = new mongoose.Schema({
 const course = mongoose.model("course", courseSchema);
 
 const bannerImgCourse = mongoose.model("bannerImgCourse",bannerImgSchema)
-
-
 
 module.exports = {bannerImgCourse,course}
 

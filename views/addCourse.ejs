@@ -8,6 +8,9 @@
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
     <script src="/aejsFunction/ejsFunction.js"> </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
 </head>
 
 <body>
@@ -87,7 +90,8 @@
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
                         <div style="margin: 5px;  padding: 10px;">
                             <div>
-                                <form action="/api/v1/admin/add-course-banner" method="POST" enctype="multipart/form-data">
+                                <form action="/api/v1/admin/add-course-banner" method="POST"
+                                    enctype="multipart/form-data">
                                     <label
                                         style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; display: block;">Banner
                                         Image : </label>
@@ -124,8 +128,8 @@
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;" for="category">
                                         Add Category :
                                     </label>
-                                    <select id="category-selector" name="category" 
-                                                        style="border: 1px; border-style: solid; padding: 10px 10px;">
+                                    <select id="category-selector" name="category"
+                                        style="border: 1px; border-style: solid; padding: 10px 10px;">
                                     </select>
                                 </div>
 
@@ -148,9 +152,9 @@
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                             for="overview">Course
                                             Overview : </label>
-                                        <input required type="text" name="overview" id="overview"
+                                        <textarea required type="text" name="overview" id="overview" class="editor"
                                             placeholder="Course Overview"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
                                     </div>
                                 </div>
 
@@ -220,69 +224,22 @@
 
                                 </div>
 
-                                <!-- Benefits -->
-                                <div style="margin: 20px; border: 2px; border-style: solid;  padding: 15px;"
-                                    id="BenefitContainer">
+                                <!-- Add  Benefits Eligibility and duration   -->
+                                <div style="margin-left: 20px; margin-top: 20px; padding: 15px;"
+                                    id="courseOVerviewContainer">
 
-                                    <div
-                                        style="width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-                                        <h1
-                                            style="font-size: 20px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
-                                            Add Course Benefits : </h1>
-
-                                        <div id="courseBenefit-container"
-                                            style="width: 100%; display: flex; flex-direction: column;">
-                                            <div style="width: 100%;">
-                                                <input type="text" name="benefits[]" required
-                                                    placeholder="Course Benefits"
-                                                    style="margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px; display:block" />
-
-                                            </div>
-                                        </div>
-
-                                        <button
-                                            style="margin-top: 10px; border: 2px; border-style: solid; border-color:black; background-color: green; color: white; padding: 0 4px; "
-                                            type="button" onclick="addCourseBenefit()">Add Course Benefit</button>
-
-                                    </div>
-                                </div>
-
-                                <!-- Eligiblity -->
-
-                                <div style="margin-left: 20px; margin-top: 20px;" id="eligiblityContainer"
-                                    id="eligibilityContainer">
-                                    <div style="display: flex;  flex-direction: column;  gap: 10px;  padding: 15px;">
-                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
-                                            for="eligibility">Eligiblity : </label>
-                                        <input required type="text" name="eligibility" id="eligiblity"
-                                            placeholder="Course Eligiblity "
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px;">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"> Add Benefits
+                                            Eligibility and duration :
+                                        </label>
+                                        <textarea class="editor" required type="text" name="benefits" class="editor"
+                                            placeholder="Add  Benefits Eligibility and duration"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
                                     </div>
                                 </div>
 
 
-                                <div style="margin-left: 20px; margin-top: 20px;" id="courseDurationContainer">
-                                    <div style="display: flex;  flex-direction: column;  gap: 10px;  padding: 15px;">
-                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
-                                            for="courseDuration">Course Duration : </label>
-                                        <input required type="text" name="courseDuration" id="courseDuration"
-                                            placeholder="Course Duration"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
 
-                                    </div>
-                                </div>
-                                <div style="margin-left: 20px; margin-top: 20px;" id="fessOptionContainer">
-                                    <div style="display: flex;  flex-direction: column;  gap: 10px;  padding: 15px;">
-                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
-                                            for="feeOptions">Fees
-                                            Options : </label>
-                                        <input required type="text" name="feeOptions" id="feeOptions"
-                                            placeholder="Fees Options"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-
-                                    </div>
-                                </div>
 
                                 <!--  courseCurriculum -->
 
@@ -355,6 +312,22 @@
 
                                     </div>
                                 </div>
+
+                                <!-- certificate section -->
+                                <div style="margin-left: 20px; margin-top: 20px; padding: 15px;"
+                                    id="courseOVerviewContainer">
+
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px;">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+                                            >Course Certificate
+                                            Overview : </label>
+                                        <textarea required type="text" name="certificate"  class="editor"
+                                            placeholder="Course Certificate Overview"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
+                                    </div>
+                                </div>
+
+
                                 <!-- jobRoles -->
                                 <div style="width: 100%; margin: 20px; border: 2px; border-style: solid;  padding: 15px;"
                                     id="jobRolesContainer">
@@ -449,20 +422,36 @@
                 })
                 .catch((error) => console.log("error to get the category", error));
 
-                function addOptions(){
-                    const selector = document.querySelector("#category-selector");
-                    console.log(selector);
-                    categories.forEach(category => {
-                        const option = document.createElement('option');
-                        option.style.width="100%";
-                        option.value = category?.heading;
-                        option.innerText = category?.heading;
+            function addOptions() {
+                const selector = document.querySelector("#category-selector");
+                console.log(selector);
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.style.width = "100%";
+                    option.value = category?.heading;
+                    option.innerText = category?.heading;
 
-                        selector.appendChild(option);
-                    });
-                }
+                    selector.appendChild(option);
+                });
+            }
         </script>
-
+        <script>
+            $('.editor').trumbowyg({
+                btns: [
+                    ['viewHTML'],
+                    ['formatting'],
+                    ['strong', 'em', 'underline', 'del'],
+                    ['superscript', 'subscript'],
+                    ['link'],
+                    ['insertImage'],
+                    ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                    ['unorderedList', 'orderedList'],
+                    ['table'],
+                    ['foreColor', 'backColor'],
+                    ['fullscreen']
+                ]
+            });
+        </script>
     </div>
 
 </body>
