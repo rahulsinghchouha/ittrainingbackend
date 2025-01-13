@@ -130,6 +130,8 @@ exports.addHome = async (req, res) => {
         const homeData = await home.findOne({});
 
         if (homeData) {
+            const oldImage = path.join(__dirname, '../public', homeData.bannerImage);
+            deleteImage(oldImage,"banner Image");
             await home.findByIdAndUpdate(homeData._id, { $set: newhomeData }, { new: true });
             return successResponse(res, "home updated succesfully");
         }
