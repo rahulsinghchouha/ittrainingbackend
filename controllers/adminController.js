@@ -4,7 +4,7 @@ const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
 const { tags } = require("../models/tag");
 
-const {student} = require("../models/testimonial");
+const { student } = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
@@ -17,6 +17,9 @@ const { validationErrorWithData, successResponse, errorResponse, notFoundRespons
 const mailSender = require("../utils/mailSender");
 
 const { loginSuccess } = require("../mail/template/loginSuccess");
+const path = require("path");
+const fs = require("fs");
+const { deleteImage } = require("../config/storeFile");
 
 
 //ADD ADMIN
@@ -143,10 +146,82 @@ exports.addHome = async (req, res) => {
     }
 }
 
+//update Home 
+
+exports.updateHome = async (req, res) => {
+    // 1. Get the data
+    const { bannerHeading, chooseCourseHead, upliftYourCareerHead,
+        howToStart, maximizeCareerHead, blogHead,
+        jobReadyHead, interviewPrepHead, mentorsHead, careerCounsilHead, beforeCollegeHead,
+    } = req.body;
+
+    const { bannerImage, bannerBgImg, maximizeCareerImg, blogImg, beforeCollegeImg } = req.files;
+
+
+    //2. validate the data 
+    if (!bannerHeading || !chooseCourseHead || !upliftYourCareerHead
+        || !howToStart || !maximizeCareerHead || !blogHead
+        || !jobReadyHead || !interviewPrepHead || !mentorsHead || !careerCounsilHead || !beforeCollegeHead) {
+        console.log("Validation error all the fields require for the home page");
+        return validationErrorWithData(res, "Please enter all the fields chek how to start field");
+    }
+
+    //create new object to update them
+    const newhomeData = {
+        bannerHeading, chooseCourseHead, upliftYourCareerHead,
+        maximizeCareerHead, blogHead,
+        jobReadyHead, interviewPrepHead, mentorsHead, careerCounsilHead, beforeCollegeHead,
+        howToStart,
+    }
+
+    try {
+        const previousHome = await home.findOne({});
+
+        if (previousHome) {
+            //delete previous images from server and add new images on the server 
+
+            if (bannerImage) {
+                const oldImage = path.join(__dirname, '../public', previousHome.bannerImage);
+                deleteImage(oldImage,"banner Image");
+                newhomeData.bannerImage = bannerImage[0]?.filename;
+            }
+            if (bannerBgImg) {
+                const oldImage = path.join(__dirname, "../public", previousHome.bannerBgImg);
+                deleteImage(oldImage,"banner bg Image");
+                newhomeData.bannerBgImg = bannerBgImg[0]?.filename;
+            }
+            if (blogImg) {
+                const oldImage = path.join(__dirname, "../public", previousHome.blogImg);
+                deleteImage(oldImage, "blog img");
+                newhomeData.blogImg = blogImg[0]?.filename;
+            }
+            if (maximizeCareerImg) {
+                const oldImage = path.join(__dirname, "../public", previousHome.maximizeCareerImg);
+                deleteImage(oldImage, "maximize career img");
+                newhomeData.maximizeCareerImg = maximizeCareerImg[0]?.filename;
+            }
+            if (beforeCollegeImg) {
+                const oldImage = path.join(__dirname, "../public", previousHome.beforeCollegeImg);
+                deleteImage(oldImage, "before college image");
+                newhomeData.beforeCollegeImg = beforeCollegeImg[0]?.filename;
+            }
+            await home.findByIdAndUpdate(previousHome._id, { $set: newhomeData }, { new: true });
+            return successResponse(res, "Home Page updated succesfully")
+        }
+        else {
+            return notFoundResponse(res, "please add the home")
+        }
+    }
+    catch (error) {
+        console.log("Error when Update the Home", error);
+        return errorResponse(res, "home page not updated");
+    }
+}
+
 //ADD COURSE
 exports.addCourse = async (req, res) => {
 
-    const { courseName, category, overview, keyAreas, toolsInHand, benefits,  courseCurricullum, keyHighLights, certificate, jobRoles, fAQ } = req.body;
+    const { courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ } = req.body;
 
     const img = req.file?.filename;
 
@@ -158,7 +233,7 @@ exports.addCourse = async (req, res) => {
 
     // console.log(courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ, img);
 
-    if (!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !filterCourseCurricullum || !keyHighLights || !certificate ||!jobRoles || !filterFAQ || !img) {
+    if (!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !filterCourseCurricullum || !keyHighLights || !certificate || !jobRoles || !filterFAQ || !img) {
         return validationErrorWithData(res, "Enter all the required fields  to create a course");
     }
 
@@ -170,7 +245,7 @@ exports.addCourse = async (req, res) => {
             overview,
             keyAreas: filterKeyAreas,
             toolsInHand,
-            benefits,    
+            benefits,
             courseCurriculum: filterCourseCurricullum,
             keyHighLights,
             certificate,

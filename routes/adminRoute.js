@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const admin = require("../controllers/adminController");
-const upload = require("../config/storeFile");
+const {upload} = require("../config/storeFile");
 
 
 router.post("/add-admin",admin.addAdmin);
@@ -22,8 +22,16 @@ router.post("/add-home",upload.fields([
 {name:"maximizeCareerImg", maxCount:1},
 {name:"blogImg", maxCount:1},
 {name:"beforeCollegeImg", maxCount:1}
-
 ]), admin.addHome);
+
+//Update Home
+router.post("/update-home",upload.fields([
+    {name:"bannerImage", maxCount:1},
+    {name:"bannerBgImg", maxCount:1},
+    {name:"maximizeCareerImg", maxCount:1},
+    {name:"blogImg", maxCount:1},
+    {name:"beforeCollegeImg", maxCount:1}
+    ]), admin.updateHome);
 
 // ADD ABOUT US
 router.post("/add-about-us",upload.fields([

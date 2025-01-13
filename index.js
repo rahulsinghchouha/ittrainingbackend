@@ -45,7 +45,7 @@ app.set('view engine', 'ejs'); // Tells Express to use EJS for rendering views.
 
 //Route for show the view
 
-const serverUrl = "http://localhost:4000";
+
 
 
 app.get("/login", (req, res) => {
@@ -74,10 +74,10 @@ app.get("/new-testimonial", (req, res) => {
 });
 
 app.get("/dashboard", async (req, res) => {
-    const response = await fetch(`${serverUrl}/api/v1/get/get-home`);
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-home`);
     const object = await response.json();
    // console.log(object?.data);
-    res.render("dashboard", { homePage: object?.data });
+    res.render("dashboard", { homePage: object?.data, backendUrl:process.env.BACKEND_URL });
 });
 
 app.get("/blogs", (req, res) => {

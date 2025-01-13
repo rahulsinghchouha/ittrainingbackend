@@ -23,7 +23,7 @@
             <div
                 style=" width: 20%; position: fixed; height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
 
-                <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
+                <figure style=" margin-left: 60px; margin-top: 20px; width: 180px; height: 70px; "
                     class=" w-[100%] border-b-2 border-solid border-red-700">
                     <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
                 </figure>
@@ -31,7 +31,7 @@
 
 
                 <div
-                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 40px; margin-top: 20px;  ">
+                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 80px; margin-top: 20px;  ">
                     <div>
                         <a href="/dashboard">
                             <button
@@ -111,20 +111,177 @@
 
                         <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Home Page - </h1>
 
-                        <form>
+                        <form action="/api/v1/admin/update-home" encType="multipart/form-data" method="POST">
                             <!-- banner Heading -->
-                            <div>
-                                <textarea name="bannerHeading" type="text"
-                                    class="editor"><%= homePage?.bannerHeading  %> </textarea>
 
+                            <div style="display: flex;  flex-direction: column;  gap: 10px;">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">Banner Heading and
+                                    details: </label>
+                                <textarea class="editor" required type="text" name="bannerHeading"
+                                    placeholder="Banner Heading and welcome paragraph "
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= homePage?.bannerHeading  %></textarea>
                             </div>
+
+
                             <!-- bannerImage -->
-                            <div>
-                                <label for="">Banner Image</label>
-                                <input type="file" name="bannerImage" value="<%= homePage?.bannerImage %>"/>
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin-top: 20px;">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+                                    for="bannerImage">Insert Updated Banner Image : </label>
+                                <input  type="file" name="bannerImage" id="bannerImage"
+                                    placeholder="Banner Heading"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                             </div>
 
-                            <!-- banner bg Image -->
+                            <div style="display: flex;  flex-direction: column;  gap: 10px;">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
+                                    for="bannerBgImg">Insert Updated Banner Background Image : </label>
+                                <input  type="file" name="bannerBgImg" id=" bannerBgImg"
+                                    placeholder="Banner Background Image"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                            </div>
+                            <!-- Choose Course Heading -->
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin-top: 30px;">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">Choose Your Course
+                                    Heading and details: </label>
+                                <textarea required type="text" name="chooseCourseHead" class="editor"
+                                    placeholder="Choose Your Course Heading "
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= homePage?.chooseCourseHead  %> </textarea>
+                            </div>
+
+                            <!-- Uplift your Career -->
+                            <div style="display: flex;  flex-direction: column;  gap: 20px; margin-top: 30px;">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">How To Uplift Your
+                                    Career Heading and details : </label>
+                                <textarea required type="text" name="upliftYourCareerHead" class="editor"
+                                    placeholder="Uplift Your Career Heading "
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"> <%= homePage?.upliftYourCareerHead  %></textarea>
+                            </div>
+
+                            <!-- How To Start -->
+                            <div style="margin: 30px; border: 2px; border-style: solid;  padding: 15px;">
+                                <div
+                                    style="width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
+                                    <h1
+                                        style="font-size: 20px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
+                                        Update How To Start : </h1>
+
+                                    <% homePage?.howToStart?.forEach(function (item,index) {%>
+                                        <div style="width: 100%;">
+                                            <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">How To
+                                                Start Heading : </label>
+                                            <input type="text" name="howToStart[<%= index%>][heading]" required
+                                                value="<%= item.heading %>" placeholder="Key Heading"
+                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                            <label
+                                                style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;">How
+                                                To Start Details : </label>
+                                            <input type="text" name="howToStart[<%= index %>][details]" 
+                                                placeholder="Key Details" value="<%= item.details %>"
+                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                        </div>
+                                        <%} ) %>
+                                </div>
+                            </div>
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 20px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Maximize Your Career Heading and details: </label>
+                                <textarea required type="text" name="maximizeCareerHead"
+                                    placeholder="Maximize Your Career Heading" class="editor"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= homePage?.maximizeCareerHead %></textarea>
+                            </div>
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 20px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Enter Updated Maximize Your Career Image : </label>
+                                <input type="file" name="maximizeCareerImg"
+                                    placeholder="Maximize Your Career Image "
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                            </div>
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Enter Updated Blog Side Image : </label>
+                                <input  type="file" name="blogImg" placeholder="Select Image "
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                            </div>
+
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Enter Our Latest Blog Heading and details : </label>
+                                <textarea required type="text" name="blogHead" placeholder="Blog Heading "
+                                    class="editor"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= homePage?.blogHead %></textarea>
+                            </div>
+
+
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Job Ready Heading and details: </label>
+                                <textarea required type="text" name="jobReadyHead" placeholder="Job Ready Heading"
+                                    class="editor"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;">
+                                    <%= homePage?.jobReadyHead %>
+                                    </textarea>
+                            </div>
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Interview Prepration Heading and details: </label>
+                                <textarea required type="text" name="interviewPrepHead" class="editor"
+                                    placeholder="Interview Prepration Heading"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;">
+                                    <%= homePage?.interviewPrepHead %>
+                                </textarea>
+                            </div>
+
+
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Mentors Heading and details : </label>
+                                <textarea required type="text" name="mentorsHead" placeholder="Mentors Heading"
+                                    class="editor"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;">
+                                    <%= homePage?.mentorsHead %></textarea>
+                            </div>
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Career Counsil Heading and details: </label>
+                                <textarea required type="text" name="careerCounsilHead"
+                                    placeholder="Career Counsil Heading " class="editor"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;">
+                                    <%= homePage?.careerCounsilHead %></textarea>
+                            </div>
+
+
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Before College Heading and Details </label>
+                                <textarea required class="editor" type="text" name="beforeCollegeHead"
+                                    placeholder="Before College Heading"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= homePage?.beforeCollegeHead %></textarea>
+                            </div>
+
+
+                            <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Before College Side Image </label>
+                                <input type="file" name="beforeCollegeImg"
+                                    placeholder="Before College Side Image"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                            </div>
+
+                            <button type="submit"
+                                style="width: 18%; margin-top: 20px; margin-left: 80%; margin-bottom: 40px;  border: 2px; border-style:solid; border-color:black; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center;  border-radius: 5px; ">
+                                Submit
+                            </button>
+
+
+
                         </form>
 
 
