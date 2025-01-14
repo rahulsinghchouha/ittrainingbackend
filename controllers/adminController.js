@@ -519,22 +519,22 @@ exports.addExploreCategory = async (req, res) => {
 exports.getCategoryById = async (req, res) => {
     const { categoryId } = req.body;
 
-   // console.log("category Id", categoryId);
+    // console.log("category Id", categoryId);
 
     if (!categoryId) {
         return validationErrorWithData(res, "category id not found");
     }
     try {
         const data = await exploreCategory.findById(categoryId);
-              // If category not found
-              if (!data) {
-                return errorResponse(res, "Category not found");
-            }
-        return successResponseWithData(res,"category details found succesfully",data);
+        // If category not found
+        if (!data) {
+            return errorResponse(res, "Category not found");
+        }
+        return successResponseWithData(res, "category details found succesfully", data);
     }
     catch (error) {
         console.log("error to find the category details", error);
-        return errorResponse(res,"getting error to find the category details");
+        return errorResponse(res, "getting error to find the category details");
     }
 }
 
@@ -584,18 +584,10 @@ exports.deleteCategory = async (req, res) => {
 
 }
 
-exports.updateCategory = async(req,res) =>{
+exports.updateCategory = async (req, res) => {
     const files = req.files;
 
-    const { heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill } = req.body;
-
-    //  Initialize variables for bgImage, img, bannerImg, and detailsCards
-
-    // console.log("images",files);
-
-    // console.log(heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill)
-
-    //validation check
+    const { heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill, categoryId } = req.body;
 
     let bgImage = null;
     let img = null;
@@ -603,8 +595,8 @@ exports.updateCategory = async(req,res) =>{
     let categoryDetailsImg = null;
     const detailsCardImg = [];
 
-     // Iterate over files once to categorize them
-     files?.forEach(file => {
+    // Iterate over files once to categorize them
+    files?.forEach(file => {
         if (file.fieldname === "bgImage") {
             bgImage = file.filename;
         }
@@ -626,6 +618,45 @@ exports.updateCategory = async(req,res) =>{
             }
         }
     });
+
+    if (!categoryId || !heading || !para || !categoryDetailsWhy || !importance || !impPara || !processGrowthandSkill || !detailsCard) {
+        return validationErrorWithData(res, "Please Enter All the field Sinceriously then try again");
+    }
+
+    try {
+        const category = await exploreCategory.findById(categoryId);
+
+        if (!category) {
+            return notFoundResponse(res, "category not found");
+        }
+    //    console.log("category", category.detailsCard);
+        for (let i = 0; i < detailsCardImg.length && i < category.detailsCard.length; i++) {
+           
+            //
+            if(detailsCardImg[i]!=undefined && detailsCard[i]!=null)
+            {
+                console.log("img defined", detailsCardImg[i],i);
+                console.log(category.detailsCard[i]);
+                //now we remove the old image and update the new image
+                const oldImage = path.join(__dirname,"../public",category.detailsCard[i].img);
+                console.log(oldImage);
+            }
+        }
+
+    }
+    catch (error) {
+        console.log("Error to update the category", error);
+        return errorResponse(res, "Error to update the category");
+    }
+
+
+
+    //find 
+    //image remove from server 
+    //update the image 
+    //update the category
+
+
 
 }
 
