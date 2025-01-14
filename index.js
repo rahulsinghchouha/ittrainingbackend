@@ -114,12 +114,28 @@ app.get("/add-partners", async(req, res) => {
     const object   = await response.json();
 
    // console.log("partners",object.data); 
-    res.render("addPartners",{partners:object.data, backendUrl:process.env.BACKEND_URL});
+    res.render("addPartners",{partners:object?.data, backendUrl:process.env.BACKEND_URL});
 });
 
-app.get("/add-categories", (req, res) => {
-    res.render("addCategories");
+app.get("/add-categories", async(req, res) => {
+
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-explore-card`)
+
+    const object = await response.json();
+
+ //    console.log("categories",object?.data);
+
+    res.render("addCategories",{categories:object?.data, backendUrl:process.env.BACKEND_URL});
 });
+
+app.get("/update-category/:id", async(req,res)=>{
+
+    const categoryId = req.params.id;
+    console.log(categoryId);
+
+    res.render("updateCategory",{backendUrl:process.env.BACKEND_URL});
+})
+
 
 app.get("/add-ourStats", (req, res) => {
     res.render("addOurStats");

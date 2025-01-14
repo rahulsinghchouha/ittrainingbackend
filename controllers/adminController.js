@@ -20,6 +20,7 @@ const { loginSuccess } = require("../mail/template/loginSuccess");
 const path = require("path");
 const fs = require("fs");
 const { deleteImage } = require("../config/storeFile");
+const exploreCategory = require("../models/exploreCategory");
 
 
 //ADD ADMIN
@@ -513,6 +514,54 @@ exports.addExploreCategory = async (req, res) => {
     }
 
 }
+
+exports.deleteCategory = async (req, res) => {
+    const { id } = req.body;
+    // console.log(id);
+    if (!id) {
+        return validationErrorWithData(res, "id not found");
+    }
+    try {
+        const category = await exploreCategory.findById(id);
+        if (!category) {
+            return notFoundResponse(res, "category not found");
+        }
+        if (category.bgImage) {
+            const bgImage = path.join(__dirname, "../public", category.bgImage);
+            deleteImage(bgImage, "category bg Image");
+        }
+        if (category.img) {
+            const img = path.join(__dirname, "../public", category.img);
+            deleteImage(img, "category img");
+        }
+        if (category.bannerImg) {
+            const bannerImg = path.join(__dirname, "../public", category.bannerImg);
+            deleteImage(bannerImg, "banner image");
+        }
+        if (category.categoryDetailsImg) {
+            const categoryDetailsImg = path.join(__dirname, "../public", category.categoryDetailsImg);
+            deleteImage(categoryDetailsImg, "categoryDetailsimage");
+        }
+        if (category.detailsCard && category.detailsCard.length) {
+            category.detailsCard.forEach(item => {
+                if (item.img) {
+                    const img = path.join(__dirname, "../public", item.img);
+                    deleteImage(img, "card img");
+                }
+            });
+        }
+        await exploreCategory.findByIdAndDelete(id);
+        return successResponse(res, "category deleted succesfully")
+
+    }
+    catch (error) {
+        console.log("Error in categories", error);
+        return errorResponse(res, "category not found");
+    }
+
+}
+
+
 exports.addOurPartners = async (req, res) => {
 
     const img = req?.file?.filename;
@@ -537,7 +586,7 @@ exports.updateOurPartners = async (req, res) => {
 
     // console.log("img",img);
 
-   //  console.log("request body",partnerId);
+    //  console.log("request body",partnerId);
 
     if (!img || !partnerId) {
         return validationErrorWithData(res, "img or partnerId not found");

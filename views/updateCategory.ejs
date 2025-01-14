@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet" />
+    <link href="/css/index.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
+
+</head>
+
+<body>
+
+    <div>
+        <div style="display: flex; box-sizing: border-box; ">
+
+            <div
+                style=" width: 20%; position: fixed; height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
+
+                <figure style=" margin-left: 60px; margin-top: 20px; width: 180px; height: 70px; "
+                    class=" w-[100%] border-b-2 border-solid border-red-700">
+                    <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
+                </figure>
+
+
+
+                <div
+                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 80px; margin-top: 20px;  ">
+                    <div>
+                        <a href="/dashboard">
+                            <button
+                                style="cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius: 5px; font-size: 16px; font-weight: 700; "
+                                class="sidebarHomebButton" for="home"> Home </button>
+                        </a>
+
+                    </div>
+                    <div>
+                        <a href="/course" onclick="this.classList.add('visited-active')">
+                            <button
+                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
+                                class="sidebarHomebButton" for="course">Courses </button>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/about-us">
+                            <button
+                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
+                                class="sidebarHomebButton">
+                                About Us
+                            </button>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/blogs">
+                            <button
+                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size:16px; font-weight: 700; "
+                                class="sidebarHomebButton" for="Blogs">Blogs </button>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/our-testimonial">
+                            <button
+                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
+                                class="sidebarHomebButton" for="Testimonial">Testimonial </button>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/contact-us">
+                            <button
+                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700;  "
+                                class="sidebarHomebButton" for="contact us">Contact Us </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-left: 20%; width: 88%;">
+
+                <div
+                    style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid; display: flex; gap: 50px;">
+                    <a href="/add-home">
+                        <button
+                            style=" font-weight: 500;  color: white; background-color: #1AAEF4; width: 150px; height: 50px; border-radius: 5px; margin-top: 40px; margin-left: 40px;">Add
+                            New Home</button>
+                    </a>
+                    <a href="/add-partners">
+                        <button
+                            style="  font-weight: 500; color: white; background-color: #1AAEF4; width: 150px; height: 50px; border-radius: 5px; margin-top: 40px; margin-left: 40px;">
+                            Partners Section</button>
+                    </a>
+                    <a href="/add-categories">
+                        <button
+                            style="  font-weight: 500; color: white; background-color: #1AAEF4; width: 150px; height: 50px; border-radius: 5px; margin-top: 40px; margin-left: 40px;">
+                            Categories Section</button>
+                    </a>
+                    <a href="/add-ourStats">
+                        <button
+                            style="  font-weight: 500; color: white; background-color: #1AAEF4; width: 150px; height: 50px; border-radius: 5px; margin-top: 40px; margin-left: 40px;">
+                            Our Stats Section</button>
+                    </a>
+                </div>
+
+                <div style="margin-left: 100px; margin-top: 60px;">
+                    <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
+                        <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Home Page - </h1>
+                        <form action="/api/v1/admin/update-home" encType="multipart/form-data" method="POST">
+
+                            <button type="submit"
+                                style="width: 18%; margin-top: 20px; margin-left: 80%; margin-bottom: 40px;  border: 2px; border-style:solid; border-color:black; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center;  border-radius: 5px; ">
+                                Submit
+                            </button>
+
+                        </form>
+
+
+                    </div>
+                </div>
+
+                <div></div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <script>
+        $('.editor').trumbowyg({
+            btns: [
+                ['viewHTML'],
+                ['formatting'],
+                ['strong', 'em', 'underline', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['table'],
+                ['foreColor', 'backColor'],
+                ['fullscreen']
+            ]
+        });
+
+    </script>
+
+
+</body>
+
+</html>

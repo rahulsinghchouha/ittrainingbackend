@@ -22,14 +22,14 @@
         <div style="display: flex; box-sizing: border-box; ">
 
             <div
-                style=" position: fixed; width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
+                style=" position: fixed; width: 20%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
 
-                <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
+                <figure style=" margin-left: 60px; margin-top: 20px; width: 180px; height: 70px; "
                     class=" w-[100%] border-b-2 border-solid border-red-700">
                     <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
                 </figure>
                 <div
-                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 40px; margin-top: 20px;  ">
+                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 80px; margin-top: 20px;  ">
                     <div>
                         <a href="/dashboard">
                             <button
@@ -77,18 +77,49 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 88%; margin-left: 12%;">
+            <div style="width: 80%; margin-left: 20%;">
 
                 <div
                     style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid; display: flex; justify-content: center; align-items: center;">
                     <h1 style=" font-size: 36px; font-weight: 700; color: #1AAEF4;">
-                        Create New Categories</h1>
+                        Add and Update Categories</h1>
                 </div>
 
-                <div style=" margin-top: 60px; display: flex; justify-content: center;">
-                    <div
-                        style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+                <div style=" margin-top: 60px; display: flex; margin-left: 50px;">
+                    <div style="width: 60%;  display: flex; flex-direction: column;  ">
                         <div style="  width: 100%;  padding: 20px 20px; ">
+                            <!-- Update the categories -->
+                            <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Categories - </h1>
+
+                            <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                                <% categories?.forEach(function(category,index) {%>
+                                    <div
+                                        style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
+                                        <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Category Name : </p>
+                                        <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                            <%= category?.heading %>
+                                        </p>
+                                        <figure style="height: 70px; width: 70px;">
+                                            <img style="height: 100%; width: 100%; object-fit: cover;"
+                                                src="<%= backendUrl %>/<%= category?.categoryDetailsImg %>"
+                                                alt="category images" />
+                                        </figure>
+
+                                        <button onclick="deleteCategories('<%= category._id %>')"
+                                            style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
+                                            Delete </button>
+                                        <button onclick="updateCategory('<%= category._id %>')"
+                                            style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
+                                            Update </button>
+
+
+                                    </div>
+                                    <%}) %>
+
+
+                            </div>
                             <!-- ADD Categorise -->
 
 
@@ -136,12 +167,12 @@
                                             Category Details Why is? : </label>
                                         <textarea type="text" name="categoryDetailsWhy" class="editor"
                                             placeholder="Category Details Why is Important?"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" ></textarea>
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
                                     </div>
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                             Category Details Side Image : </label>
-                                        <input type="file" name="categoryDetailsImg" 
+                                        <input type="file" name="categoryDetailsImg"
                                             placeholder="Category Details Side Image :"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     </div>
@@ -152,7 +183,7 @@
                                             Importance of this category : </label>
                                         <textarea type="text" name="importance" class="editor"
                                             placeholder="Importance of this category  :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" ></textarea>
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
                                     </div>
                                     <!-- Create Card for multiple details -->
                                     <div style="margin: 20px; border: 2px; border-style: solid;  padding: 15px;"
@@ -163,7 +194,8 @@
                                                 style="font-size: 20px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
                                                 Add Details Card : </h1>
 
-                                            <div id="category-card-container" style="width: 100%; display: flex; flex-direction: column;">
+                                            <div id="category-card-container"
+                                                style="width: 100%; display: flex; flex-direction: column;">
                                                 <div style="width: 100%;">
                                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                                         for="bg-color">Add Background color of card :</label>
@@ -180,10 +212,10 @@
                                                     <label
                                                         style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;"
                                                         for="cardImg">Enter Card Heading and details :</label>
-                                                    <textarea  class="editor" type="text" name="detailsCard[0][cardHeadandDetail]"
-                                                        id="cardImg" placeholder="Enter Card Heading and details"
-                                                        required
-                                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" ></textarea>
+                                                    <textarea class="editor" type="text"
+                                                        name="detailsCard[0][cardHeadandDetail]" id="cardImg"
+                                                        placeholder="Enter Card Heading and details" required
+                                                        style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
                                                 </div>
                                             </div>
 
@@ -196,24 +228,27 @@
 
                                     <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                         <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                           Enter Important paragraph which will show in blue text  : </label>
+                                            Enter Important paragraph which will show in blue text : </label>
                                         <input type="text" name="impPara"
                                             placeholder="Enter Important paragraph which will show in blue text :"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     </div>
 
-                                    <div style="margin-top: 30px; display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                        <label style="margin-top: 30px; font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                           Enter Process, Growth and skills in this category: </label>
+                                    <div
+                                        style="margin-top: 30px; display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label
+                                            style="margin-top: 30px; font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Enter Process, Growth and skills in this category: </label>
                                         <textarea class="editor" type="text" name="processGrowthandSkill"
                                             placeholder="Enter Process, Growth and skills in this category :"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" ></textarea>
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"></textarea>
                                     </div>
 
                                     <button type="submit"
                                         style="width: 15%; padding: 5px 10px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 85%; color: white; ">Submit</button>
                                 </form>
                             </div>
+
 
 
                         </div>
@@ -238,11 +273,45 @@
                     ['foreColor', 'backColor'],
                     ['fullscreen']
                 ]
-                
+
             });
         </script>
 
     </div>
+    <script>
+        async function deleteCategories(id) {
+            console.log("id", id);
+            //here we send the post request and delete this categories
+            try {
+                const response = await fetch("/api/v1/admin/delete-category", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id })
+                })
+                if (response.ok) {
+
+                    alert("Category deleted successfully!");
+
+                } else {
+                    // Handle server-side errors or non-2xx responses
+                    alert(`Error:  'Failed to delete category.'}`);
+                }
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+        }
+
+        function updateCategory(id)
+        {
+            //console.log(id);
+            window.location.href = `/update-category/${id}`
+        }
+
+
+    </script>
 
 </body>
 

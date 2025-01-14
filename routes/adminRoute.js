@@ -14,9 +14,9 @@ router.post("/update-partners",upload.single("img"),admin.updateOurPartners);
 
 router.post("/our-stats", admin.addOurStats);
 
-
-router.post( "/explore-category",upload.any(), admin.addExploreCategory);
-  
+//category
+router.post("/explore-category",upload.any(), admin.addExploreCategory);
+router.post("/delete-category",admin.deleteCategory);
 
 //add Home 
 router.post("/add-home",upload.fields([
