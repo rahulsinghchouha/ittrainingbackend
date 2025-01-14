@@ -76,8 +76,8 @@ app.get("/new-testimonial", (req, res) => {
 app.get("/dashboard", async (req, res) => {
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-home`);
     const object = await response.json();
-   // console.log(object?.data);
-    res.render("dashboard", { homePage: object?.data, backendUrl:process.env.BACKEND_URL });
+    // console.log(object?.data);
+    res.render("dashboard", { homePage: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 
 app.get("/blogs", (req, res) => {
@@ -107,33 +107,53 @@ app.get("/add-aboutUs", (req, res) => {
     res.render("addAboutUs");
 });
 
-app.get("/add-partners", async(req, res) => {
+app.get("/add-partners", async (req, res) => {
 
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-partners`);
-    
-    const object   = await response.json();
 
-   // console.log("partners",object.data); 
-    res.render("addPartners",{partners:object?.data, backendUrl:process.env.BACKEND_URL});
+    const object = await response.json();
+
+    // console.log("partners",object.data); 
+    res.render("addPartners", { partners: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 
-app.get("/add-categories", async(req, res) => {
+app.get("/add-categories", async (req, res) => {
 
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-explore-card`)
 
     const object = await response.json();
 
- //    console.log("categories",object?.data);
+    //    console.log("categories",object?.data);
 
-    res.render("addCategories",{categories:object?.data, backendUrl:process.env.BACKEND_URL});
+    res.render("addCategories", { categories: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 
-app.get("/update-category/:id", async(req,res)=>{
-
+app.get("/update-category/:id", async (req, res) => {
     const categoryId = req.params.id;
-    console.log(categoryId);
+    // console.log(categoryId);
+    let object;
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-category-by-id`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ categoryId })
+        })
+        if (!response.ok) {
+            throw new Error(`Failed to fetch category details, status: ${response.status}`);
+        }
+        object = await response.json();
+        // Check if the response contains the expected data
+        if (!object || !object.data) {
+            throw new Error("Category data not found in the response");
+        }
+    }
+    catch (error) {
+        console.log("error to fetch the particular category details", error);
+    }
 
-    res.render("updateCategory",{backendUrl:process.env.BACKEND_URL});
+    res.render("updateCategory", { category: object?.data, backendUrl: process.env.BACKEND_URL });
 })
 
 

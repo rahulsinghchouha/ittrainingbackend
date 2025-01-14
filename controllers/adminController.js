@@ -438,6 +438,8 @@ exports.addOurStats = async (req, res) => {
 
 
 }
+
+// Category Section
 exports.addExploreCategory = async (req, res) => {
 
     const files = req.files;
@@ -454,7 +456,7 @@ exports.addExploreCategory = async (req, res) => {
 
 
     // Iterate over files once to categorize them
-    files.forEach(file => {
+    files?.forEach(file => {
 
         if (file.fieldname === "bgImage") {
             bgImage = file.filename;
@@ -514,6 +516,27 @@ exports.addExploreCategory = async (req, res) => {
     }
 
 }
+exports.getCategoryById = async (req, res) => {
+    const { categoryId } = req.body;
+
+   // console.log("category Id", categoryId);
+
+    if (!categoryId) {
+        return validationErrorWithData(res, "category id not found");
+    }
+    try {
+        const data = await exploreCategory.findById(categoryId);
+              // If category not found
+              if (!data) {
+                return errorResponse(res, "Category not found");
+            }
+        return successResponseWithData(res,"category details found succesfully",data);
+    }
+    catch (error) {
+        console.log("error to find the category details", error);
+        return errorResponse(res,"getting error to find the category details");
+    }
+}
 
 exports.deleteCategory = async (req, res) => {
     const { id } = req.body;
@@ -561,6 +584,50 @@ exports.deleteCategory = async (req, res) => {
 
 }
 
+exports.updateCategory = async(req,res) =>{
+    const files = req.files;
+
+    const { heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill } = req.body;
+
+    //  Initialize variables for bgImage, img, bannerImg, and detailsCards
+
+    // console.log("images",files);
+
+    // console.log(heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill)
+
+    //validation check
+
+    let bgImage = null;
+    let img = null;
+    let bannerImg = null;
+    let categoryDetailsImg = null;
+    const detailsCardImg = [];
+
+     // Iterate over files once to categorize them
+     files?.forEach(file => {
+        if (file.fieldname === "bgImage") {
+            bgImage = file.filename;
+        }
+        else if (file.fieldname === "img") {
+            img = file.filename;
+        }
+        else if (file.fieldname === "bannerImg") {
+            bannerImg = file.filename;
+        }
+        else if (file.fieldname === "categoryDetailsImg") {
+            categoryDetailsImg = file.filename;
+        }
+        else if (file.fieldname.startsWith("detailsCard[")) {
+            // Handle detailsCard images using regex
+            const indexMatch = file.fieldname.match(/detailsCard\[(\d+)\]\[img\]/);
+            if (indexMatch) {
+                const index = parseInt(indexMatch[1], 10);
+                detailsCardImg[index] = file.filename; // Store by index
+            }
+        }
+    });
+
+}
 
 exports.addOurPartners = async (req, res) => {
 

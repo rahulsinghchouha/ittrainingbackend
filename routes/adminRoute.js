@@ -17,7 +17,8 @@ router.post("/our-stats", admin.addOurStats);
 //category
 router.post("/explore-category",upload.any(), admin.addExploreCategory);
 router.post("/delete-category",admin.deleteCategory);
-
+router.post("/get-category-by-id",admin.getCategoryById);
+router.post("/update-category",upload.any(),admin.updateCategory);
 //add Home 
 router.post("/add-home",upload.fields([
 {name:"bannerImage", maxCount:1},
