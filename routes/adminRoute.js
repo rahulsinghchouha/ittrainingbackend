@@ -8,7 +8,10 @@ router.post("/admin-login",admin.adminLogin);
 router.post("/add-course",upload.single("img"),admin.addCourse);
 router.post("/add-course-banner",upload.single("img"),admin.addCourseBannerImage);
 router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);
+//partners
 router.post("/add-partners", upload.single("img"), admin.addOurPartners);
+router.post("/update-partners",upload.single("img"),admin.updateOurPartners);
+
 router.post("/our-stats", admin.addOurStats);
 
 

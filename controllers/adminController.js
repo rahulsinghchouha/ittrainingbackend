@@ -131,7 +131,7 @@ exports.addHome = async (req, res) => {
 
         if (homeData) {
             const oldImage = path.join(__dirname, '../public', homeData.bannerImage);
-            deleteImage(oldImage,"banner Image");
+            deleteImage(oldImage, "banner Image");
             await home.findByIdAndUpdate(homeData._id, { $set: newhomeData }, { new: true });
             return successResponse(res, "home updated succesfully");
         }
@@ -159,7 +159,6 @@ exports.updateHome = async (req, res) => {
 
     const { bannerImage, bannerBgImg, maximizeCareerImg, blogImg, beforeCollegeImg } = req.files;
 
-
     //2. validate the data 
     if (!bannerHeading || !chooseCourseHead || !upliftYourCareerHead
         || !howToStart || !maximizeCareerHead || !blogHead
@@ -184,12 +183,12 @@ exports.updateHome = async (req, res) => {
 
             if (bannerImage) {
                 const oldImage = path.join(__dirname, '../public', previousHome.bannerImage);
-                deleteImage(oldImage,"banner Image");
+                deleteImage(oldImage, "banner Image");
                 newhomeData.bannerImage = bannerImage[0]?.filename;
             }
             if (bannerBgImg) {
                 const oldImage = path.join(__dirname, "../public", previousHome.bannerBgImg);
-                deleteImage(oldImage,"banner bg Image");
+                deleteImage(oldImage, "banner bg Image");
                 newhomeData.bannerBgImg = bannerBgImg[0]?.filename;
             }
             if (blogImg) {
@@ -530,6 +529,38 @@ exports.addOurPartners = async (req, res) => {
     }
 
 }
+
+exports.updateOurPartners = async (req, res) => {
+
+    const img = req.file?.filename;
+    const { partnerId } = req.body;
+
+    // console.log("img",img);
+
+    // console.log("request body",req.body.partnerId);
+
+    if (!img || !partnerId) {
+        return validationErrorWithData(res, "img or partnerId not found");
+    }
+
+    try {
+        const partners = await ourPartners.find();
+        const updatePartner = partners[partnerId];
+        const oldImage = path.join(__dirname, '../public', updatePartner.img);
+        deleteImage(oldImage, "update partner");
+        updatePartner.img = img;
+
+        await updatePartner.save();
+
+        return successResponse(res, "partner updated");
+    }
+    catch (error) {
+        console.log("error", error);
+        return errorResponse(res, "error to fetch the partners");
+    }
+
+}
+
 exports.addBlog = async (req, res) => {
     const { heading, details, tags, blogCategory } = req.body;
     const img = req.file?.filename;

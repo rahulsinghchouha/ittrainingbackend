@@ -17,14 +17,14 @@
         <div style="display: flex; box-sizing: border-box; ">
 
             <div
-                style=" width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
+                style=" width: 20%; position: fixed;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
 
-                <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
+                <figure style=" margin-left: 60px; margin-top: 20px; width: 180px; height: 70px; "
                     class=" w-[100%] border-b-2 border-solid border-red-700">
                     <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
                 </figure>
                 <div
-                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 40px; margin-top: 20px;  ">
+                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 80px; margin-top: 20px;  ">
                     <div>
                         <a href="/dashboard">
                             <button
@@ -72,12 +72,12 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 88%;">
+            <div style="width: 80%; margin-left: 20%;">
 
                 <div
                     style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid; display: flex; justify-content: center; align-items: center;">
                     <h1 style=" font-size: 36px; font-weight: 700; color: #1AAEF4;">
-                        Create New Partners</h1>
+                        Add and Update Partners</h1>
                 </div>
 
                 <div style=" margin-top: 60px; display: flex; justify-content: center;">
@@ -90,14 +90,44 @@
                                     <label
                                         style="display:block;  font-size: 20px; font-weight: 700; color: #1AAEF4; margin-top: 20px; ">
                                         Add Partner : </label>
+
                                     <input type="file" name="img" required
                                         style="margin-top: 10px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-
+                                 
+                                    
                                     <button type="submit"
                                         style="padding: 5px 10px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 90%; color: white; ">Submit</button>
 
                                 </div>
                             </form>
+
+                            <!-- update partners section -->
+                            <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Partners update
+                                all the same Image : </h1>
+                            <% partners?.forEach(function(item,index){%>
+                                <form action="/api/v1/admin/update-partners" method="POST"
+                                    enctype="multipart/form-data">
+                                    <div style="margin: 20px;   padding: 15px;">
+                                        <label
+                                            style="display:block;  font-size: 20px; font-weight: 700; color: #1AAEF4; margin-top: 20px; ">
+                                            Update Partner : </label>
+                                        <div style="display: flex;  width: 100%; align-items: center;">
+                                            <figure style="height: 55px; width: 50px; margin-right: 30px; ">
+                                                <img style="height: 100%; width: 100%; object-fit: cover;"
+                                                    src="<%= backendUrl %>/<%= item.img %>" alt="banner image" />
+                                            </figure>
+                                               <!-- Hidden field to identify the partner -->
+                                                <input type="hidden" name="partnerId" value="<%= index %>" />
+                                            <input type="file" name="img" required
+                                                style="margin-top: 10px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                                        </div>
+                                        <button type="submit"
+                                            style="padding: 5px 10px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 90%; color: white; ">Submit</button>
+
+                                    </div>
+                                </form>
+                                <%}) %>
+
 
                         </div>
 

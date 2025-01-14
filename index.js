@@ -107,8 +107,14 @@ app.get("/add-aboutUs", (req, res) => {
     res.render("addAboutUs");
 });
 
-app.get("/add-partners", (req, res) => {
-    res.render("addPartners");
+app.get("/add-partners", async(req, res) => {
+
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-partners`);
+    
+    const object   = await response.json();
+
+    //console.log("partners",object.data); 
+    res.render("addPartners",{partners:object.data, backendUrl:process.env.BACKEND_URL});
 });
 
 app.get("/add-categories", (req, res) => {
