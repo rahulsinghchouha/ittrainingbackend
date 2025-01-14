@@ -70,6 +70,7 @@ exports.getStudentPlaced = async (req, res) => {
 exports.getPartners = async (req, res) => {
     try {
         const data = await ourPartners.find();
+
         successResponseWithData(res, "partners get succesfully", data);
 
     }

@@ -113,7 +113,7 @@ app.get("/add-partners", async(req, res) => {
     
     const object   = await response.json();
 
-    //console.log("partners",object.data); 
+   // console.log("partners",object.data); 
     res.render("addPartners",{partners:object.data, backendUrl:process.env.BACKEND_URL});
 });
 

@@ -537,20 +537,20 @@ exports.updateOurPartners = async (req, res) => {
 
     // console.log("img",img);
 
-    // console.log("request body",req.body.partnerId);
+   //  console.log("request body",partnerId);
 
     if (!img || !partnerId) {
         return validationErrorWithData(res, "img or partnerId not found");
     }
 
     try {
-        const partners = await ourPartners.find();
-        const updatePartner = partners[partnerId];
-        const oldImage = path.join(__dirname, '../public', updatePartner.img);
+        const partner = await ourPartners.findById(partnerId);
+        //console.log(partner);
+        const oldImage = path.join(__dirname, '../public', partner.img);
         deleteImage(oldImage, "update partner");
-        updatePartner.img = img;
+        partner.img = img;
 
-        await updatePartner.save();
+        await partner.save();
 
         return successResponse(res, "partner updated");
     }

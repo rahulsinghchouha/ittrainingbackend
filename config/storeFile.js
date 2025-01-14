@@ -25,7 +25,7 @@ const deleteImage = async (imagePath,imageName) => {
 
         // File exists, so proceed to delete it
         await fs.promises.unlink(imagePath);
-        console.log(`Image deleted: ${imageName}`);
+      //  console.log(`Image deleted: ${imageName}`);
     } catch (err) {
         // If file doesn't exist or any other error happens, log the error
         console.error(`Error deleting image: ${imageName}`, err);
