@@ -282,8 +282,6 @@ exports.updateCourse = async(req,res) =>{
     console.log(req.body);
 }
 
-
-
 exports.addCourseBannerImage = async (req, res) => {
     const img = req.file?.filename;
     if (!img) {
@@ -309,8 +307,6 @@ exports.addCourseBannerImage = async (req, res) => {
         return errorResponse(res, "img not added please try again");
     }
 }
-
-
 
 //------------------- ABOUT US ------------------
 exports.addAboutUS = async (req, res) => {
@@ -425,7 +421,6 @@ exports.addContactUs = async (req, res) => {
         return errorResponse(res, "contact us not added please verify the data and try again");
     }
 }
-
 
 exports.addOurStats = async (req, res) => {
 
