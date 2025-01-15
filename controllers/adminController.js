@@ -595,6 +595,7 @@ exports.updateCategory = async (req, res) => {
     let categoryDetailsImg = null;
     const detailsCardImg = [];
 
+
     // Iterate over files once to categorize them
     files?.forEach(file => {
         if (file.fieldname === "bgImage") {
@@ -623,41 +624,68 @@ exports.updateCategory = async (req, res) => {
         return validationErrorWithData(res, "Please Enter All the field Sinceriously then try again");
     }
 
+    const updateCategory = {
+        heading, para, categoryDetailsWhy, importance, detailsCard, impPara, processGrowthandSkill
+    }
     try {
         const category = await exploreCategory.findById(categoryId);
 
         if (!category) {
             return notFoundResponse(res, "category not found");
         }
-    //    console.log("category", category.detailsCard);
-        for (let i = 0; i < detailsCardImg.length && i < category.detailsCard.length; i++) {
-           
-            //
-            if(detailsCardImg[i]!=undefined && detailsCard[i]!=null)
+
+        //update card image
+        let i = 0;
+        for(i; i < detailsCardImg.length && i < category.detailsCard.length; i++) {
+
+            if (detailsCardImg[i]) {
+                const oldImage = path.join(__dirname, "../public", category.detailsCard[i]?.img );
+                deleteImage(oldImage, `category card image ${i + 1}`);
+                updateCategory.detailsCard[i].img = detailsCardImg[i];
+            }
+            else {
+                updateCategory.detailsCard[i].img = category.detailsCard[i].img
+            }
+        }
+        if (i < category.detailsCard.length ) {
+            for ( i; i < category.detailsCard.length; i++)
             {
-                console.log("img defined", detailsCardImg[i],i);
-                console.log(category.detailsCard[i]);
-                //now we remove the old image and update the new image
-                const oldImage = path.join(__dirname,"../public",category.detailsCard[i].img);
-                console.log(oldImage);
+                updateCategory.detailsCard[i].img = category.detailsCard[i].img
             }
         }
 
+
+        //now we update the another images
+        if (bgImage) {
+            const oldImage = path.join(__dirname, "../public", category.bgImage);
+            deleteImage(oldImage, "bgImage");
+            updateCategory.bgImage = bgImage;
+        }
+        if (img) {
+            const oldImage = path.join(__dirname, "../public", category.img);
+            deleteImage(oldImage, "img");
+            updateCategory.img = img;
+        }
+        if (bannerImg) {
+            const oldImage = path.join(__dirname, "../public", category.bannerImg);
+            deleteImage(oldImage, "bannerImg");
+            updateCategory.bannerImg = bannerImg;
+        }
+        if (categoryDetailsImg) {
+            const oldImage = path.join(__dirname, "../public", category.categoryDetailsImg);
+            deleteImage(oldImage, "categoryDetailsimg");
+            updateCategory.categoryDetailsImg = categoryDetailsImg;
+        }
+        console.log("updated category", updateCategory.detailsCard);
+
+        await exploreCategory.findByIdAndUpdate(category._id, { $set: updateCategory }, { new: true });
+
+        return successResponse(res, "category section updated");
     }
     catch (error) {
         console.log("Error to update the category", error);
         return errorResponse(res, "Error to update the category");
     }
-
-
-
-    //find 
-    //image remove from server 
-    //update the image 
-    //update the category
-
-
-
 }
 
 exports.addOurPartners = async (req, res) => {
