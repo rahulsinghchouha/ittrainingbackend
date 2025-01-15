@@ -9,6 +9,7 @@ router.post("/admin-login",admin.adminLogin);
 //COURSE
 router.post("/add-course",upload.single("img"),admin.addCourse);
 router.post("/get-course-by-id",admin.getCourseById);
+router.post("/update-course",upload.single("img"),admin.updateCourse);
 router.post("/add-course-banner",upload.single("img"),admin.addCourseBannerImage);
 router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);
 //partners

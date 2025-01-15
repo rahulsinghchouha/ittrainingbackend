@@ -90,7 +90,9 @@
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
                         <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Course Page - </h1>
                         <form action="/api/v1/admin/update-course" method="POST" enctype="multipart/form-data">
-
+                            
+                            <input type="hidden" name="courseId" value="<%= courseDetails?._id %>"  />
+                            
                             <div style="margin-left: 20px; margin-top: 20px;" id="courseNameContainer">
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;  padding: 15px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
@@ -98,7 +100,6 @@
                                     <input required type="text" name="courseName" id=" courseName"
                                         placeholder="Course Name  " value="<%= courseDetails?.courseName  %>"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-
                                 </div>
                             </div>
                             <div style="margin-left: 20px; margin-top: 20px; padding: 15px;" id="addCategoryContainer">
@@ -107,8 +108,6 @@
                                 </label>
                                 <select id="category-selector" name="category"
                                     style="border: 1px; border-style: solid; padding: 10px 10px;">
-
-
                                 </select>
                             </div>
 
@@ -124,7 +123,7 @@
                                             <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
                                                 src="<%= backendUrl %>/<%= courseDetails?.img %>" alt="course image" />
                                         </figure>
-                                        <input required type="file" name="img" id="img" placeholder="Course Image"
+                                        <input type="file" name="img" id="img" placeholder="Course Image"
                                             style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     </div>
                                 </div>
@@ -361,7 +360,7 @@
                                     style="width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
                                     <h1
                                         style="font-size: 24px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
-                                        update FAQ'S : </h1>
+                                        Update FAQ'S : </h1>
                                     <% courseDetails?.fAQ?.forEach(function(faq,index) {%>
                                         <div id="faqs-container"
                                             style="width: 100%; display: flex; flex-direction: column; margin-bottom: 20px;">
@@ -381,7 +380,7 @@
                                 </div>
                             </div>
                             <button type="submit"
-                                style=" border:2px; border-style: solid; border-color: black; margin-left: 80%; margin-top: 20px; width: 20%; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 0px; border-radius: 5px; ">
+                                style=" margin-bottom:20px;  border:2px; border-style: solid; border-color: black; margin-left: 80%; margin-top: 0px; width: 20%; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 0px; border-radius: 5px; ">
                                 Submit
                             </button>
                         </form>
