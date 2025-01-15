@@ -157,8 +157,27 @@ app.get("/update-category/:id", async (req, res) => {
 })
 
 
-app.get("/add-ourStats", (req, res) => {
-    res.render("addOurStats");
+app.get("/add-ourStats", async (req, res) => {
+
+    let object;
+
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-our-stats`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch category details, status: ${response.status}`);
+        }
+        object = await response.json();
+        if (!object || !object.data) {
+            throw new Error("Category data not found in the response");
+        }
+        console.log(object?.data);
+    }
+    catch (error) {
+        console.log("error to fetch our stats", error);
+    }
+
+    res.render("addOurStats", { ourStats: object?.data });
+
 });
 
 app.listen(PORT, () => {

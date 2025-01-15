@@ -92,7 +92,7 @@ exports.getExploreCard = async (req, res) => {
 }
 exports.getOurStats = async (req, res) => {
     try {
-        const data = await ourStats.find();
+        const data = await ourStats.findOne({});
         successResponseWithData(res, "our stats get succesfully", data);
     }
     catch (error) {
