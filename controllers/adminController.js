@@ -258,6 +258,26 @@ exports.addCourse = async (req, res) => {
         return errorResponse(res, "Course not added please add valid field and try again");
     }
 }
+exports.getCourseById = async(req,res) =>{
+   
+    const {courseId} = req.body;
+
+    if(!courseId)
+    {
+        return validationErrorWithData(res,"not getting the course Id");
+    }
+    try{
+            const data = await course.findById(courseId);
+            return successResponseWithData(res,"course Details get succesfully",data);
+    }
+    catch(error)
+    {
+          console.log("error to get the course data ", error);
+          return errorResponse(res,"course Details not get");
+    }
+}
+
+
 exports.updateCourse = async(req,res) =>{
     console.log(req.body);
 }

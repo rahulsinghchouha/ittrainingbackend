@@ -58,7 +58,7 @@ app.get("/home", (req, res) => {
 app.get("/add-home", (req, res) => {
     res.render("newHome");
 });
-
+//Course
 app.get("/course", async(req, res) => {
 
     let object;
@@ -75,7 +75,7 @@ app.get("/course", async(req, res) => {
             {
                 throw new Error ("courses not found");
             }
-            console.log("courses",object.data);
+            
     }
     catch(error)
     {
@@ -83,6 +83,39 @@ app.get("/course", async(req, res) => {
     }
     res.render("courses",{courses : object.data, backendUrl: process.env.BACKEND_URL});
 });
+app.get("/update-course/:id",async(req,res)=>{
+
+    const courseId = req.params.id; 
+    if(!courseId)
+    {
+        res.render("courses");
+    }
+    let object;
+    try{
+            const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-course-by-id`,{
+                method:"POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body : JSON.stringify({courseId})
+            })
+            if(!response.ok)
+            {
+                throw new Error ("not a valid course category API Call");
+            }
+            // object = await response.json();
+
+            // console.log(object.data);
+            
+    }
+    catch(error)
+    {
+        console.log("error to get the course",error);
+    }
+})
+
+
+
 app.get("/add-course", (req, res) => {
     res.render("addCourse");
 });

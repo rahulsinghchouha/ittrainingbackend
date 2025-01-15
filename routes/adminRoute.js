@@ -5,7 +5,10 @@ const {upload} = require("../config/storeFile");
 
 router.post("/add-admin",admin.addAdmin);
 router.post("/admin-login",admin.adminLogin);
+
+//COURSE
 router.post("/add-course",upload.single("img"),admin.addCourse);
+router.post("/get-course-by-id",admin.getCourseById);
 router.post("/add-course-banner",upload.single("img"),admin.addCourseBannerImage);
 router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);
 //partners
