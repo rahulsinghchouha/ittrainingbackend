@@ -91,7 +91,7 @@ exports.adminLogin = async (req, res) => {
     }
 }
 
-// ADD HOME
+//------------------ HOME---------------------
 exports.addHome = async (req, res) => {
 
     // 1. Get the data
@@ -148,9 +148,6 @@ exports.addHome = async (req, res) => {
 
     }
 }
-
-//update Home 
-
 exports.updateHome = async (req, res) => {
     // 1. Get the data
     const { bannerHeading, chooseCourseHead, upliftYourCareerHead,
@@ -220,7 +217,7 @@ exports.updateHome = async (req, res) => {
     }
 }
 
-//ADD COURSE
+//----------------COURSE------------------
 exports.addCourse = async (req, res) => {
 
     const { courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ } = req.body;
@@ -261,6 +258,12 @@ exports.addCourse = async (req, res) => {
         return errorResponse(res, "Course not added please add valid field and try again");
     }
 }
+exports.updateCourse = async(req,res) =>{
+    console.log(req.body);
+}
+
+
+
 exports.addCourseBannerImage = async (req, res) => {
     const img = req.file?.filename;
     if (!img) {
@@ -289,7 +292,7 @@ exports.addCourseBannerImage = async (req, res) => {
 
 
 
-// ADD ABOUT US
+//------------------- ABOUT US ------------------
 exports.addAboutUS = async (req, res) => {
 
     const { yourImaginationHead, totalStudentJoined, ourJourneyHead, ourBeliefsHead, ourMissionHead, missionDetails, visionDetails, valuesDetails } = req.body;
@@ -339,7 +342,7 @@ exports.addAboutUS = async (req, res) => {
 
 }
 
-//ADD Testimonial
+//----------------ADD Testimonial-----------
 exports.addStudentPlaced = async (req, res) => {
     const { name, profile, experience } = req.body;
     const img = req.file?.filename;
@@ -364,7 +367,7 @@ exports.addStudentPlaced = async (req, res) => {
     }
 }
 
-//ADD Contact US
+//------------------Contact US----------
 exports.addContactUs = async (req, res) => {
     const { contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming } = req.body
     const bannerImg = req.file?.filename;
@@ -439,7 +442,7 @@ exports.addOurStats = async (req, res) => {
 
 }
 
-// Category Section
+//----------------Explore Category Section---------------
 exports.addExploreCategory = async (req, res) => {
 
     const files = req.files;
@@ -686,6 +689,7 @@ exports.updateCategory = async (req, res) => {
         return errorResponse(res, "Error to update the category");
     }
 }
+
 // --------------------PARTNERS-------------------------
 exports.addOurPartners = async (req, res) => {
 
@@ -734,6 +738,7 @@ exports.updateOurPartners = async (req, res) => {
     }
 
 }
+
 exports.deleteOurPartner = async (req, res) => {
     const { partnerId } = req.body;
     if (!partnerId) {
