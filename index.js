@@ -170,7 +170,6 @@ app.get("/add-ourStats", async (req, res) => {
         if (!object || !object.data) {
             throw new Error("Category data not found in the response");
         }
-        console.log(object?.data);
     }
     catch (error) {
         console.log("error to fetch our stats", error);

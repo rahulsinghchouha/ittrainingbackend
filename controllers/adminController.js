@@ -636,10 +636,10 @@ exports.updateCategory = async (req, res) => {
 
         //update card image
         let i = 0;
-        for(i; i < detailsCardImg.length && i < category.detailsCard.length; i++) {
+        for (i; i < detailsCardImg.length && i < category.detailsCard.length; i++) {
 
             if (detailsCardImg[i]) {
-                const oldImage = path.join(__dirname, "../public", category.detailsCard[i]?.img );
+                const oldImage = path.join(__dirname, "../public", category.detailsCard[i]?.img);
                 deleteImage(oldImage, `category card image ${i + 1}`);
                 updateCategory.detailsCard[i].img = detailsCardImg[i];
             }
@@ -647,9 +647,8 @@ exports.updateCategory = async (req, res) => {
                 updateCategory.detailsCard[i].img = category.detailsCard[i].img
             }
         }
-        if (i < category.detailsCard.length ) {
-            for ( i; i < category.detailsCard.length; i++)
-            {
+        if (i < category.detailsCard.length) {
+            for (i; i < category.detailsCard.length; i++) {
                 updateCategory.detailsCard[i].img = category.detailsCard[i].img
             }
         }
@@ -687,7 +686,7 @@ exports.updateCategory = async (req, res) => {
         return errorResponse(res, "Error to update the category");
     }
 }
-
+// --------------------PARTNERS-------------------------
 exports.addOurPartners = async (req, res) => {
 
     const img = req?.file?.filename;
@@ -735,6 +734,21 @@ exports.updateOurPartners = async (req, res) => {
     }
 
 }
+exports.deleteOurPartner = async (req, res) => {
+    const { partnerId } = req.body;
+    if (!partnerId) {
+        return validationErrorWithData(res, "partner not found")
+    }
+    try {
+        await ourPartners.findByIdAndDelete(partnerId);
+        return successResponse(res, "partner deleted succesfully");
+    }
+    catch (error) {
+        console.log("error to delete partner", error);
+        return errorResponse(res, "partner not deleted please try again");
+    }
+}
+
 
 exports.addBlog = async (req, res) => {
     const { heading, details, tags, blogCategory } = req.body;

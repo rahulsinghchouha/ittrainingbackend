@@ -11,7 +11,9 @@ router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);
 //partners
 router.post("/add-partners", upload.single("img"), admin.addOurPartners);
 router.post("/update-partners",upload.single("img"),admin.updateOurPartners);
+router.post("/delete-partners",admin.deleteOurPartner);
 
+//our stats
 router.post("/our-stats", admin.addOurStats);
 
 //category
