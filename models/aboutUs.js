@@ -22,7 +22,6 @@ const aboutUsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-   
     ourJourneyImg: {
         type: String,
         required: true,

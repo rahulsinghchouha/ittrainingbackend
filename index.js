@@ -130,10 +130,57 @@ app.get("/dashboard", async (req, res) => {
     // console.log(object?.data);
     res.render("dashboard", { homePage: object?.data, backendUrl: process.env.BACKEND_URL });
 });
-
-app.get("/blogs", (req, res) => {
-    res.render("blog");
+//=======================Blog Section===============
+app.get("/blogs", async (req, res) => {
+    let object;
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-blogs`);
+        if (!response.ok) {
+            throw new Error("response not get");
+        }
+        object = await response.json();
+        if(!object || !object.data)
+        {
+            throw new Error ("data not found");
+        }
+    }
+    catch (error) {
+            console.log("error to fetch the data ",error);
+    }
+    res.render("blog",{blogs:object.data, backendUrl:process.env.BACKEND_URL});
 });
+
+app.get("/update-blog/:id",async(req,res)=>{
+    const blogId = req.params?.id;
+    if (!blogId) {
+        res.render("blog");
+    }
+    let object;
+    try{
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-blog-by-id`,{
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ blogId })
+         })
+        if(!response.ok)
+        {
+            throw new Error ("response not get");
+        }
+        object = await response.json();
+        if(!object || !object.data)
+        {
+            throw new Error ("data not found");
+        }
+        res.render("updateBlog",{blogDetails:object.data});       
+    }
+    catch(error)
+    {
+        console.log("error",error);
+        res.render("blog");
+    }
+})
 
 app.get("/add-newBlog", (req, res) => {
     res.render("addNewBlog");
@@ -161,7 +208,7 @@ app.get("/about-us", async (req, res) => {
         if (!object || !object.data) {
             throw new Error("data not get");
         }
-        
+
     }
     catch (error) {
         console.log("error to get data", error);
@@ -197,7 +244,7 @@ app.get("/add-categories", async (req, res) => {
 
 app.get("/update-category/:id", async (req, res) => {
     const categoryId = req.params.id;
-    // console.log(categoryId);
+
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-category-by-id`, {
@@ -214,13 +261,16 @@ app.get("/update-category/:id", async (req, res) => {
         // Check if the response contains the expected data
         if (!object || !object.data) {
             throw new Error("Category data not found in the response");
+
         }
+        res.render("updateCategory", { category: object?.data, backendUrl: process.env.BACKEND_URL });
     }
     catch (error) {
         console.log("error to fetch the particular category details", error);
+        res.render("addCategories");
     }
 
-    res.render("updateCategory", { category: object?.data, backendUrl: process.env.BACKEND_URL });
+
 })
 
 

@@ -60,9 +60,10 @@ router.post("/update-about-us",upload.fields([
     {name:"ourBeliefImg",maxCount:1},
     {name:"ourMissionImg",maxCount:1}]),admin.updateAboutUs);
 
-//add blog
+//BLOG
 router.post("/add-blogs",upload.single("img"),admin.addBlog);
 router.post("/add-tag",admin.addTag);
+router.post("/get-blog-by-id",admin.getBlogById);
 
 //contact us
 router.post("/add-contact-us",upload.single("bannerImg"),admin.addContactUs);

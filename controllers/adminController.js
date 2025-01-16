@@ -876,7 +876,7 @@ exports.deleteOurPartner = async (req, res) => {
     }
 }
 
-
+//-----------------------BLOG------------------------
 exports.addBlog = async (req, res) => {
     const { heading, details, tags, blogCategory } = req.body;
     const img = req.file?.filename;
@@ -922,3 +922,22 @@ exports.addTag = async (req, res) => {
     }
 
 }
+//get-blog-by-id
+exports.getBlogById = async(req,res) =>{
+    const {blogId} = req.body;
+    if(!blogId)
+    {
+        return validationErrorWithData(res,"Blog id not found");
+    }
+    try{
+            const data = await blogs.findById(blogId);
+            return successResponse(res,"blog found succesfully",data);
+    }
+    catch(error)
+    {
+        console.log("blog not found",error);
+        return errorResponse(res,"blog not found");
+    }
+}
+
+
