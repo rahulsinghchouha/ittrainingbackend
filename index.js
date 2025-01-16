@@ -108,7 +108,7 @@ app.get("/update-course/:id", async (req, res) => {
         console.log("error to get the course", error);
     }
 
-    res.render("updateCourse",{courseDetails:object?.data,backendUrl:process.env.BACKEND_URL});
+    res.render("updateCourse", { courseDetails: object?.data, backendUrl: process.env.BACKEND_URL });
 })
 
 
@@ -150,8 +150,24 @@ app.get("/add-contactUs", (req, res) => {
     res.render("addContactUs");
 });
 
-app.get("/about-us", (req, res) => {
-    res.render("aboutUs");
+app.get("/about-us", async (req, res) => {
+    let object;
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-about-us`);
+        if (!response.ok) {
+            throw new Error("not getting any response");
+        }
+        object = await response.json();
+        if (!object || !object.data) {
+            throw new Error("data not get");
+        }
+        
+    }
+    catch (error) {
+        console.log("error to get data", error);
+    }
+
+    res.render("aboutUs", { aboutUs: object.data, backendUrl: process.env.BACKEND_URL });
 });
 
 app.get("/add-aboutUs", (req, res) => {

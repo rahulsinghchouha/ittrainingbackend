@@ -304,21 +304,19 @@ exports.updateCourse = async (req, res) => {
     }
 }
 
-exports.deleteCourse = async (req,res) =>{
+exports.deleteCourse = async (req, res) => {
 
-    const {id} = req.body;
-    if(!id)
-    {
-        return validationErrorWithData(res,"course id not found");
+    const { id } = req.body;
+    if (!id) {
+        return validationErrorWithData(res, "course id not found");
     }
-    try{
-            await course.findByIdAndDelete(id);
-            return successResponse(res,"course deleted succesfully");
+    try {
+        await course.findByIdAndDelete(id);
+        return successResponse(res, "course deleted succesfully");
     }
-    catch(error)
-    {
-        console.log("Course not found ",error);
-        return errorResponse(res,"course not found")
+    catch (error) {
+        console.log("Course not found ", error);
+        return errorResponse(res, "course not found")
     }
 }
 
@@ -397,6 +395,75 @@ exports.addAboutUS = async (req, res) => {
     }
 
 }
+
+exports.updateAboutUs = async (req, res) => {
+    //get the data 
+    const { yourImaginationHead, totalStudentJoined, ourJourneyHead, ourBeliefsHead, ourMissionHead, missionDetails, visionDetails, valuesDetails } = req.body;
+
+    const { bannerImage, yourImaginationImg, ourJourneyImg, ourBeliefImg, ourMissionImg } = req.files;
+
+    //validate that data 
+
+    if (!yourImaginationHead || !totalStudentJoined || !ourJourneyHead || !ourBeliefsHead || !ourMissionHead || !missionDetails || !visionDetails || !valuesDetails) {
+        return validationErrorWithData(res, "Please Enter all the valid data and try");
+    }
+
+    try {
+        const about = await aboutUS.findOne({});
+
+        if (!about) {
+            return notFoundResponse(res, "about us not");
+        }
+        const updatedAbout = {
+            yourImaginationHead,
+            totalStudentJoined,
+            ourJourneyHead,
+            ourBeliefsHead,
+            ourMissionHead,
+            missionDetails,
+            visionDetails,
+            valuesDetails
+        }
+
+        if (bannerImage) {
+            const oldImage = path.join(__dirname, "../public", about.bannerImage);
+            deleteImage(oldImage, "banner Image");
+            updatedAbout.bannerImage = bannerImage[0]?.filename;
+        }
+        if (yourImaginationImg) {
+            const oldImage = path.join(__dirname, "../public", about.yourImaginationImg);
+            deleteImage(oldImage, "your imagination image");
+            updatedAbout.yourImaginationImg = yourImaginationImg[0]?.filename;
+        }
+        if (ourJourneyImg) {
+            const oldImage = path.join(__dirname, "../public", about.ourJourneyImg);
+            deleteImage(oldImage, "our journey image");
+            updatedAbout.ourJourneyImg = ourJourneyImg[0]?.filename;
+        }
+        if (ourBeliefImg) {
+            const oldImage = path.join(__dirname, "../public", about.ourBeliefImg);
+            deleteImage(oldImage, "our belief image");
+            updatedAbout.ourBeliefImg = ourBeliefImg[0]?.filename;
+        }
+        if (ourMissionImg) {
+            const oldImage = path.join(__dirname, "../public", about.ourMissionImg);
+            deleteImage(oldImage, "Our Mission Image");
+            updatedAbout.ourMissionImg = ourMissionImg[0]?.filename;
+        }
+
+    
+       await aboutUS.findByIdAndUpdate(about._id, { $set: updatedAbout }, { new: true });
+
+        return successResponse(res, "about us updated succesfully");
+
+    }
+    catch (error) {
+        console.log("Error to update the course", error);
+        return errorResponse(res, "about us not updated");
+    }
+
+}
+
 
 //----------------ADD Testimonial-----------
 exports.addStudentPlaced = async (req, res) => {

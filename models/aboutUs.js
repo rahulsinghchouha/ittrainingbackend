@@ -40,7 +40,6 @@ const aboutUsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-
     ourMissionImg: {
         type: String,
         required: true,
