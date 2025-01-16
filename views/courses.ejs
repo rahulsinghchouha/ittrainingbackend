@@ -126,30 +126,30 @@
 
     </div>
     <script>
-        // async function deleteCourse(id) {
-        //     console.log("id", id);
-        //     //here we send the post request and delete this categories
-        //     try {
-        //         const response = await fetch("/api/v1/admin/delete-category", {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-Type": "application/json"
-        //             },
-        //             body: JSON.stringify({ id })
-        //         })
-        //         if (response.ok) {
+        async function deleteCourse(id) {
+            console.log("id", id);
+            //here we send the post request and delete this categories
+            try {
+                const response = await fetch("/api/v1/admin/delete-course", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id })
+                })
+                if (response.ok) {
 
-        //             alert("Category deleted successfully!");
+                    alert("Category deleted successfully!");
 
-        //         } else {
-        //             // Handle server-side errors or non-2xx responses
-        //             alert(`Error:  'Failed to delete category.'}`);
-        //         }
-        //     }
-        //     catch (error) {
-        //         console.log("error", error);
-        //     }
-        // }
+                } else {
+                    // Handle server-side errors or non-2xx responses
+                    alert(`Error:  'Failed to delete category.'}`);
+                }
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+        }
 
         function updateCourse(id)
         {

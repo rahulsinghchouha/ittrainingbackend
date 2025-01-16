@@ -275,45 +275,51 @@ exports.getCourseById = async (req, res) => {
     }
 }
 
-
 exports.updateCourse = async (req, res) => {
-
     const { courseId, courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ } = req.body;
-
     const img = req.file?.filename;
-
     if (!courseId || !courseName || !category || !overview || !keyAreas || !toolsInHand || !benefits || !courseCurricullum || !keyHighLights || !certificate || !jobRoles || !fAQ) {
         return validationErrorWithData(res, "Enter all the required fields  to create a course");
     }
-
     const updatedCourse = {
         courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ
     }
-
     try {
         const courseDetails = await course.findById(courseId);
-
         if (!courseDetails) {
             console.log("course not found");
             return notFoundResponse(res, "course not found");
         }
-
         if (img) {
             const oldImage = path.join(__dirname, "../public", courseDetails?.img);
             deleteImage(oldImage, "course image");
             updatedCourse.img = img;
         }
-
         await course.findByIdAndUpdate(courseDetails._id, { $set: updatedCourse }, { new: true });
-
         return successResponse(res, "course updated succesfully");
-
     }
     catch (error) {
         console.log("Error to update the course ", error);
         return errorResponse(res, "course not updated please try again");
     }
+}
 
+exports.deleteCourse = async (req,res) =>{
+
+    const {id} = req.body;
+    if(!id)
+    {
+        return validationErrorWithData(res,"course id not found");
+    }
+    try{
+            await course.findByIdAndDelete(id);
+            return successResponse(res,"course deleted succesfully");
+    }
+    catch(error)
+    {
+        console.log("Course not found ",error);
+        return errorResponse(res,"course not found")
+    }
 }
 
 exports.addCourseBannerImage = async (req, res) => {
