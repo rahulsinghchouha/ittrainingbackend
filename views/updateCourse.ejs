@@ -9,10 +9,10 @@
     <link href="/style.css" rel="stylesheet" />
     <link href="/css/index.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
-
 </head>
 
 <body>
@@ -90,9 +90,9 @@
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
                         <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Course Page - </h1>
                         <form action="/api/v1/admin/update-course" method="POST" enctype="multipart/form-data">
-                            
-                            <input type="hidden" name="courseId" value="<%= courseDetails?._id %>"  />
-                            
+
+                            <input type="hidden" name="courseId" value="<%= courseDetails?._id %>" />
+
                             <div style="margin-left: 20px; margin-top: 20px;" id="courseNameContainer">
                                 <div style="display: flex;  flex-direction: column;  gap: 10px;  padding: 15px;">
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
@@ -136,6 +136,7 @@
                                     <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;"
                                         for="overview">Update Course
                                         Overview : </label>
+                                        <i class="fa fa-book"></i>
                                     <textarea required type="text" name="overview" id="overview" class="editor"
                                         placeholder="Course Overview"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= courseDetails?.overview  %></textarea>
@@ -422,8 +423,80 @@
             });
         }
     </script>
-    <script>
+   <script>
+    $(document).ready(function () {
+        // Define the custom buttons
+        $.extend(true, $.trumbowyg, {
+            langs: {
+                en: {
+                    courseDetails: 'Course Details',
+                    categoryDetails: 'Category Details',
+                    blogDetails: 'Blog Details'
+                }
+            },
+            plugins: {
+                courseDetails: {
+                    init: function (trumbowyg) {
+                        trumbowyg.addBtnDef('courseDetails', {
+                            fn: function () {
+                                const selectedText = getSelectedText(trumbowyg);
+                                handleCourseDetails(selectedText);
+                            },
+                            ico: 'fa fa-book' // Use FontAwesome class for icon
+                        });
+                    }
+                },
+                categoryDetails: {
+                    init: function (trumbowyg) {
+                        trumbowyg.addBtnDef('categoryDetails', {
+                            fn: function () {
+                                const selectedText = getSelectedText(trumbowyg);
+                                handleCategoryDetails(selectedText);
+                            },
+                            ico: 'fa fa-tags' // Use FontAwesome class for icon
+                        });
+                    }
+                },
+                blogDetails: {
+                    init: function (trumbowyg) {
+                        trumbowyg.addBtnDef('blogDetails', {
+                            fn: function () {
+                                const selectedText = getSelectedText(trumbowyg);
+                                handleBlogDetails(selectedText);
+                            },
+                            ico: 'fa fa-blog' // Use FontAwesome class for icon
+                        });
+                    }
+                }
+            }
+        });
+
+        // Initialize Trumbowyg editor with custom buttons
         $('.editor').trumbowyg({
+            btnsDef: {
+                // Custom buttons definitions
+                courseDetails: {
+                    fn: function () {
+                        const selectedText = getSelectedText();
+                        handleCourseDetails(selectedText);
+                    },
+                    ico: 'fa fa-book' // Use FontAwesome class for icon
+                },
+                categoryDetails: {
+                    fn: function () {
+                        const selectedText = getSelectedText();
+                        handleCategoryDetails(selectedText);
+                    },
+                    ico: 'fa fa-tags' // Use FontAwesome class for icon
+                },
+                blogDetails: {
+                    fn: function () {
+                        const selectedText = getSelectedText();
+                        handleBlogDetails(selectedText);
+                    },
+                    ico: 'fa fa-blog' // Use FontAwesome class for icon
+                }
+            },
             btns: [
                 ['viewHTML'],
                 ['formatting'],
@@ -435,12 +508,36 @@
                 ['unorderedList', 'orderedList'],
                 ['table'],
                 ['foreColor', 'backColor'],
-                ['fullscreen']
+                ['fullscreen'],
+                ['courseDetails', 'categoryDetails', 'blogDetails'] // Add custom buttons to the toolbar
             ]
         });
 
-    </script>
+        // Function to get selected text from the editor
+        function getSelectedText(trumbowyg) {
+            const range = trumbowyg.range.createRange();
+            return range ? range.toString() : ''; // Return selected text or empty string
+        }
 
+        // Handle Course Details functionality
+        function handleCourseDetails(selectedText) {
+            alert('Course Details: ' + selectedText); // Display selected text in alert
+            // You can replace this with your actual logic for handling course details
+        }
+
+        // Handle Category Details functionality
+        function handleCategoryDetails(selectedText) {
+            alert('Category Details: ' + selectedText); // Display selected text in alert
+            // You can replace this with your actual logic for handling category details
+        }
+
+        // Handle Blog Details functionality
+        function handleBlogDetails(selectedText) {
+            alert('Blog Details: ' + selectedText); // Display selected text in alert
+            // You can replace this with your actual logic for handling blog details
+        }
+    });
+</script>
 
 </body>
 
