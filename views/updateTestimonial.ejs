@@ -18,7 +18,7 @@
             <div
                 style=" width: 20%; position: fixed;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
 
-                <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
+                <figure style=" margin-left: 60px; margin-top: 20px; width: 180px; height: 70px; "
                     class=" w-[100%] border-b-2 border-solid border-red-700">
                     <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
                 </figure>
@@ -26,7 +26,7 @@
 
 
                 <div
-                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 40px; margin-top: 20px;  ">
+                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 80px; margin-top: 20px;  ">
                     <div>
                         <a href="/dashboard">
                             <button
@@ -84,7 +84,7 @@
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
                         <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Student Details -
                         </h1>
-                        <form action="/api/v1/admin/student-placed" method="POST" enctype="multipart/form-data">
+                        <form action="/api/v1/admin/update-testimonial" method="POST" enctype="multipart/form-data">
                             <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">Student
                                     Name : </label>
@@ -92,6 +92,7 @@
                                     value="<%= testimonialDetails?.name  %>"
                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                             </div>
+                            <input type="hidden" name="studentId" value="<%= testimonialDetails?._id %>"  />
                             <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">Placed
                                     Profile : </label>
@@ -111,10 +112,7 @@
                                     <input type="file" name="img" placeholder="Select Student Image "
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                 </div>
-
                             </div>
-
-
                             <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">Student
                                     Experience : </label>

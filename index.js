@@ -138,9 +138,7 @@ app.get("/our-testimonial", async (req, res) => {
 app.get("/testimonial/update-testimonial/:id", async (req, res) => {
 
     const testimonialId = req.params.id;
-    if (!testimonialId) {
-        res.render("testimonial");
-    }
+   
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-testimonial-by-id`, {
@@ -157,12 +155,12 @@ app.get("/testimonial/update-testimonial/:id", async (req, res) => {
         if (!object || !object.data) {
             throw new Error("Error to find the object");
         }
-        console.log("-------",object.data);
+    
     }
     catch (error) {
         console.log("Error to get the testimonial details", error);
     }
-    res.render("updateTestimonial",{testimonialDetails:object.data, backendUrl:process.env.BACKEND_URL});
+    res.render("updateTestimonial",{testimonialDetails:object?.data, backendUrl:process.env.BACKEND_URL});
 })
 
 
@@ -230,8 +228,25 @@ app.get("/add-newTag", (req, res) => {
     res.render("addNewTag");
 });
 
-app.get("/contact-us", (req, res) => {
-    res.render("contactUs");
+app.get("/contact-us", async(req, res) => {
+    let object;
+    try{
+            const response = await fetch(`${process.env?.BACKEND_URL}/api/v1/get/get-contact-us`);
+            if(!response.ok)
+            {
+                throw new Error ("not fetching the contact us details");
+            }
+            object = response.json();
+            if( !object || !object.data)
+            {
+                throw new Error ("contact us data not found");
+            }
+        }
+    catch(error)
+    {
+        console.log("error to get the contact us",error);
+    }
+    res.render("contactUs",{contactData:object?.data,backendUrl:process.env?.BACKEND_URL});
 });
 app.get("/add-contactUs", (req, res) => {
     res.render("addContactUs");

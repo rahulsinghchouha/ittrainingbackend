@@ -23,6 +23,7 @@ const { deleteImage } = require("../config/storeFile");
 const exploreCategory = require("../models/exploreCategory");
 
 
+
 //ADD ADMIN
 
 exports.addAdmin = async (req, res) => {
@@ -503,9 +504,60 @@ exports.getTestimonialById = async (req, res) => {
     }
     catch (error) {
         console.log("Error to get the testimonial", error);
-        return errorResponse(res,"error to get the student details");
+        return errorResponse(res, "error to get the student details");
     }
 }
+exports.updateTestimonial = async (req, res) => {
+    const { studentId, name, profile, experience } = req.body;
+    const img = req.file?.filename;
+    //validation
+    if (!studentId || !name || !profile || !experience) {
+        return validationErrorWithData(res, "data not found");
+    }
+    try {
+        const studentDetails = await student.findById(studentId);
+        if (!studentDetails) {
+            return notFoundResponse(res, "student details not found");
+        }
+        const updatedTestimonial = {
+            name, profile, experience
+        }
+        if (img) {
+            const oldImage = path.join(__dirname, "../public", studentDetails.img);
+            deleteImage(oldImage, "student Image");
+            updatedTestimonial.img = img;
+        }
+        await student.findByIdAndUpdate(studentDetails._id, { $set: updatedTestimonial }, { new: true })
+        return successResponse(res, "student updated");
+    }
+    catch (error) {
+        console.log("error to update the data", error);
+        return errorResponse(res, "testimonial not updated");
+    }
+}
+exports.deleteTestimonial = async (req, res) => {
+    const { id } = req.body;
+    if (!id)
+        return validationErrorWithData(res, "student id not found");
+
+    try {
+        const testimonial = await student.findById(id);
+        if (!testimonial) {
+            return notFoundResponse(res, "testimonial not found");
+        }
+        if (testimonial.img) {
+            const oldImage = path.join(__dirname, "../public", testimonial.img);
+            deleteImage(oldImage, "testimonial Image");
+        }
+        await student.deleteOne(testimonial._id);
+        return successResponse(res, "testimonial deleted succesfully");
+    }
+    catch (error) {
+        console.log("Error to delete the testimonial", error);
+        return errorResponse(res, "testimonial not deleted")
+    }
+}
+
 
 
 //------------------Contact US----------
