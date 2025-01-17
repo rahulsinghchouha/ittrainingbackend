@@ -598,7 +598,42 @@ exports.addContactUs = async (req, res) => {
         return errorResponse(res, "contact us not added please verify the data and try again");
     }
 }
+exports.updateContactUs = async (req,res) =>{
 
+    const bannerImg = req.file?.filename;
+    const {contactUsId, contactUsHead,officeAddress,contactUsNumber,contactUsEmail,officeTiming} = req.body;
+    //validation
+    if( !contactUsId || !contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming)
+    {
+        return validationErrorWithData(res,"data not get");
+    }
+    try{
+            const contactUsData = await contactUs.findById(contactUsId);
+            if(!contactUsData)
+            {
+                return notFoundResponse(res,"contact data not found");
+            }
+            const updatedContact = {
+                contactUsHead,officeAddress,contactUsNumber,contactUsEmail,officeTiming
+            }
+            if(bannerImg)
+            {
+                const oldImage = path.join(__dirname,"../public",contactUsData.bannerImg);
+                deleteImage(oldImage,"banner image contactus");
+                updatedContact.bannerImg = bannerImg;
+            }
+            await contactUs.findByIdAndUpdate(contactUsData._id,{ $set : updatedContact},{ new:true });
+            return successResponse(res,"contact us updated succesfully");
+    }
+    catch(error)
+    {
+        console.log("error to update the contact",error);
+        return errorResponse(res,"contact us not updated");
+    }
+}
+
+
+//---------------------OUR STATS
 exports.addOurStats = async (req, res) => {
 
     const { mentors, experience, placedStudent, yearsOfJourney } = req.body;

@@ -236,7 +236,8 @@ app.get("/contact-us", async(req, res) => {
             {
                 throw new Error ("not fetching the contact us details");
             }
-            object = response.json();
+            object = await response.json();
+           
             if( !object || !object.data)
             {
                 throw new Error ("contact us data not found");

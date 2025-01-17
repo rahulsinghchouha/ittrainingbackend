@@ -11,7 +11,6 @@ router.post("/add-course",upload.single("img"),admin.addCourse);
 router.post("/get-course-by-id",admin.getCourseById);
 router.post("/update-course",upload.single("img"),admin.updateCourse);
 router.post("/delete-course",admin.deleteCourse);
-
 router.post("/add-course-banner",upload.single("img"),admin.addCourseBannerImage);
 
 //TESTIMONIAL
@@ -73,7 +72,7 @@ router.post("/get-blog-by-id",admin.getBlogById);
 
 //contact us
 router.post("/add-contact-us",upload.single("bannerImg"),admin.addContactUs);
-
+router.post("/update-contact-us",upload.single("bannerImg"),admin.updateContactUs);
 
 
 module.exports = router;

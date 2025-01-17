@@ -8,6 +8,12 @@
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
     <script src="/aejsFunction/ejsFunction.js"> </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
+
+
 </head>
 
 <body>
@@ -82,13 +88,81 @@
                             New</button>
                     </a>
                 </div>
-
-                <div>
-
+                <div
+                    style="width:100%; height: 100px; border-width:100%; display: flex; justify-content: center; align-items: center;">
+                    <h1 style=" font-size: 36px; font-weight: 700; color: #1AAEF4;">
+                        Update Contact Details</h1>
                 </div>
 
+                <div style="  display: flex; justify-content: center; margin-bottom: 20px;">
+                    <div
+                        style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
+                        <div style=" width: 100%; padding: 20px 20px; ">
 
+                            <div>
+                                <h1 style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); ">
+                                    Update Details : </h1>
 
+                                <form method="POST" enctype="multipart/form-data" action="/api/v1/admin/update-contact-us">
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Banner Image : </label>
+                                        <div style="display: flex;  width: 100%; align-items: center;">
+                                            <figure style="height: 55px; width: 50px; margin-right: 30px; ">
+                                                <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
+                                                    src="<%= backendUrl %>/<%= contactData?.bannerImg %>"
+                                                    alt="course image" />
+                                            </figure>
+                                            <input type="file" name="bannerImg" placeholder="Banner Image "
+                                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                                min="0" />
+                                        </div>
+                                        <input type="hidden" name="contactUsId" value="<%= contactData?._id %>" />
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Contact Us Heading sub heading and details : </label>
+                                        <textarea type="text" name="contactUsHead" placeholder="Contact Us Heading"
+                                            required class="editor"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= contactData?.contactUsHead %></textarea>
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Office Address : </label>
+                                        <input type="text" name="officeAddress" placeholder="Office Address" required   value="<%= contactData?.officeAddress %>"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Contact Us Number : </label>
+                                        <input type="number" name="contactUsNumber" placeholder="Contact Us Number" required value="<%= contactData?.contactUsNumber %>"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Contact Us Email : </label>
+                                        <input type="email" name="contactUsEmail" placeholder="Contact Us Email" required value="<%= contactData?.contactUsEmail %>"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
+                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                            Office Timing : </label>
+                                        <input type="text" name="officeTiming" placeholder="Office Timing" required value="<%= contactData?.officeTiming %>"
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
+                                            min="0" />
+                                    </div>
+
+                                    <button type="submit"
+                                        style="padding: 8px 20px; background-color: #1AAEF4; margin-top: 10px; border-radius: 2px; border: 1px; border-style: solid; border-color: black; margin-left: 85%; color: white; ">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 
 
             </div>
@@ -97,7 +171,24 @@
         </div>
 
     </div>
+    <script>
+        $('.editor').trumbowyg({
+            btns: [
+                ['viewHTML'],
+                ['formatting'],
+                ['strong', 'em', 'underline', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['table'],
+                ['foreColor', 'backColor'],
+                ['fullscreen']
+            ]
 
+        });
+    </script>
 </body>
 
 </html>
