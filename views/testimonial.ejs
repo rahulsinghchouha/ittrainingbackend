@@ -16,7 +16,7 @@
         <div style="display: flex; box-sizing: border-box; ">
 
             <div
-                style=" width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
+                style=" width: 20%; position: fixed;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
 
                 <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
                     class=" w-[100%] border-b-2 border-solid border-red-700">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 88%;">
+            <div style="width: 80%; margin-left: 20%;">
 
                 <div style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid;">
                     <a href="/new-testimonial">
@@ -82,18 +82,82 @@
                         New</button>
                     </a>
                 </div>
+                <div style="width: 80%; margin-left: 150px; margin-top: 100px;">
 
-             
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                        <% testimonials?.forEach(function(testimonial,index) {%>
+                            <div
+                                style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
+                                <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Student Name : </p>
+                                <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                    <%= testimonial?.name %>
+                                </p>
+                                <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                    <%= testimonial?.profile %>
+                                </p>
+                                <figure style="height: 70px; width: 70px;">
+                                    <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
+                                        src="<%= backendUrl %>/<%= testimonial?.img %>"
+                                        alt="course image" />
+                                </figure>
+ 
+                                <button onclick="deleteTestimonial('<%= testimonial._id %>')"
+                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
+                                    Delete </button>
+                                <button onclick="updateTestimonial('<%= testimonial._id %>')"
+                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
+                                    Update </button>
+ 
+ 
+                            </div>
+                            <%}) %>
+  
+                    </div>
 
 
-                
+
+                </div>
+
+
             </div>
-
-
         </div>
 
     </div>
+    <script>
+        async function deleteTestimonial(id) {
+            console.log("id", id);
+            //here we send the post request and delete this categories
+            try {
+                const response = await fetch("/api/v1/admin/delete-course", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ id })
+                })
+                if (response.ok) {
 
+                    alert("Category deleted successfully!");
+
+                } else {
+                    // Handle server-side errors or non-2xx responses
+                    alert(`Error:  'Failed to delete category.'}`);
+                }
+            }
+            catch (error) {
+                console.log("error", error);
+            }
+        }
+
+        function updateTestimonial(id)
+        {
+            console.log(id);
+            window.location.href = `/testimonial/update-testimonial/${id}`
+        }
+
+    </script>
 </body>
 
 </html>

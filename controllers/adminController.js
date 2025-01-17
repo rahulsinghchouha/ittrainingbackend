@@ -451,8 +451,8 @@ exports.updateAboutUs = async (req, res) => {
             updatedAbout.ourMissionImg = ourMissionImg[0]?.filename;
         }
 
-    
-       await aboutUS.findByIdAndUpdate(about._id, { $set: updatedAbout }, { new: true });
+
+        await aboutUS.findByIdAndUpdate(about._id, { $set: updatedAbout }, { new: true });
 
         return successResponse(res, "about us updated succesfully");
 
@@ -489,6 +489,24 @@ exports.addStudentPlaced = async (req, res) => {
         return errorResponse(res, "student not added please try again");
     }
 }
+exports.getTestimonialById = async (req, res) => {
+    const { testimonialId } = req.body;
+    if (!testimonialId) {
+        return validationErrorWithData(res, "testimonial not found");
+    }
+    try {
+        const data = await student.findById(testimonialId);
+        if (!data)
+            return notFoundResponse("Student details not found");
+
+        return successResponseWithData(res, "student details found", data);
+    }
+    catch (error) {
+        console.log("Error to get the testimonial", error);
+        return errorResponse(res,"error to get the student details");
+    }
+}
+
 
 //------------------Contact US----------
 exports.addContactUs = async (req, res) => {
@@ -923,20 +941,18 @@ exports.addTag = async (req, res) => {
 
 }
 //get-blog-by-id
-exports.getBlogById = async(req,res) =>{
-    const {blogId} = req.body;
-    if(!blogId)
-    {
-        return validationErrorWithData(res,"Blog id not found");
+exports.getBlogById = async (req, res) => {
+    const { blogId } = req.body;
+    if (!blogId) {
+        return validationErrorWithData(res, "Blog id not found");
     }
-    try{
-            const data = await blogs.findById(blogId);
-            return successResponse(res,"blog found succesfully",data);
+    try {
+        const data = await blogs.findById(blogId);
+        return successResponse(res, "blog found succesfully", data);
     }
-    catch(error)
-    {
-        console.log("blog not found",error);
-        return errorResponse(res,"blog not found");
+    catch (error) {
+        console.log("blog not found", error);
+        return errorResponse(res, "blog not found");
     }
 }
 

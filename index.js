@@ -83,9 +83,7 @@ app.get("/course", async (req, res) => {
 app.get("/update-course/:id", async (req, res) => {
 
     const courseId = req.params.id;
-    if (!courseId) {
-        res.render("courses");
-    }
+
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-course-by-id`, {
@@ -116,10 +114,58 @@ app.get("/update-course/:id", async (req, res) => {
 app.get("/add-course", (req, res) => {
     res.render("addCourse");
 });
+//==========TESTIMONIAL PAGE============
+app.get("/our-testimonial", async (req, res) => {
 
-app.get("/our-testimonial", (req, res) => {
-    res.render("testimonial");
+    let object;
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/student-placed`);
+        if (!response.ok) {
+            throw new Error("Resoponse not getting");
+        }
+        object = await response.json();
+
+        if (!object || !object.data) {
+            throw new Error("object data not getting");
+        }
+
+    }
+    catch (error) {
+        console.log("error to get the testimonial", error);
+    }
+    res.render("testimonial", { testimonials: object.data, backendUrl: process.env.BACKEND_URL });
 });
+app.get("/testimonial/update-testimonial/:id", async (req, res) => {
+
+    const testimonialId = req.params.id;
+    if (!testimonialId) {
+        res.render("testimonial");
+    }
+    let object;
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-testimonial-by-id`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ testimonialId })
+        });
+        if (!response.ok) {
+            throw new Error("error to get the response");
+        }
+        object = await response.json();
+        if (!object || !object.data) {
+            throw new Error("Error to find the object");
+        }
+        console.log("-------",object.data);
+    }
+    catch (error) {
+        console.log("Error to get the testimonial details", error);
+    }
+    res.render("updateTestimonial",{testimonialDetails:object.data, backendUrl:process.env.BACKEND_URL});
+})
+
+
 app.get("/new-testimonial", (req, res) => {
     res.render("newTestimonial");
 });
@@ -139,46 +185,40 @@ app.get("/blogs", async (req, res) => {
             throw new Error("response not get");
         }
         object = await response.json();
-        if(!object || !object.data)
-        {
-            throw new Error ("data not found");
+        if (!object || !object.data) {
+            throw new Error("data not found");
         }
     }
     catch (error) {
-            console.log("error to fetch the data ",error);
+        console.log("error to fetch the data ", error);
     }
-    res.render("blog",{blogs:object.data, backendUrl:process.env.BACKEND_URL});
+    res.render("blog", { blogs: object.data, backendUrl: process.env.BACKEND_URL });
 });
 
-app.get("/update-blog/:id",async(req,res)=>{
+app.get("/update-blog/:id", async (req, res) => {
     const blogId = req.params?.id;
-    if (!blogId) {
-        res.render("blog");
-    }
+
     let object;
-    try{
-        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-blog-by-id`,{
-            method:"POST",
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-blog-by-id`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ blogId })
-         })
-        if(!response.ok)
-        {
-            throw new Error ("response not get");
+        })
+        if (!response.ok) {
+            throw new Error("response not get");
         }
         object = await response.json();
-        if(!object || !object.data)
-        {
-            throw new Error ("data not found");
+        if (!object || !object.data) {
+            throw new Error("data not found");
         }
-        res.render("updateBlog",{blogDetails:object.data});       
+        res.render("updateBlog", { blogDetails: object.data, backendUrl: process.env.BACKEND_URL });
     }
-    catch(error)
-    {
-        console.log("error",error);
-        res.render("blog");
+    catch (error) {
+        console.log("error", error);
+
     }
 })
 
