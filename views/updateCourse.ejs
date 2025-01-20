@@ -8,11 +8,30 @@
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/style.css" rel="stylesheet" />
     <link href="/css/index.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   
+    <!-- Trumbowyg CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+
+    <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Trumbowyg JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
+    <style>
+       .trumbowyg-button-group .trumbowyg-courseDetails-button {
+            background-color: yellow !important;
+            color: black !important;
+            font-size: 15px !important;
+        }
+        .trumbowyg-categoryDetails-button  {
+            background-color: lightblue !important;
+            color: black !important;
+        }
+        .trumbowyg-blogDetails-button  {
+            background-color: lightgreen !important;
+            color: black !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -270,11 +289,6 @@
 
                                             </div>
                                             <%}) %>
-
-
-
-
-
                                     </div>
 
 
@@ -425,78 +439,10 @@
     </script>
    <script>
     $(document).ready(function () {
-        // Define the custom buttons
-        $.extend(true, $.trumbowyg, {
-            langs: {
-                en: {
-                    courseDetails: 'Course Details',
-                    categoryDetails: 'Category Details',
-                    blogDetails: 'Blog Details'
-                }
-            },
-            plugins: {
-                courseDetails: {
-                    init: function (trumbowyg) {
-                        trumbowyg.addBtnDef('courseDetails', {
-                            fn: function () {
-                                const selectedText = getSelectedText(trumbowyg);
-                                handleCourseDetails(selectedText);
-                            },
-                            ico: 'fa fa-book' // Use FontAwesome class for icon
-                        });
-                    }
-                },
-                categoryDetails: {
-                    init: function (trumbowyg) {
-                        trumbowyg.addBtnDef('categoryDetails', {
-                            fn: function () {
-                                const selectedText = getSelectedText(trumbowyg);
-                                handleCategoryDetails(selectedText);
-                            },
-                            ico: 'fa fa-tags' // Use FontAwesome class for icon
-                        });
-                    }
-                },
-                blogDetails: {
-                    init: function (trumbowyg) {
-                        trumbowyg.addBtnDef('blogDetails', {
-                            fn: function () {
-                                const selectedText = getSelectedText(trumbowyg);
-                                handleBlogDetails(selectedText);
-                            },
-                            ico: 'fa fa-blog' // Use FontAwesome class for icon
-                        });
-                    }
-                }
-            }
-        });
-
+       
         // Initialize Trumbowyg editor with custom buttons
         $('.editor').trumbowyg({
-            btnsDef: {
-                // Custom buttons definitions
-                courseDetails: {
-                    fn: function () {
-                        const selectedText = getSelectedText();
-                        handleCourseDetails(selectedText);
-                    },
-                    ico: 'fa fa-book' // Use FontAwesome class for icon
-                },
-                categoryDetails: {
-                    fn: function () {
-                        const selectedText = getSelectedText();
-                        handleCategoryDetails(selectedText);
-                    },
-                    ico: 'fa fa-tags' // Use FontAwesome class for icon
-                },
-                blogDetails: {
-                    fn: function () {
-                        const selectedText = getSelectedText();
-                        handleBlogDetails(selectedText);
-                    },
-                    ico: 'fa fa-blog' // Use FontAwesome class for icon
-                }
-            },
+           
             btns: [
                 ['viewHTML'],
                 ['formatting'],
@@ -508,8 +454,7 @@
                 ['unorderedList', 'orderedList'],
                 ['table'],
                 ['foreColor', 'backColor'],
-                ['fullscreen'],
-                ['courseDetails', 'categoryDetails', 'blogDetails'] // Add custom buttons to the toolbar
+                ['fullscreen']                
             ]
         });
 
