@@ -8,7 +8,7 @@ const home = require('../models/home');
 const aboutUs = require("../models/aboutUs");
 const { tags } = require("../models/tag");
 
-const { successResponse, errorResponse, validationErrorWithData, successResponseWithData } = require("../helper/apiResponse");
+const { successResponse, errorResponse, validationErrorWithData, successResponseWithData, notFoundResponse } = require("../helper/apiResponse");
 
 const contactUs = require('../models/contactUs');
 
@@ -40,7 +40,7 @@ exports.getCourseBanner = async (req, res) => {
         const data = await bannerImgCourse.findOne({});
         successResponseWithData(res, "course banner get succesfully", data);
     }
-    catch(error) {
+    catch (error) {
         console.log(error);
         return errorResponse(res, "Error to get the data");
     }
@@ -90,6 +90,29 @@ exports.getExploreCard = async (req, res) => {
 
     }
 }
+exports.getCategoryByName = async (req, res) => {
+
+    const { name } = req.query;
+
+    if (!name) {
+        return validationErrorWithData(res, "name not found");
+    }
+    try {
+        const data = await exploreCategory.findOne({ heading: { $regex: name, $options: 'i' } });
+
+        if (!data)
+            return notFoundResponse(res, "category not found");
+
+        return successResponseWithData(res, "category found succesfully",data);
+    }
+    catch (error) {
+        console.log("category not found", error);
+        return errorResponse(res, "category not find");
+    }
+}
+
+
+
 exports.getOurStats = async (req, res) => {
     try {
         const data = await ourStats.findOne({});
