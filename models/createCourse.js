@@ -89,11 +89,19 @@ const bannerImgSchema = new mongoose.Schema({
         require:true
     }
 })
+const courseDetailsBannerSch = new mongoose.Schema({
+    img:{
+        type:String,
+        required:true
+    }
+}) 
 
 const course = mongoose.model("course", courseSchema);
 
 const bannerImgCourse = mongoose.model("bannerImgCourse",bannerImgSchema)
 
-module.exports = {bannerImgCourse,course}
+const courseDetailsBanner = mongoose.model("courseDetailsBanner",courseDetailsBannerSch);
+
+module.exports = {bannerImgCourse,course,courseDetailsBanner};
 
 

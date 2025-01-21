@@ -13,6 +13,7 @@ router.post("/update-course",upload.single("img"),admin.updateCourse);
 router.post("/delete-course",admin.deleteCourse);
 router.post("/add-course-banner",upload.single("img"),admin.addCourseBannerImage);
 router.post("/update-course-banner",upload.single("img"),admin.updateCourseBanner);
+router.post("/add-course-details-banner",upload.single("img"),admin.addCourseDetailBanner);
 
 //TESTIMONIAL
 router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);

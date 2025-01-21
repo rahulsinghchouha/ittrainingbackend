@@ -1,4 +1,4 @@
-const { course, bannerImgCourse } = require('../models/createCourse');
+const { course, bannerImgCourse, courseDetailsBanner } = require('../models/createCourse');
 const { student } = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
@@ -43,6 +43,17 @@ exports.getCourseBanner = async (req, res) => {
     catch (error) {
         console.log(error);
         return errorResponse(res, "Error to get the data");
+    }
+}
+exports.getCourseDetailsBanner = async (req, res) => {
+    try {
+        const data = await courseDetailsBanner.findOne({});
+        return successResponseWithData(res, "course details found succesfully", data);
+    }
+    catch (error) {
+        console.log("error to find the course banner", error);
+        return errorResponse(res, "course details banner not found");
+
     }
 }
 
@@ -103,7 +114,7 @@ exports.getCategoryByName = async (req, res) => {
         if (!data)
             return notFoundResponse(res, "category not found");
 
-        return successResponseWithData(res, "category found succesfully",data);
+        return successResponseWithData(res, "category found succesfully", data);
     }
     catch (error) {
         console.log("category not found", error);

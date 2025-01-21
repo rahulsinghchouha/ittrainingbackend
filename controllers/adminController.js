@@ -1,4 +1,4 @@
-const { course, bannerImgCourse } = require("../models/createCourse");
+const { course, bannerImgCourse, courseDetailsBanner } = require("../models/createCourse");
 const home = require("../models/home");
 const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
@@ -290,7 +290,6 @@ exports.getCourseById = async (req, res) => {
         return errorResponse(res, "course Details not get");
     }
 }
-
 exports.updateCourse = async (req, res) => {
     const { courseId, courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ } = req.body;
     const img = req.file?.filename;
@@ -319,7 +318,6 @@ exports.updateCourse = async (req, res) => {
         return errorResponse(res, "course not updated please try again");
     }
 }
-
 exports.deleteCourse = async (req, res) => {
 
     const { id } = req.body;
@@ -345,7 +343,6 @@ exports.deleteCourse = async (req, res) => {
         return errorResponse(res, "course not found")
     }
 }
-
 exports.addCourseBannerImage = async (req, res) => {
     const img = req.file?.filename;
     const {coursePageHeading} = req.body;
@@ -406,6 +403,31 @@ exports.updateCourseBanner = async (req,res) =>{
         return errorResponse(res,"error to update the course");
     }
 }
+exports.addCourseDetailBanner = async (req,res) =>{
+    const img = req.file?.filename;
+
+    if(!img)
+        return validationErrorWithData(res,"course details banner img not found");
+
+    try{
+        const banner = await courseDetailsBanner.findOne({});
+        if(banner)
+        {
+            deleteImage(path.join(__dirname,"../public",banner.img),"course details banner img");
+            banner.img = img;
+            await banner.save();
+        }
+        else{
+            await courseDetailsBanner.create({img});
+        }
+        return successResponse(res,"course details banner created");
+    }
+    catch(error)
+    {
+        console.log("error to update the course banner img",error);
+        return errorResponse(res,"error to update the course details banner ");
+    }
+} 
 
 //------------------- ABOUT US ------------------
 exports.addAboutUS = async (req, res) => {

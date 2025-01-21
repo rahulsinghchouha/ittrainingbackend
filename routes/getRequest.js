@@ -3,8 +3,11 @@ const getRequest = require("../controllers/getRequest");
 
 
 router.get("/get-home",getRequest.getHome);
+//course
 router.get("/course-card",getRequest.getCourseCard);
 router.get("/course-banner-img",getRequest.getCourseBanner);
+router.get("/course-details-banner",getRequest.getCourseDetailsBanner);
+
 router.get("/get-about-us",getRequest.getAboutUs);
 router.get("/student-placed",getRequest.getStudentPlaced);
 router.get("/get-partners",getRequest.getPartners);
