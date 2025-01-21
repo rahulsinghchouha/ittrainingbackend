@@ -624,6 +624,9 @@ exports.addContactUs = async (req, res) => {
         const contactData = await contactUs.findOne({});
 
         if (contactData) {
+            const oldImage = path.join(__dirname, "../public", contactData.bannerImg);
+            deleteImage(oldImage, "banner image contactus");
+            
             await contactUs.findByIdAndUpdate(contactData._id, { $set: newContact }, { new: true });
             return successResponseWithData(res, "contact data added succesfully");
         }
