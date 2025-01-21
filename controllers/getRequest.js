@@ -3,7 +3,7 @@ const { student } = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");
-const { blogs } = require("../models/blog")
+const { blogs , bannerImgBlog} = require("../models/blog")
 const home = require('../models/home');
 const aboutUs = require("../models/aboutUs");
 const { tags } = require("../models/tag");
@@ -23,7 +23,6 @@ exports.getHome = async (req, res) => {
         errorResponse(res, "error to get home data");
     }
 }
-
 
 exports.getCourseCard = async (req, res) => {
     try {
@@ -48,6 +47,8 @@ exports.getCourseBanner = async (req, res) => {
 exports.getCourseDetailsBanner = async (req, res) => {
     try {
         const data = await courseDetailsBanner.findOne({});
+        if(!data) return notFoundResponse(res,"course details banner not found");  
+        
         return successResponseWithData(res, "course details found succesfully", data);
     }
     catch (error) {
@@ -122,8 +123,6 @@ exports.getCategoryByName = async (req, res) => {
     }
 }
 
-
-
 exports.getOurStats = async (req, res) => {
     try {
         const data = await ourStats.findOne({});
@@ -134,9 +133,12 @@ exports.getOurStats = async (req, res) => {
         errorResponse(res, "error to get our stats card");
     }
 }
+//BLOG
 exports.getBlogs = async (req, res) => {
     try {
         const data = await blogs.find();
+        if(!data) return notFoundResponse(res,"blog not found");
+
         successResponseWithData(res, "Blogs get succesfully", data);
     }
     catch (error) {
@@ -145,6 +147,20 @@ exports.getBlogs = async (req, res) => {
 
     }
 }
+exports.getBlogBanner = async(req,res) =>{
+    try{
+        const data = await bannerImgBlog.findOne({});
+
+        if(!data) return notFoundResponse(res,"blog banner not found");
+
+        return successResponseWithData(res,"blog banner get",data);
+    }
+    catch(error){
+        console.log("blog banner not get",error);
+        return errorResponse(res,"blog banner not get");
+    }
+}
+
 exports.getTags = async (req, res) => {
     try {
         // console.log("tag controller call");

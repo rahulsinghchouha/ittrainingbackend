@@ -8,7 +8,7 @@ const { student } = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
-const { blogs } = require("../models/blog");
+const { blogs,bannerImgBlog } = require("../models/blog");
 
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
@@ -1170,7 +1170,6 @@ exports.deleteBlog = async (req, res) => {
         return errorResponse(res, "blog not deleted");
     }
 }
-//get-blog-by-id
 exports.getBlogById = async (req, res) => {
     const { blogId } = req.body;
     if (!blogId) {
@@ -1183,6 +1182,34 @@ exports.getBlogById = async (req, res) => {
     catch (error) {
         console.log("blog not found", error);
         return errorResponse(res, "blog not found");
+    }
+}
+exports.addBlogBanner = async(req,res) =>{
+
+    const img = req.file?.filename;
+
+    if(!img)
+    {
+        return validationErrorWithData(res,"Blog banner img not found ");
+    }
+    try{
+            const banner = await bannerImgBlog.findOne({});
+
+            if(banner)
+            {
+                deleteImage(path.join(__dirname,"../public",banner?.img),"blog banner image");
+                banner.img = img;
+                await banner.save();
+            }
+            else{
+                await bannerImgBlog.create({img});
+            }
+            return successResponse(res,"blog banner img add succesfully");
+    }
+    catch(error)
+    {
+        console.log("Error to update the blog banner img",error);
+        return errorResponse(res,"blog banner not updated");
     }
 }
 

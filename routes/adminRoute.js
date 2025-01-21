@@ -70,6 +70,7 @@ router.post("/update-about-us",upload.fields([
 //BLOG
 router.post("/add-blogs",upload.single("img"),admin.addBlog);
 router.post("/update-blog",upload.single("img"),admin.updateBlog);
+router.post("/add-blog-banner",upload.single("img"),admin.addBlogBanner);
 router.get("/delete-blog",admin.deleteBlog);
 router.post("/get-blog-by-id",admin.getBlogById);
 
