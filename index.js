@@ -62,6 +62,7 @@ app.get("/add-home", (req, res) => {
 app.get("/course", async (req, res) => {
 
     let object;
+    let bannerCourse;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/course-card`);
 
@@ -78,7 +79,24 @@ app.get("/course", async (req, res) => {
     catch (error) {
         console.log("error to get the courses", error);
     }
-    res.render("courses", { courses: object.data, backendUrl: process.env.BACKEND_URL });
+
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/course-banner-img`);
+
+        if (!response.ok) {
+            throw new Error("invalid API Call");
+        }
+        bannerCourse = await response.json();
+
+        if (!bannerCourse || !bannerCourse.data) {
+            throw new Error("courses not found");
+        }
+
+    }
+    catch (error) {
+        console.log("error to get the courses", error);
+    }
+    res.render("courses", { courses: object?.data,bannerCourse: bannerCourse?.data , backendUrl: process.env.BACKEND_URL });
 });
 app.get("/update-course/:id", async (req, res) => {
 

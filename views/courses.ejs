@@ -8,6 +8,9 @@
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
     <script src="/aejsFunction/ejsFunction.js"> </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
 </head>
 
 <body>
@@ -78,56 +81,104 @@
 
                 <div style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid;">
                     <a href="/add-course">
-                    <button
-                        style="color: white; background-color: #1AAEF4; width: 90px; height: 40px; border-radius: 5px; margin-top: 50px; margin-left: 40px;">Add
-                        New</button>
+                        <button
+                            style="color: white; background-color: #1AAEF4; width: 90px; height: 40px; border-radius: 5px; margin-top: 50px; margin-left: 40px;">Add
+                            New</button>
                     </a>
-                </div>  
-                
-                <div style="width: 80%; margin-left: auto; margin-right: auto; margin-top: 30px;" >
-                   <!-- Update and Delete the Course -->
-                   <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update And Delete The Course - </h1>
+                </div>
 
-                   <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="width: 80%; margin-left: auto; margin-right: auto; margin-top: 30px;">
+                    <!-- Update and Delete the Course -->
+                    <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update the Course Page - </h1>
 
-                       <% courses?.forEach(function(course,index) {%>
-                           <div
-                               style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
-                               <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                   Course Name : </p>
-                               <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
-                                   <%= course?.courseName %>
-                               </p>
-                               <figure style="height: 70px; width: 70px;">
-                                   <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
-                                       src="<%= backendUrl %>/<%= course?.img %>"
-                                       alt="course image" />
-                               </figure>
+                    <div style="margin-bottom: 50px;">
+                        <form action="/api/v1/admin/update-course-banner" method="POST" enctype="multipart/form-data">
+                            <label
+                                style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; display: block;">Update Banner
+                                Image : </label>
+                            <div style="display: flex;  width: 100%; align-items: center;">
+                                <figure style="height: 55px; width: 50px; margin-right: 30px; ">
+                                    <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
+                                        src="<%= backendUrl %>/<%= bannerCourse?.img %>" alt="course image" />
+                                </figure>
+                                <input  type="file" name="img"  placeholder="Banner Image"
+                                    style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
+                            </div>
+                            <input type="hidden" name="bannerId" value="<%= bannerCourse?._id %>" />
+                            <label
+                                style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 20px; display: block;">Update Course
+                                Page Details
+                            </label>
+                            <textarea required type="text" name="coursePageHeading" required
+                                placeholder="Course Page Details" class="editor"
+                                style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= bannerCourse?.coursePageHeading %></textarea>
 
-                               <button onclick="deleteCourse('<%= course._id %>')"
-                                   style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
-                                   Delete </button>
-                               <button onclick="updateCourse('<%= course._id %>')"
-                                   style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
-                                   Update </button>
+                            <button type="submit"
+                                style=" border:2px; border-style: solid; border-color: black; margin-left: 90%; margin-top: 20px; width: 10%; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 0px; border-radius: 5px; ">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
 
 
-                           </div>
-                           <%}) %>
+                    <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update And Delete The Course - </h1>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                        <% courses?.forEach(function(course,index) {%>
+                            <div
+                                style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
+                                <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                    Course Name : </p>
+                                <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                    <%= course?.courseName %>
+                                </p>
+                                <figure style="height: 70px; width: 70px;">
+                                    <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
+                                        src="<%= backendUrl %>/<%= course?.img %>" alt="course image" />
+                                </figure>
+
+                                <button onclick="deleteCourse('<%= course._id %>')"
+                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
+                                    Delete </button>
+                                <button onclick="updateCourse('<%= course._id %>')"
+                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
+                                    Update </button>
 
 
-                   </div>
+                            </div>
+                            <%}) %>
+
+
+                    </div>
                 </div>
             </div>
 
 
         </div>
-       
+
 
     </div>
     <script>
+        $('.editor').trumbowyg({
+            btns: [
+                ['viewHTML'],
+                ['formatting'],
+                ['strong', 'em', 'underline', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['table'],
+                ['foreColor', 'backColor'],
+                ['fullscreen']
+            ]
+        });
+    </script>
+    <script>
         async function deleteCourse(id) {
-            
+
             try {
                 const response = await fetch("/api/v1/admin/delete-course", {
                     method: "POST",
@@ -150,8 +201,7 @@
             }
         }
 
-        function updateCourse(id)
-        {
+        function updateCourse(id) {
             console.log(id);
             window.location.href = `/update-course/${id}`
         }

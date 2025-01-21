@@ -377,7 +377,35 @@ exports.addCourseBannerImage = async (req, res) => {
         return errorResponse(res, "course data not added please try again");
     }
 }
+exports.updateCourseBanner = async (req,res) =>{
+    const img = req.file?.filename;
+    const {coursePageHeading,bannerId} = req.body;
 
+    //validation
+    if(!bannerId || !coursePageHeading)
+                return validationErrorWithData(res,"please enter the require field");
+
+    try{
+            const banner = await bannerImgCourse.findById(bannerId);
+            if(!banner)
+            {
+                return notFoundResponse(res,"banner not found");
+            }
+            const updatedBanner = {coursePageHeading};
+            if(img)
+            {
+                deleteImage(path.join(__dirname,"../public",banner.img),"course banner image");
+                updatedBanner.img = img;
+            }
+            await bannerImgCourse.findByIdAndUpdate(banner._id,{$set:updatedBanner},{new:true});
+            return successResponse(res,"banner updated succesfully");          
+    }
+    catch(error)
+    {
+        console.log("error to update the banner",error);
+        return errorResponse(res,"error to update the course");
+    }
+}
 
 //------------------- ABOUT US ------------------
 exports.addAboutUS = async (req, res) => {
