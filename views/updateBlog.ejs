@@ -96,6 +96,7 @@
                             <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
                                     Update Blog Image : </label>
+                                    <input type="hidden" name="blogId" value="<%= blogDetails?._id %>" />
                                 <div style="display: flex;  width: 100%; align-items: center;">
                                     <figure style="height: 55px; width: 50px; margin-right: 30px; ">
                                         <img style="height: 100%; width: 100%; object-fit: cover;"
@@ -218,7 +219,6 @@
 
         function addOptions() {
             const selector = document.querySelector("#category-selector");
-            console.log(selector);
             categories.forEach(category => {
                 const option = document.createElement('option');
                 option.style.width = "100%";

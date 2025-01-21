@@ -598,37 +598,33 @@ exports.addContactUs = async (req, res) => {
         return errorResponse(res, "contact us not added please verify the data and try again");
     }
 }
-exports.updateContactUs = async (req,res) =>{
+exports.updateContactUs = async (req, res) => {
 
     const bannerImg = req.file?.filename;
-    const {contactUsId, contactUsHead,officeAddress,contactUsNumber,contactUsEmail,officeTiming} = req.body;
+    const { contactUsId, contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming } = req.body;
     //validation
-    if( !contactUsId || !contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming)
-    {
-        return validationErrorWithData(res,"data not get");
+    if (!contactUsId || !contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming) {
+        return validationErrorWithData(res, "data not get");
     }
-    try{
-            const contactUsData = await contactUs.findById(contactUsId);
-            if(!contactUsData)
-            {
-                return notFoundResponse(res,"contact data not found");
-            }
-            const updatedContact = {
-                contactUsHead,officeAddress,contactUsNumber,contactUsEmail,officeTiming
-            }
-            if(bannerImg)
-            {
-                const oldImage = path.join(__dirname,"../public",contactUsData.bannerImg);
-                deleteImage(oldImage,"banner image contactus");
-                updatedContact.bannerImg = bannerImg;
-            }
-            await contactUs.findByIdAndUpdate(contactUsData._id,{ $set : updatedContact},{ new:true });
-            return successResponse(res,"contact us updated succesfully");
+    try {
+        const contactUsData = await contactUs.findById(contactUsId);
+        if (!contactUsData) {
+            return notFoundResponse(res, "contact data not found");
+        }
+        const updatedContact = {
+            contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming
+        }
+        if (bannerImg) {
+            const oldImage = path.join(__dirname, "../public", contactUsData.bannerImg);
+            deleteImage(oldImage, "banner image contactus");
+            updatedContact.bannerImg = bannerImg;
+        }
+        await contactUs.findByIdAndUpdate(contactUsData._id, { $set: updatedContact }, { new: true });
+        return successResponse(res, "contact us updated succesfully");
     }
-    catch(error)
-    {
-        console.log("error to update the contact",error);
-        return errorResponse(res,"contact us not updated");
+    catch (error) {
+        console.log("error to update the contact", error);
+        return errorResponse(res, "contact us not updated");
     }
 }
 
@@ -940,10 +936,6 @@ exports.updateOurPartners = async (req, res) => {
     const img = req.file?.filename;
     const { partnerId } = req.body;
 
-    // console.log("img",img);
-
-    //  console.log("request body",partnerId);
-
     if (!img || !partnerId) {
         return validationErrorWithData(res, "img or partnerId not found");
     }
@@ -1007,6 +999,42 @@ exports.addBlog = async (req, res) => {
     }
 
 }
+exports.updateBlog = async (req, res) => {
+
+    const { blogId, heading, blogCategory, details, tags } = req.body;
+    const img = req.file?.filename;
+
+    if (!blogId || !heading || !blogCategory || !details || !tags) {
+        return validationErrorWithData(res, "require all the details");
+    }
+
+    try {
+
+        const blog = await blogs.findById(blogId);
+
+        if (!blog) return notFoundResponse(res, "blog details not found");
+
+        const updatedBlog = {
+            heading,
+            blogCategory,
+            details,
+            tags
+        }
+        if (img) {
+            deleteImage(path.join(__dirname, "../public", blog?.img), "blog img");
+            updatedBlog.img = img;
+        }
+        await blogs.findByIdAndUpdate(blogId, { $set: updatedBlog }, { new: true });
+
+        return successResponse(res,"blog details updated succesfully");
+    }
+    catch (error) {
+        console.log("Error to update the blog");
+        return errorResponse(res,"blog not updated");
+    }
+
+}
+
 exports.addTag = async (req, res) => {
 
     const { tag } = req.body;

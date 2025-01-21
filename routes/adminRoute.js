@@ -67,8 +67,10 @@ router.post("/update-about-us",upload.fields([
 
 //BLOG
 router.post("/add-blogs",upload.single("img"),admin.addBlog);
+router.post("/update-blog",upload.single("img"),admin.updateBlog);
 router.post("/add-tag",admin.addTag);
 router.post("/get-blog-by-id",admin.getBlogById);
+
 
 //contact us
 router.post("/add-contact-us",upload.single("bannerImg"),admin.addContactUs);
