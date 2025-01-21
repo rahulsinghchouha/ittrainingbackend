@@ -12,68 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
-    <script>
-        let tags = null;
-        let selectorIndex = 1;
-        //fetch the tags from the server
-        // console.log("Script running");
-
-        fetch('/api/v1/get/get-tags')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();  // Parse the response body as JSON
-            })
-            .then((data) => {
-                tags = data?.data;
-                console.log(tags);
-            })
-            .catch((error) => console.log("Error to get the tag", error))
-
-
-        function addTagsOption(index) {
-            const tagSelector = document.querySelector(`#tags-selector-${index}`);
-            // Loop through all <select> elements and populate them with options
-            console.log("function add tag call");
-            tags.forEach(singleTag => {
-                const option = document.createElement('option');
-                option.value = singleTag.tag;
-                option.textContent = `${singleTag.tag}`;
-                tagSelector.appendChild(option);
-            })
-        }
-
-        function removeHeading(button) {
-            button.parentElement.remove();
-        }
-        function addMoreTags() {
-
-            const tagsContainer = document.querySelector('#tags-container');
-
-            const div = document.createElement('div');
-
-            div.style.width = '100%';
-
-            div.innerHTML = `
-             <select type="text" name="tags[]"  id="tags-selector-${selectorIndex}"
-                                                    placeholder="Tools In Hand" required
-                                                    style="margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px; display:block" >
-                                                
-            </select>
-            <button type="button" onClick="removeHeading(this)" style="margin-top:10px; background-color:red; color:white; border: 2px; border-style: solid; border-color:black; padding: 0 4px;">Remove This Tag</button>
-            
-            `
-            tagsContainer.appendChild(div);
-
-            addTagsOption(selectorIndex);
-
-            selectorIndex++;
-
-        }
-
-    </script>
-
+   
 
 </head>
 
@@ -153,8 +92,6 @@
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
                         <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Home Page - </h1>
 
-
-
                         <form method="POST" action="/api/v1/admin/update-blog" enctype="multipart/form-data">
                             <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
@@ -172,7 +109,7 @@
                             </div>
                             <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                    Add Blog Heading : </label>
+                                    Update Blog Heading : </label>
                                 <input type="text" name="heading" placeholder="Add Blog Heading" required
                                     value="<%= blogDetails?.heading %>"
                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
@@ -180,7 +117,7 @@
                             <!-- Blog Category -->
                             <div style="margin-top: 20px; padding: 15px;" id="addCategoryContainer">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                    Add Blog Category :
+                                    Update Blog Category :
                                 </label>
                                 <select id="category-selector" name="blogCategory"
                                     value="<%= blogDetails?.blogCategory %>"
@@ -193,36 +130,37 @@
                                     style="width: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
                                     <h1
                                         style="font-size: 20px; font-weight: 700; color: green; margin-top: 20px; margin-left:20px ;">
-                                        Add Tags : </h1>
+                                        Update Tags : </h1>
 
                                     <div id="tags-container"
                                         style="width: 100%; display: flex; flex-direction: column;">
                                         <div style="width: 100%;">
-                                            <% blogDetails?.tags?.forEach(function(tags,index) {%>
-                                                <script>
-                                                    addTagsOption(<%= index %>);
-                                                </script>
+                                            <% blogDetails?.tags?.forEach(function(tag,index) {%>
+                                               
 
                                                 <select type="text" name="tags[]" id="tags-selector-<%= index %>"
-                                                    value="<%= tags %>" placeholder="Tools In Hand" 
+                                                    placeholder="Tools In Hand"
                                                     style="margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px; display:block">
+                                                    <option value="<%= tag %>"><%= tag %></option>
+                                                    <% tags?.forEach(function(tagOption,index){%>
+                                                        <% if(tag  !=  tagOption?.tag )
+                                                        {%>
+                                                            <option value="<%= tagOption?.tag %>"><%= tagOption?.tag %></option>
+                                                        <%} %>
+                                                        
+                                                    <%}) %>
+                                               
                                                 </select>
 
-                                                <%}) %>
+                                              <%})%>
                                         </div>
-
                                     </div>
-
-                                    <button
-                                        style="margin-top: 10px; border: 2px; border-style: solid; border-color:black; background-color: green; color: white; padding: 0 4px; "
-                                        type="button" onclick="addMoreTags()">Add More Tags</button>
-
                                 </div>
                             </div>
 
                             <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
                                 <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                    Add Blog Details : </label>
+                                    Update Blog Details : </label>
                                 <textarea class="editor" type="text" name="details" placeholder="Add Blog Details"
                                     required
                                     style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"><%= blogDetails?.details  %></textarea>
@@ -262,6 +200,7 @@
         });
 
     </script>
+
     <script>
         let categories = null;
         fetch('/api/v1/get/get-explore-card')
@@ -290,8 +229,7 @@
             });
         }
     </script>
-
-
+   
 </body>
 
 </html>

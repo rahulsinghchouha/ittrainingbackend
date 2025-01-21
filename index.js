@@ -138,7 +138,7 @@ app.get("/our-testimonial", async (req, res) => {
 app.get("/testimonial/update-testimonial/:id", async (req, res) => {
 
     const testimonialId = req.params.id;
-   
+
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-testimonial-by-id`, {
@@ -155,12 +155,12 @@ app.get("/testimonial/update-testimonial/:id", async (req, res) => {
         if (!object || !object.data) {
             throw new Error("Error to find the object");
         }
-    
+
     }
     catch (error) {
         console.log("Error to get the testimonial details", error);
     }
-    res.render("updateTestimonial",{testimonialDetails:object?.data, backendUrl:process.env.BACKEND_URL});
+    res.render("updateTestimonial", { testimonialDetails: object?.data, backendUrl: process.env.BACKEND_URL });
 })
 
 
@@ -195,7 +195,7 @@ app.get("/blogs", async (req, res) => {
 
 app.get("/update-blog/:id", async (req, res) => {
     const blogId = req.params?.id;
-
+    let tags;
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-blog-by-id`, {
@@ -210,14 +210,29 @@ app.get("/update-blog/:id", async (req, res) => {
         }
         object = await response.json();
         if (!object || !object.data) {
-            throw new Error("data not found");
+            throw new Error("blog not found");
         }
-        res.render("updateBlog", { blogDetails: object.data, backendUrl: process.env.BACKEND_URL });
+    }
+    catch (error) {
+        console.log("error to get the blogs", error);
+    }
+    //for get the tags
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-tags`);
+        if (!response.ok) {
+            throw new Error("response not get");
+        }
+        tags = await response.json();
+        if (!tags || !tags.data) {
+            throw new Error("tag not found");
+        }
     }
     catch (error) {
         console.log("error", error);
-
     }
+
+    res.render("updateBlog", { blogDetails: object.data, tags:tags.data, backendUrl: process.env.BACKEND_URL });
+
 })
 
 app.get("/add-newBlog", (req, res) => {
@@ -228,26 +243,23 @@ app.get("/add-newTag", (req, res) => {
     res.render("addNewTag");
 });
 
-app.get("/contact-us", async(req, res) => {
+app.get("/contact-us", async (req, res) => {
     let object;
-    try{
-            const response = await fetch(`${process.env?.BACKEND_URL}/api/v1/get/get-contact-us`);
-            if(!response.ok)
-            {
-                throw new Error ("not fetching the contact us details");
-            }
-            object = await response.json();
-           
-            if( !object || !object.data)
-            {
-                throw new Error ("contact us data not found");
-            }
+    try {
+        const response = await fetch(`${process.env?.BACKEND_URL}/api/v1/get/get-contact-us`);
+        if (!response.ok) {
+            throw new Error("not fetching the contact us details");
         }
-    catch(error)
-    {
-        console.log("error to get the contact us",error);
+        object = await response.json();
+
+        if (!object || !object.data) {
+            throw new Error("contact us data not found");
+        }
     }
-    res.render("contactUs",{contactData:object?.data,backendUrl:process.env?.BACKEND_URL});
+    catch (error) {
+        console.log("error to get the contact us", error);
+    }
+    res.render("contactUs", { contactData: object?.data, backendUrl: process.env?.BACKEND_URL });
 });
 app.get("/add-contactUs", (req, res) => {
     res.render("addContactUs");
