@@ -348,29 +348,36 @@ exports.deleteCourse = async (req, res) => {
 
 exports.addCourseBannerImage = async (req, res) => {
     const img = req.file?.filename;
-    if (!img) {
-        return validationErrorWithData(res, "img not found");
+    const {coursePageHeading} = req.body;
+
+    if (!img || !coursePageHeading) {
+        return validationErrorWithData(res, "data not found");
     }
-    const newImg = {
-        img
+    const newData = {
+        img,
+        coursePageHeading
     }
     try {
         const bannerData = await bannerImgCourse.findOne({});
 
         if (bannerData) {
-            await bannerImgCourse.findByIdAndUpdate(bannerData._id, { $set: newImg }, { new: true });
-            return successResponse(res, "img updated succesfully");
+
+            deleteImage(path.join(__dirname,"../public", bannerData.img),"course banner image");
+
+            await bannerImgCourse.findByIdAndUpdate(bannerData._id, { $set: newData }, { new: true });
+            return successResponse(res, "course page updated succesfully");
         }
         else {
-            await bannerImgCourse.create({ img });
-            return successResponse(res, "img added succesfully");
+            await bannerImgCourse.create({ newData });
+            return successResponse(res, "course banner added succesfully");
         }
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res, "img not added please try again");
+        return errorResponse(res, "course data not added please try again");
     }
 }
+
 
 //------------------- ABOUT US ------------------
 exports.addAboutUS = async (req, res) => {
@@ -626,7 +633,7 @@ exports.addContactUs = async (req, res) => {
         if (contactData) {
             const oldImage = path.join(__dirname, "../public", contactData.bannerImg);
             deleteImage(oldImage, "banner image contactus");
-            
+
             await contactUs.findByIdAndUpdate(contactData._id, { $set: newContact }, { new: true });
             return successResponseWithData(res, "contact data added succesfully");
         }

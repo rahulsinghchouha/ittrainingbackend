@@ -82,7 +82,11 @@ const courseSchema = new mongoose.Schema({
 const bannerImgSchema = new mongoose.Schema({
     img:{
         type:String,
-        required:true,
+        required:true
+    },
+    coursePageHeading:{
+        type:String,
+        require:true
     }
 })
 
