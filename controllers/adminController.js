@@ -3,7 +3,7 @@ const home = require("../models/home");
 const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
 const { tags } = require("../models/tag");
-
+const mongoose = require('mongoose');
 const { student } = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
@@ -1102,7 +1102,7 @@ exports.deleteTag = async (req, res) => {
 
     try {
         await tags.findByIdAndDelete(tagId);
-        return successResponse(res,"tag deleetd succesfully");
+        return successResponse(res,"tag deleted succesfully");
        }
     catch (error) {
         console.log("error to delete the tag", error);
@@ -1110,5 +1110,23 @@ exports.deleteTag = async (req, res) => {
     }
 
 }
+exports.updateTag = async(req,res) =>{
 
+    const {tagId,tag} = req.body;
+
+        if (!tagId || !tag)
+            return validationErrorWithData(res, "tag not found");
+    // Validate tag ID format
+    if (!mongoose.isValidObjectId(tagId)) {
+        return validationErrorWithData(res, "Invalid tag ID format");
+    }
+        try {
+            await tags.findByIdAndUpdate(tagId,{$set:{tag}},{new:true});
+            return successResponse(res,"tag updated succesfully");
+           }
+        catch (error) {
+            console.log("error to update the tag", error);
+            return errorResponse(res, "tag not updated");
+        }
+}
 

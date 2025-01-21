@@ -74,6 +74,7 @@ router.post("/get-blog-by-id",admin.getBlogById);
 //TAG
 router.post("/add-tag",admin.addTag);
 router.post("/delete-tag",admin.deleteTag);
+router.post("/update-tag",admin.updateTag);
 
 //contact us
 router.post("/add-contact-us",upload.single("bannerImg"),admin.addContactUs);
