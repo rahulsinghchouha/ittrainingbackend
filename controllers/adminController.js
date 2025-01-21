@@ -133,8 +133,22 @@ exports.addHome = async (req, res) => {
         const homeData = await home.findOne({});
 
         if (homeData) {
-            const oldImage = path.join(__dirname, '../public', homeData.bannerImage);
-            deleteImage(oldImage, "banner Image");
+            const oldImage1 = path.join(__dirname, '../public', homeData.bannerImage);
+            deleteImage(oldImage1, "banner Image");
+
+            const oldImage2 = path.join(__dirname, "../public", homeData.bannerBgImg);
+            deleteImage(oldImage2, "banner bg Image");
+
+            const oldImage3 = path.join(__dirname, "../public", homeData.blogImg);
+            deleteImage(oldImage3, "blog img");
+
+            const oldImage4 = path.join(__dirname, "../public", homeData.maximizeCareerImg);
+            deleteImage(oldImage4, "maximize career img");
+
+            const oldImage5 = path.join(__dirname, "../public", homeData.beforeCollegeImg);
+            deleteImage(oldImage5, "before college image");
+
+
             await home.findByIdAndUpdate(homeData._id, { $set: newhomeData }, { new: true });
             return successResponse(res, "home updated succesfully");
         }
@@ -313,6 +327,16 @@ exports.deleteCourse = async (req, res) => {
         return validationErrorWithData(res, "course id not found");
     }
     try {
+
+        const courseDetails = await course.findById(id);
+        if (!courseDetails) {
+            console.log("course not found");
+            return notFoundResponse(res, "course not found");
+        }
+
+        const oldImage = path.join(__dirname, "../public", courseDetails.img);
+        deleteImage(oldImage, "course image");
+
         await course.findByIdAndDelete(id);
         return successResponse(res, "course deleted succesfully");
     }
@@ -382,6 +406,22 @@ exports.addAboutUS = async (req, res) => {
         const aboutData = await aboutUS.findOne({});
         //agr about hai then user ne new about ki request send kr di
         if (aboutData) {
+            const oldImage1 = path.join(__dirname, "../public", aboutData.bannerImage);
+            deleteImage(oldImage1, "banner Image");
+
+            const oldImage2 = path.join(__dirname, "../public", aboutData.yourImaginationImg);
+            deleteImage(oldImage2, "your imagination image");
+
+            const oldImage3 = path.join(__dirname, "../public", aboutData.ourJourneyImg);
+            deleteImage(oldImage3, "our journey image");
+
+            const oldImage4 = path.join(__dirname, "../public", aboutData.ourBeliefImg);
+            deleteImage(oldImage4, "our belief image");
+
+            const oldImage5 = path.join(__dirname, "../public", aboutData.ourMissionImg);
+            deleteImage(oldImage5, "Our Mission Image");
+
+
             await aboutUS.findByIdAndUpdate(aboutData._id, { $set: aboutUsData }, { new: true });
             return successResponse(res, "about us updated succesfully");
         }
@@ -902,7 +942,7 @@ exports.updateCategory = async (req, res) => {
             deleteImage(oldImage, "categoryDetailsimg");
             updateCategory.categoryDetailsImg = categoryDetailsImg;
         }
-        console.log("updated category", updateCategory.detailsCard);
+        //console.log("updated category", updateCategory.detailsCard);
 
         await exploreCategory.findByIdAndUpdate(category._id, { $set: updateCategory }, { new: true });
 
@@ -944,6 +984,9 @@ exports.updateOurPartners = async (req, res) => {
     try {
         const partner = await ourPartners.findById(partnerId);
         //console.log(partner);
+        if(!partner)
+            return notFoundResponse(res,"partner not found");
+
         const oldImage = path.join(__dirname, '../public', partner.img);
         deleteImage(oldImage, "update partner");
         partner.img = img;
@@ -965,6 +1008,17 @@ exports.deleteOurPartner = async (req, res) => {
         return validationErrorWithData(res, "partner not found")
     }
     try {
+
+        const partner = await ourPartners.findById(partnerId);
+
+        if(!partner)
+            return notFoundResponse(res,"partner not found");
+
+
+        const oldImage = path.join(__dirname, '../public', partner.img);
+        deleteImage(oldImage, " partner image");
+
+
         await ourPartners.findByIdAndDelete(partnerId);
         return successResponse(res, "partner deleted succesfully");
     }
