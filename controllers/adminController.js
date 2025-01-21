@@ -630,7 +630,7 @@ exports.updateContactUs = async (req, res) => {
 }
 
 
-//---------------------OUR STATS
+//---------------------OUR STATS---------
 exports.addOurStats = async (req, res) => {
 
     const { mentors, experience, placedStudent, yearsOfJourney } = req.body;
@@ -1072,7 +1072,7 @@ exports.getBlogById = async (req, res) => {
     }
 }
 
-
+//--------------------TAG------------
 exports.addTag = async (req, res) => {
 
     const { tag } = req.body;
