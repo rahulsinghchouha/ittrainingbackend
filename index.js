@@ -239,8 +239,25 @@ app.get("/add-newBlog", (req, res) => {
     res.render("addNewBlog");
 });
 
-app.get("/add-newTag", (req, res) => {
-    res.render("addNewTag");
+app.get("/add-newTag", async (req, res) => {
+
+    let tags;
+
+    try {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-tags`);
+        if (!response.ok) {
+            throw new Error("response not get");
+        }
+        tags = await response.json();
+        if (!tags || !tags.data) {
+            throw new Error("tag not found");
+        }
+    }
+    catch (error) {
+        console.log("error", error);
+    }
+
+    res.render("addNewTag",{tags:tags.data});
 });
 
 app.get("/contact-us", async (req, res) => {

@@ -1058,6 +1058,22 @@ exports.deleteBlog = async (req,res) =>{
         return errorResponse(res,"blog not deleted");
     }
 }
+//get-blog-by-id
+exports.getBlogById = async (req, res) => {
+    const { blogId } = req.body;
+    if (!blogId) {
+        return validationErrorWithData(res, "Blog id not found");
+    }
+    try {
+        const data = await blogs.findById(blogId);
+        return successResponse(res, "blog found succesfully", data);
+    }
+    catch (error) {
+        console.log("blog not found", error);
+        return errorResponse(res, "blog not found");
+    }
+}
+
 
 exports.addTag = async (req, res) => {
 
@@ -1078,21 +1094,6 @@ exports.addTag = async (req, res) => {
         return errorResponse(res, "Please Enter a valid data and try again");
     }
 
-}
-//get-blog-by-id
-exports.getBlogById = async (req, res) => {
-    const { blogId } = req.body;
-    if (!blogId) {
-        return validationErrorWithData(res, "Blog id not found");
-    }
-    try {
-        const data = await blogs.findById(blogId);
-        return successResponse(res, "blog found succesfully", data);
-    }
-    catch (error) {
-        console.log("blog not found", error);
-        return errorResponse(res, "blog not found");
-    }
 }
 
 
