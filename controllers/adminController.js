@@ -21,6 +21,7 @@ const path = require("path");
 const fs = require("fs");
 const { deleteImage } = require("../config/storeFile");
 const exploreCategory = require("../models/exploreCategory");
+const { findByIdAndDelete } = require("../models/studentDetails");
 
 
 
@@ -1033,6 +1034,29 @@ exports.updateBlog = async (req, res) => {
         return errorResponse(res,"blog not updated");
     }
 
+}
+exports.deleteBlog = async (req,res) =>{
+    const {blogId} = req.query;
+
+    if(!blogId)
+    {
+        return validationErrorWithData(res,"blog id not found");
+    }
+    try{
+        const blog = await blogs.findById(blogId);
+        if(!blog) return notFoundResponse(res,"blog not found");
+
+        if(blog.img)
+         deleteImage(path.join(__dirname,"../public",blog.img));
+
+        await blogs.findByIdAndDelete(blogId);
+        return successResponse(res,"blog deleted succesfully");
+    }
+    catch(error)
+    {
+        console.log("error to delete the blog",error);
+        return errorResponse(res,"blog not deleted");
+    }
 }
 
 exports.addTag = async (req, res) => {
