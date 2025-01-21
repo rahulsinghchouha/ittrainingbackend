@@ -1027,35 +1027,33 @@ exports.updateBlog = async (req, res) => {
         }
         await blogs.findByIdAndUpdate(blogId, { $set: updatedBlog }, { new: true });
 
-        return successResponse(res,"blog details updated succesfully");
+        return successResponse(res, "blog details updated succesfully");
     }
     catch (error) {
         console.log("Error to update the blog");
-        return errorResponse(res,"blog not updated");
+        return errorResponse(res, "blog not updated");
     }
 
 }
-exports.deleteBlog = async (req,res) =>{
-    const {blogId} = req.query;
+exports.deleteBlog = async (req, res) => {
+    const { blogId } = req.query;
 
-    if(!blogId)
-    {
-        return validationErrorWithData(res,"blog id not found");
+    if (!blogId) {
+        return validationErrorWithData(res, "blog id not found");
     }
-    try{
+    try {
         const blog = await blogs.findById(blogId);
-        if(!blog) return notFoundResponse(res,"blog not found");
+        if (!blog) return notFoundResponse(res, "blog not found");
 
-        if(blog.img)
-         deleteImage(path.join(__dirname,"../public",blog.img));
+        if (blog.img)
+            deleteImage(path.join(__dirname, "../public", blog.img));
 
         await blogs.findByIdAndDelete(blogId);
-        return successResponse(res,"blog deleted succesfully");
+        return successResponse(res, "blog deleted succesfully");
     }
-    catch(error)
-    {
-        console.log("error to delete the blog",error);
-        return errorResponse(res,"blog not deleted");
+    catch (error) {
+        console.log("error to delete the blog", error);
+        return errorResponse(res, "blog not deleted");
     }
 }
 //get-blog-by-id
@@ -1092,6 +1090,23 @@ exports.addTag = async (req, res) => {
             return duplicateDataError(res, "Cant add duplicate data ");
         }
         return errorResponse(res, "Please Enter a valid data and try again");
+    }
+
+}
+exports.deleteTag = async (req, res) => {
+
+    const { tagId } = req.body;
+
+    if (!tagId)
+        return validationErrorWithData(res, "tag not found");
+
+    try {
+        await tags.findByIdAndDelete(tagId);
+        return successResponse(res,"tag deleetd succesfully");
+       }
+    catch (error) {
+        console.log("error to delete the tag", error);
+        return errorResponse(res, "tag not deleted");
     }
 
 }
