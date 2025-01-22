@@ -279,6 +279,9 @@ exports.getCourseById = async (req, res) => {
     }
     try {
         const data = await course.findById(courseId);
+        if(!data)
+            return notFoundResponse(res,"course not found");
+
         return successResponseWithData(res, "course Details get succesfully", data);
     }
     catch (error) {
@@ -1194,6 +1197,10 @@ exports.getBlogById = async (req, res) => {
     }
     try {
         const data = await blogs.findById(blogId);
+        if(!data)
+            return notFoundResponse(res,"blog not found");
+
+
         return successResponse(res, "blog found succesfully", data);
     }
     catch (error) {
