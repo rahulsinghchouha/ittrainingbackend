@@ -352,7 +352,7 @@ app.get("/add-categories", async (req, res) => {
 
     //    console.log("categories",object?.data);
 
-    res.render("addCategories", { categories: object?.data, backendUrl: process.env.BACKEND_URL });
+    res.render("addCategories", { success:req.flash('success'), error:req.flash('error'), categories: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 
 app.get("/update-category/:id", async (req, res) => {
@@ -376,7 +376,7 @@ app.get("/update-category/:id", async (req, res) => {
             throw new Error("Category data not found in the response");
 
         }
-        res.render("updateCategory", { category: object?.data, backendUrl: process.env.BACKEND_URL });
+        res.render("updateCategory", {success:req.flash('success'), error:req.flash('error'), category: object?.data, backendUrl: process.env.BACKEND_URL });
     }
     catch (error) {
         console.log("error to fetch the particular category details", error);

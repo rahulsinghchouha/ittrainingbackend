@@ -88,6 +88,16 @@
                 <div style=" margin-top: 60px; display: flex; margin-left: 50px;">
                     <div style="width: 60%;  display: flex; flex-direction: column;  ">
                         <div style="  width: 100%;  padding: 20px 20px; ">
+                            <% if (success && success.length > 0) { %>
+                                <div  class="toast success-toast">
+                                    <%= success %>
+                                </div>
+                            <% } %>
+                            <% if (error && error.length > 0) { %>
+                                <div class="toast error-toast">
+                                    <%= error %>
+                                </div>
+                            <% } %>
                             <!-- Update the categories -->
                             <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update The Categories - </h1>
 

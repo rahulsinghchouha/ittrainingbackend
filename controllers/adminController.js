@@ -838,8 +838,9 @@ exports.addExploreCategory = async (req, res) => {
 
     // validation then we create this 
     if (!heading || !categoryDetailsImg || !para || !categoryDetailsWhy || !importance || !impPara || !processGrowthandSkill || !filterDetailsCard || !bgImage || !img || !bannerImg || !filterDetailsCardImg) {
-        return 
-
+ 
+        req.flash('error','Please Enter all the require field');
+        return res.redirect("/add-categories");
     }
 
 
@@ -857,11 +858,13 @@ exports.addExploreCategory = async (req, res) => {
             impPara,
             processGrowthandSkill
         });
-        return successResponse(res, "explore Category Card added succesfully");
+        req.flash('success','Category Created succesfully');
+        return res.redirect("/add-categories");
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res, "card not added please verify the data and try again");
+        req.flash('error','Category not created please try again');
+        return res.redirect("/add-categories");
     }
 
 }
@@ -891,12 +894,14 @@ exports.deleteCategory = async (req, res) => {
     const { id } = req.body;
     // console.log(id);
     if (!id) {
-        return validationErrorWithData(res, "id not found");
+        req.flash('error','category not found');
+        return res.redirect("/add-categories");
     }
     try {
         const category = await exploreCategory.findById(id);
         if (!category) {
-            return notFoundResponse(res, "category not found");
+        req.flash('error','category not found');
+        return res.redirect("/add-categories");
         }
         if (category.bgImage) {
             const bgImage = path.join(__dirname, "../public", category.bgImage);
@@ -923,12 +928,14 @@ exports.deleteCategory = async (req, res) => {
             });
         }
         await exploreCategory.findByIdAndDelete(id);
-        return successResponse(res, "category deleted succesfully")
+        req.flash('success','category deleted succesfully');
+        return res.redirect("/add-categories");
 
     }
     catch (error) {
-        console.log("Error in categories", error);
-        return errorResponse(res, "category not found");
+        console.log("Error in categories deletion", error);
+        req.flash('error','category not deleted please try again');
+        return res.redirect("/add-categories");
     }
 
 }
@@ -970,7 +977,8 @@ exports.updateCategory = async (req, res) => {
     });
 
     if (!categoryId || !heading || !para || !categoryDetailsWhy || !importance || !impPara || !processGrowthandSkill || !detailsCard) {
-        return validationErrorWithData(res, "Please Enter All the field Sinceriously then try again");
+        req.flash('error','please enter all the require details');
+        return res.redirect(`/update-category/${categoryId}`);
     }
 
     const updateCategory = {
@@ -980,7 +988,8 @@ exports.updateCategory = async (req, res) => {
         const category = await exploreCategory.findById(categoryId);
 
         if (!category) {
-            return notFoundResponse(res, "category not found");
+            req.flash('error','category not found');
+            return res.redirect(`/update-category/${categoryId}`);
         }
 
         //update card image
@@ -1028,11 +1037,13 @@ exports.updateCategory = async (req, res) => {
 
         await exploreCategory.findByIdAndUpdate(category._id, { $set: updateCategory }, { new: true });
 
-        return successResponse(res, "category section updated");
+        req.flash('success','category updated succesfully');
+        return res.redirect(`/update-category/${categoryId}`);
     }
     catch (error) {
         console.log("Error to update the category", error);
-        return errorResponse(res, "Error to update the category");
+        req.flash('error','category not updated');
+        return res.redirect(`/update-category/${categoryId}`);
     }
 }
 
