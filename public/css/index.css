@@ -26,3 +26,48 @@ h1{
     background-color: #1AAEF4;
     color: white;
 }
+
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    z-index: 9999;
+    display: none;  /* Initially hidden */
+    animation: fadeIn 0.5s, fadeOut 3s 2.5s;  /* Fade in and out effect */
+}
+.success-toast{
+    background-color: green;
+    color: white;
+    font: 500;
+    font-size: 26px;
+}
+.error-toast{
+    background-color: red;
+    color: white;
+    font: 500;
+    font-size: 26px;
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+
+@keyframes fadeOut {
+    from{
+        opacity:1;
+    }
+    to{
+        opacity: 0;
+    }
+}

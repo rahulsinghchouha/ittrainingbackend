@@ -9,7 +9,7 @@ const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
 const { blogs, bannerImgBlog, blogDetailBanner } = require("../models/blog");
-
+const fetch = require('node-fetch');
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
 const { validationErrorWithData, successResponse, errorResponse, notFoundResponse, successResponseWithData, duplicateDataError } = require("../helper/apiResponse");
@@ -45,7 +45,6 @@ exports.addAdmin = async (req, res) => {
     catch (error) {
         console.log(error);
         return errorResponse(res, "Admin not added please try again");
-
     }
 }
 
@@ -74,9 +73,9 @@ exports.adminLogin = async (req, res) => {
             const isPassword = await bcrypt.compare(password, hashedPassword);
 
             if (isPassword) {
-                const info = mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
-                console.log("Info",info);
-                res.render("dashboard")
+                const info = await mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
+                //console.log("Info", info);
+                res.redirect("/dashboard")
             }
             else {
                 res.render("index", { message: "incorrect password" })
@@ -217,15 +216,17 @@ exports.updateHome = async (req, res) => {
                 newhomeData.beforeCollegeImg = beforeCollegeImg[0]?.filename;
             }
             await home.findByIdAndUpdate(previousHome._id, { $set: newhomeData }, { new: true });
-            return successResponse(res, "Home Page updated succesfully")
+            req.flash('success','Dashboard updated succesfully')
+            res.redirect("/dashboard");
         }
         else {
-            return notFoundResponse(res, "please add the home")
+            req.flash('error','dashboard not added');
+            res.redirect("/dashboard");
         }
     }
     catch (error) {
-        console.log("Error when Update the Home", error);
-        return errorResponse(res, "home page not updated");
+        req.flash('error','dashboard not updated');
+        res.redirect("/dashboard");
     }
 }
 
@@ -279,8 +280,8 @@ exports.getCourseById = async (req, res) => {
     }
     try {
         const data = await course.findById(courseId);
-        if(!data)
-            return notFoundResponse(res,"course not found");
+        if (!data)
+            return notFoundResponse(res, "course not found");
 
         return successResponseWithData(res, "course Details get succesfully", data);
     }
@@ -1197,8 +1198,8 @@ exports.getBlogById = async (req, res) => {
     }
     try {
         const data = await blogs.findById(blogId);
-        if(!data)
-            return notFoundResponse(res,"blog not found");
+        if (!data)
+            return notFoundResponse(res, "blog not found");
 
 
         return successResponse(res, "blog found succesfully", data);

@@ -6,7 +6,8 @@ const getRoute = require("./routes/getRequest");
 const cors = require("cors");
 const path = require('path');
 const fetch = require('node-fetch');
-
+const flash = require("connect-flash");
+const session = require("express-session")
 
 const app = express();
 
@@ -18,6 +19,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For parsing URL-encoded data
 //app.use(upload.array()); // for parsing multipart/form-data
 app.use(express.static(path.join(__dirname, 'public'))); //serve static files images
+
+//express - session
+app.use(session({
+    secret:process.env.EXPRESS_SESSION,
+    resave:false,
+    saveUninitialized:true
+}))
+// Set up flash middleware
+app.use(flash());
 
 //db connect
 dbConnect();
@@ -190,7 +200,7 @@ app.get("/dashboard", async (req, res) => {
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-home`);
     const object = await response.json();
     // console.log(object?.data);
-    res.render("dashboard", { homePage: object?.data, backendUrl: process.env.BACKEND_URL });
+    res.render("dashboard", { success:req.flash('success'),error:req.flash('error') ,homePage: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 //=======================Blog Section===============
 app.get("/blogs", async (req, res) => {

@@ -224,18 +224,31 @@ function addCardCategory() {
             ['foreColor', 'backColor'],
             ['fullscreen']
         ]
-        
+
     });
 }
 
+// Display the toast message when it's added
+document.addEventListener('DOMContentLoaded', () => {
+    const successToast = document.querySelector('.success-toast');
+    const errorToast = document.querySelector('.error-toast');
 
+    // If there's a success message, show the toast and remove after 3 seconds
+    if (successToast) {
+        successToast.style.display = 'block';
+        setTimeout(() => {
+            successToast.style.display = 'none';
+        }, 3000); // Hide after 3 seconds
+    }
 
-
-
-
-
-
-
+    // If there's an error message, show the toast and remove after 3 seconds
+    if (errorToast) {
+        errorToast.style.display = 'block';
+        setTimeout(() => {
+            errorToast.style.display = 'none';
+        }, 3000); // Hide after 3 seconds
+    }
+});
 
 
 // function addPartners() {
