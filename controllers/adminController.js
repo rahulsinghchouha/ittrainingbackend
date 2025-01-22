@@ -73,8 +73,8 @@ exports.adminLogin = async (req, res) => {
             const isPassword = await bcrypt.compare(password, hashedPassword);
 
             if (isPassword) {
-                const info = await mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
-                //console.log("Info", info);
+                await mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
+                
                 res.redirect("/dashboard")
             }
             else {
@@ -216,11 +216,11 @@ exports.updateHome = async (req, res) => {
                 newhomeData.beforeCollegeImg = beforeCollegeImg[0]?.filename;
             }
             await home.findByIdAndUpdate(previousHome._id, { $set: newhomeData }, { new: true });
-            req.flash('success','Dashboard updated succesfully')
-            res.redirect("/dashboard");
+           req.flash('success','Dashboard updated succesfully')
+           res.redirect("/dashboard");
         }
         else {
-            req.flash('error','dashboard not added');
+            req.flash('error','dashboard not updated');
             res.redirect("/dashboard");
         }
     }
@@ -838,7 +838,8 @@ exports.addExploreCategory = async (req, res) => {
 
     // validation then we create this 
     if (!heading || !categoryDetailsImg || !para || !categoryDetailsWhy || !importance || !impPara || !processGrowthandSkill || !filterDetailsCard || !bgImage || !img || !bannerImg || !filterDetailsCardImg) {
-        return validationErrorWithData(res, "Please Enter All the field Sinceriously then try again");
+        return 
+
     }
 
 
@@ -1040,15 +1041,21 @@ exports.addOurPartners = async (req, res) => {
 
     const img = req?.file?.filename;
 
-    if (!img) return validationErrorWithData(res, "img not found");
+    if (!img)
+        {
+            req.flash('error','img not found');
+            return res.redirect("/add-partners")
+        } 
 
     try {
         await ourPartners.create({ img: img });
-        return successResponse(res, "partner added succesfully");
+        req.flash('success','partner added succesfully');
+        return res.redirect("/add-partners")
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res, "partner not added please try again");
+        req.flash('error','partner not added please try again');
+        return res.redirect("/add-partners");
     }
 
 }
@@ -1059,26 +1066,31 @@ exports.updateOurPartners = async (req, res) => {
     const { partnerId } = req.body;
 
     if (!img || !partnerId) {
-        return validationErrorWithData(res, "img or partnerId not found");
+        req.flash('error','enter all the require field');
+        return res.redirect("/add-partners")
     }
 
     try {
         const partner = await ourPartners.findById(partnerId);
         //console.log(partner);
         if (!partner)
-            return notFoundResponse(res, "partner not found");
-
+        {
+            req.flash('error','partner not found please try again');
+            return res.redirect("/add-partners")
+        }
         const oldImage = path.join(__dirname, '../public', partner.img);
         deleteImage(oldImage, "update partner");
         partner.img = img;
 
         await partner.save();
 
-        return successResponse(res, "partner updated");
+        req.flash('success','partner updated succesfully');
+        return res.redirect("/add-partners")
     }
     catch (error) {
         console.log("error", error);
-        return errorResponse(res, "error to fetch the partners");
+        req.flash('error','partner not updated please try again');
+        return res.redirect("/add-partners");
     }
 
 }
@@ -1086,26 +1098,32 @@ exports.updateOurPartners = async (req, res) => {
 exports.deleteOurPartner = async (req, res) => {
     const { partnerId } = req.body;
     if (!partnerId) {
-        return validationErrorWithData(res, "partner not found")
+            req.flash('error','partnerId not found please try again');
+            return res.redirect("/add-partners")
     }
     try {
 
         const partner = await ourPartners.findById(partnerId);
 
         if (!partner)
-            return notFoundResponse(res, "partner not found");
-
+        {
+            req.flash('error','partner not found ');
+            return res.redirect("/add-partners")
+        }
+           
 
         const oldImage = path.join(__dirname, '../public', partner.img);
         deleteImage(oldImage, " partner image");
 
 
         await ourPartners.findByIdAndDelete(partnerId);
-        return successResponse(res, "partner deleted succesfully");
+        req.flash('success','partner deleted succesfully');
+        return res.redirect("/add-partners")
     }
     catch (error) {
         console.log("error to delete partner", error);
-        return errorResponse(res, "partner not deleted please try again");
+        req.flash('error','partner not deleted please try again');
+        return res.redirect("/add-partners");
     }
 }
 

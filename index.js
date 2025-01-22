@@ -341,7 +341,7 @@ app.get("/add-partners", async (req, res) => {
     const object = await response.json();
 
     // console.log("partners",object.data); 
-    res.render("addPartners", { partners: object?.data, backendUrl: process.env.BACKEND_URL });
+    res.render("addPartners", {  success:req.flash('success'),error:req.flash('error') ,partners: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 
 app.get("/add-categories", async (req, res) => {

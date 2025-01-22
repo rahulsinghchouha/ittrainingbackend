@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         successToast.style.display = 'block';
         setTimeout(() => {
             successToast.style.display = 'none';
-        }, 3000); // Hide after 3 seconds
+        }, 5000); // Hide after 3 seconds
     }
 
     // If there's an error message, show the toast and remove after 3 seconds
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorToast.style.display = 'block';
         setTimeout(() => {
             errorToast.style.display = 'none';
-        }, 3000); // Hide after 3 seconds
+        }, 5000); // Hide after 3 seconds
     }
 });
 
