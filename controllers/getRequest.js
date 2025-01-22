@@ -16,6 +16,9 @@ const contactUs = require('../models/contactUs');
 exports.getHome = async (req, res) => {
     try {
         const data = await home.findOne({});
+        if(!data)
+            return notFoundResponse(res,"Home Page not found");
+
         successResponseWithData(res, "home data get succesfully", data);
     }
     catch (error) {
@@ -27,6 +30,10 @@ exports.getHome = async (req, res) => {
 exports.getCourseCard = async (req, res) => {
     try {
         const data = await course.find();
+        if(!data)
+            return notFoundResponse(res,"course not found");
+
+
         successResponseWithData(res, "course card get succesfully", data);
     }
     catch (error) {
@@ -37,6 +44,10 @@ exports.getCourseCard = async (req, res) => {
 exports.getCourseBanner = async (req, res) => {
     try {
         const data = await bannerImgCourse.findOne({});
+        if(!data)
+            return notFoundResponse(res,"course banner image not found");
+
+
         successResponseWithData(res, "course banner get succesfully", data);
     }
     catch (error) {
@@ -47,6 +58,10 @@ exports.getCourseBanner = async (req, res) => {
 exports.getCourseDetailsBanner = async (req, res) => {
     try {
         const data = await courseDetailsBanner.findOne({});
+        if(!data)
+            return notFoundResponse(res,"course details banner not");
+
+
         if(!data) return notFoundResponse(res,"course details banner not found");  
         
         return successResponseWithData(res, "course details found succesfully", data);
@@ -61,6 +76,10 @@ exports.getCourseDetailsBanner = async (req, res) => {
 exports.getAboutUs = async (req, res) => {
     try {
         const data = await aboutUs.findOne({});
+        if(!data)
+            return notFoundResponse(res,"about us not found");
+
+
         successResponseWithData(res, "about us data get succesfuly", data);
     }
     catch (error) {
@@ -72,6 +91,10 @@ exports.getAboutUs = async (req, res) => {
 exports.getStudentPlaced = async (req, res) => {
     try {
         const data = await student.find();
+        if(!data)
+            return notFoundResponse(res,"placed student not found");
+
+
         successResponseWithData(res, "placed student get succesfully", data);
 
     }
@@ -101,6 +124,9 @@ exports.getTestimonialBanner = async (req,res) =>{
 exports.getPartners = async (req, res) => {
     try {
         const data = await ourPartners.find();
+        if(!data)
+            return notFoundResponse(res,"partners not found");
+
 
         successResponseWithData(res, "partners get succesfully", data);
 
@@ -113,6 +139,9 @@ exports.getPartners = async (req, res) => {
 exports.getExploreCard = async (req, res) => {
     try {
         const data = await exploreCategory.find();
+        if(!data)
+            return notFoundResponse(res,"category not found");
+ 
         successResponseWithData(res, "explore card get succesfully return", data);
     }
     catch (error) {
@@ -145,6 +174,10 @@ exports.getCategoryByName = async (req, res) => {
 exports.getOurStats = async (req, res) => {
     try {
         const data = await ourStats.findOne({});
+        if(!data)
+            return notFoundResponse(res,"our stats not found");
+
+
         successResponseWithData(res, "our stats get succesfully", data);
     }
     catch (error) {
@@ -199,6 +232,9 @@ exports.getTags = async (req, res) => {
     try {
         // console.log("tag controller call");
         const data = await tags.find();
+        if(!data)
+            return notFoundResponse(res,"Tags not found");
+
         // console.log("tag data", data);
         return successResponseWithData(res, "data get succesfully", data);
     }
@@ -226,6 +262,9 @@ exports.getContactUs = async (req, res) => {
     try {
 
         const data = await contactUs.findOne({});
+        if(!data)
+            return notFoundResponse(res,"contact us not found");
+
 
         successResponseWithData(res, "Contact us get Succesfully", data);
     }

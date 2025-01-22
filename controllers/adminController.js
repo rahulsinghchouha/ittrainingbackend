@@ -35,11 +35,7 @@ exports.addAdmin = async (req, res) => {
         return validationErrorWithData(res, "data validation failed ");
     }
     try {
-
-
         const hashedPassword = await bcrypt.hash(password, 10);
-
-
         await admin.create({
             email: email,
             password: hashedPassword,
@@ -79,7 +75,7 @@ exports.adminLogin = async (req, res) => {
 
             if (isPassword) {
                 const info = mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
-                //  console.log("Info",info);
+                console.log("Info",info);
                 res.render("dashboard")
             }
             else {
