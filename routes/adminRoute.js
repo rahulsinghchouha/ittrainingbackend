@@ -20,6 +20,7 @@ router.post("/student-placed", upload.single("img"), admin.addStudentPlaced);
 router.post("/get-testimonial-by-id",admin.getTestimonialById);
 router.post("/update-testimonial", upload.single("img"), admin.updateTestimonial);
 router.post("/delete-testimonial",admin.deleteTestimonial);
+router.post("/add-testimonial-banner", upload.single("img"), admin.addTestimonialBanner);
 
 //partners
 router.post("/add-partners", upload.single("img"), admin.addOurPartners);

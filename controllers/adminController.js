@@ -2,13 +2,13 @@ const { course, bannerImgCourse, courseDetailsBanner } = require("../models/crea
 const home = require("../models/home");
 const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
-const { tags , bannerImgTag } = require("../models/tag");
+const { tags, bannerImgTag } = require("../models/tag");
 const mongoose = require('mongoose');
-const { student } = require("../models/testimonial");
+const { student, bannerImgTestimonial } = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
-const { blogs,bannerImgBlog, blogDetailBanner } = require("../models/blog");
+const { blogs, bannerImgBlog, blogDetailBanner } = require("../models/blog");
 
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
@@ -345,7 +345,7 @@ exports.deleteCourse = async (req, res) => {
 }
 exports.addCourseBannerImage = async (req, res) => {
     const img = req.file?.filename;
-    const {coursePageHeading} = req.body;
+    const { coursePageHeading } = req.body;
 
     if (!img || !coursePageHeading) {
         return validationErrorWithData(res, "data not found");
@@ -359,7 +359,7 @@ exports.addCourseBannerImage = async (req, res) => {
 
         if (bannerData) {
 
-            deleteImage(path.join(__dirname,"../public", bannerData.img),"course banner image");
+            deleteImage(path.join(__dirname, "../public", bannerData.img), "course banner image");
 
             await bannerImgCourse.findByIdAndUpdate(bannerData._id, { $set: newData }, { new: true });
             return successResponse(res, "course page updated succesfully");
@@ -374,60 +374,55 @@ exports.addCourseBannerImage = async (req, res) => {
         return errorResponse(res, "course data not added please try again");
     }
 }
-exports.updateCourseBanner = async (req,res) =>{
+exports.updateCourseBanner = async (req, res) => {
     const img = req.file?.filename;
-    const {coursePageHeading,bannerId} = req.body;
+    const { coursePageHeading, bannerId } = req.body;
 
     //validation
-    if(!bannerId || !coursePageHeading)
-                return validationErrorWithData(res,"please enter the require field");
+    if (!bannerId || !coursePageHeading)
+        return validationErrorWithData(res, "please enter the require field");
 
-    try{
-            const banner = await bannerImgCourse.findById(bannerId);
-            if(!banner)
-            {
-                return notFoundResponse(res,"banner not found");
-            }
-            const updatedBanner = {coursePageHeading};
-            if(img)
-            {
-                deleteImage(path.join(__dirname,"../public",banner.img),"course banner image");
-                updatedBanner.img = img;
-            }
-            await bannerImgCourse.findByIdAndUpdate(banner._id,{$set:updatedBanner},{new:true});
-            return successResponse(res,"banner updated succesfully");          
+    try {
+        const banner = await bannerImgCourse.findById(bannerId);
+        if (!banner) {
+            return notFoundResponse(res, "banner not found");
+        }
+        const updatedBanner = { coursePageHeading };
+        if (img) {
+            deleteImage(path.join(__dirname, "../public", banner.img), "course banner image");
+            updatedBanner.img = img;
+        }
+        await bannerImgCourse.findByIdAndUpdate(banner._id, { $set: updatedBanner }, { new: true });
+        return successResponse(res, "banner updated succesfully");
     }
-    catch(error)
-    {
-        console.log("error to update the banner",error);
-        return errorResponse(res,"error to update the course");
+    catch (error) {
+        console.log("error to update the banner", error);
+        return errorResponse(res, "error to update the course");
     }
 }
-exports.addCourseDetailBanner = async (req,res) =>{
+exports.addCourseDetailBanner = async (req, res) => {
     const img = req.file?.filename;
 
-    if(!img)
-        return validationErrorWithData(res,"course details banner img not found");
+    if (!img)
+        return validationErrorWithData(res, "course details banner img not found");
 
-    try{
+    try {
         const banner = await courseDetailsBanner.findOne({});
-        if(banner)
-        {
-            deleteImage(path.join(__dirname,"../public",banner.img),"course details banner img");
+        if (banner) {
+            deleteImage(path.join(__dirname, "../public", banner.img), "course details banner img");
             banner.img = img;
             await banner.save();
         }
-        else{
-            await courseDetailsBanner.create({img});
+        else {
+            await courseDetailsBanner.create({ img });
         }
-        return successResponse(res,"course details banner created");
+        return successResponse(res, "course details banner created");
     }
-    catch(error)
-    {
-        console.log("error to update the course banner img",error);
-        return errorResponse(res,"error to update the course details banner ");
+    catch (error) {
+        console.log("error to update the course banner img", error);
+        return errorResponse(res, "error to update the course details banner ");
     }
-} 
+}
 
 //------------------- ABOUT US ------------------
 exports.addAboutUS = async (req, res) => {
@@ -653,6 +648,32 @@ exports.deleteTestimonial = async (req, res) => {
     catch (error) {
         console.log("Error to delete the testimonial", error);
         return errorResponse(res, "testimonial not deleted")
+    }
+}
+exports.addTestimonialBanner = async (req, res) => {
+
+    const img = req.file?.filename;
+
+    if (!img) {
+        return validationErrorWithData(res, "img not found");
+    }
+
+    try {
+        const banner = await bannerImgTestimonial.findOne({});
+        if (banner) {
+            deleteImage(path.join(__dirname, "../public", banner.img), "testimonial banner img");
+            banner.img = banner;
+            await banner.save();
+        }
+        else {
+            await bannerImgTestimonial.create({ img });
+        }
+        return successResponse(res, "tesimonial banner added succesfully");
+
+    }
+    catch (error) {
+        console.log("Error to update the testimonial banner", error);
+        return errorResponse(res, "testimonial banner not added");
     }
 }
 
@@ -1044,8 +1065,8 @@ exports.updateOurPartners = async (req, res) => {
     try {
         const partner = await ourPartners.findById(partnerId);
         //console.log(partner);
-        if(!partner)
-            return notFoundResponse(res,"partner not found");
+        if (!partner)
+            return notFoundResponse(res, "partner not found");
 
         const oldImage = path.join(__dirname, '../public', partner.img);
         deleteImage(oldImage, "update partner");
@@ -1071,8 +1092,8 @@ exports.deleteOurPartner = async (req, res) => {
 
         const partner = await ourPartners.findById(partnerId);
 
-        if(!partner)
-            return notFoundResponse(res,"partner not found");
+        if (!partner)
+            return notFoundResponse(res, "partner not found");
 
 
         const oldImage = path.join(__dirname, '../public', partner.img);
@@ -1184,58 +1205,53 @@ exports.getBlogById = async (req, res) => {
         return errorResponse(res, "blog not found");
     }
 }
-exports.addBlogBanner = async(req,res) =>{
+exports.addBlogBanner = async (req, res) => {
 
     const img = req.file?.filename;
 
-    if(!img)
-    {
-        return validationErrorWithData(res,"Blog banner img not found ");
+    if (!img) {
+        return validationErrorWithData(res, "Blog banner img not found ");
     }
-    try{
-            const banner = await bannerImgBlog.findOne({});
+    try {
+        const banner = await bannerImgBlog.findOne({});
 
-            if(banner)
-            {
-                deleteImage(path.join(__dirname,"../public",banner?.img),"blog banner image");
-                banner.img = img;
-                await banner.save();
-            }
-            else{
-                await bannerImgBlog.create({img});
-            }
-            return successResponse(res,"blog banner img add succesfully");
+        if (banner) {
+            deleteImage(path.join(__dirname, "../public", banner?.img), "blog banner image");
+            banner.img = img;
+            await banner.save();
+        }
+        else {
+            await bannerImgBlog.create({ img });
+        }
+        return successResponse(res, "blog banner img add succesfully");
     }
-    catch(error)
-    {
-        console.log("Error to update the blog banner img",error);
-        return errorResponse(res,"blog banner not updated");
+    catch (error) {
+        console.log("Error to update the blog banner img", error);
+        return errorResponse(res, "blog banner not updated");
     }
 }
-exports.addBlogDetailBanner = async(req,res) =>{
+exports.addBlogDetailBanner = async (req, res) => {
     const img = req.file?.filename;
 
-    if(!img)
-        return validationErrorWithData(res,"blog detail banner img not found");
+    if (!img)
+        return validationErrorWithData(res, "blog detail banner img not found");
 
-    try{
-            const banner = await blogDetailBanner.findOne({});
+    try {
+        const banner = await blogDetailBanner.findOne({});
 
-            if(banner)
-            {
-                deleteImage(path.join(__dirname,"../public",banner.img),"blog detail banner");
-                banner.img = img;
-                await banner.save();
-            }
-            else{
-                await blogDetailBanner.create({img});
-            }
-            return successResponse(res,"banner uploaded succesfully");
+        if (banner) {
+            deleteImage(path.join(__dirname, "../public", banner.img), "blog detail banner");
+            banner.img = img;
+            await banner.save();
+        }
+        else {
+            await blogDetailBanner.create({ img });
+        }
+        return successResponse(res, "banner uploaded succesfully");
     }
-    catch(error)
-    {
-        console.log("error to upload image",error);
-        return errorResponse(res,"blog detail banner not updated");
+    catch (error) {
+        console.log("error to upload image", error);
+        return errorResponse(res, "blog detail banner not updated");
     }
 }
 
@@ -1269,57 +1285,55 @@ exports.deleteTag = async (req, res) => {
 
     try {
         await tags.findByIdAndDelete(tagId);
-        return successResponse(res,"tag deleted succesfully");
-       }
+        return successResponse(res, "tag deleted succesfully");
+    }
     catch (error) {
         console.log("error to delete the tag", error);
         return errorResponse(res, "tag not deleted");
     }
 
 }
-exports.updateTag = async(req,res) =>{
+exports.updateTag = async (req, res) => {
 
-    const {tagId,tag} = req.body;
+    const { tagId, tag } = req.body;
 
-        if (!tagId || !tag)
-            return validationErrorWithData(res, "tag not found");
+    if (!tagId || !tag)
+        return validationErrorWithData(res, "tag not found");
     // Validate tag ID format
     if (!mongoose.isValidObjectId(tagId)) {
         return validationErrorWithData(res, "Invalid tag ID format");
     }
-        try {
-            await tags.findByIdAndUpdate(tagId,{$set:{tag}},{new:true});
-            return successResponse(res,"tag updated succesfully");
-           }
-        catch (error) {
-            console.log("error to update the tag", error);
-            return errorResponse(res, "tag not updated");
-        }
+    try {
+        await tags.findByIdAndUpdate(tagId, { $set: { tag } }, { new: true });
+        return successResponse(res, "tag updated succesfully");
+    }
+    catch (error) {
+        console.log("error to update the tag", error);
+        return errorResponse(res, "tag not updated");
+    }
 }
-exports.addTagBanner = async (req,res) =>{
-    
-    const img = req?.file?.filename;
-    if(!img)
-        return validationErrorWithData(res,"tag banner not found");
+exports.addTagBanner = async (req, res) => {
 
-    try{
+    const img = req?.file?.filename;
+    if (!img)
+        return validationErrorWithData(res, "tag banner not found");
+
+    try {
         const banner = await bannerImgTag.findOne({});
 
-        if(banner)
-        {
-            deleteImage(path.join(__dirname,"../public",banner.img),"tag banner img");
+        if (banner) {
+            deleteImage(path.join(__dirname, "../public", banner.img), "tag banner img");
             banner.img = img;
             await banner.save();
         }
-        else{
-            await bannerImgTag.create({img});
+        else {
+            await bannerImgTag.create({ img });
         }
-        return successResponse(res,"tag banner created succesfully");
+        return successResponse(res, "tag banner created succesfully");
     }
-    catch(error)
-    {
-        console.log("error to add tag banner",error);
-        return errorResponse(res,"error to add tag banner");
+    catch (error) {
+        console.log("error to add tag banner", error);
+        return errorResponse(res, "error to add tag banner");
     }
 }
 

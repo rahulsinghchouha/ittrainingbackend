@@ -84,13 +84,14 @@
                 <div style="margin-left: 100px; ">
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
                         <div>
+                            
                             <div style="margin: 5px;  padding: 10px;">
 
-                                <form>
+                                <form action="api/v1/admin/add-testimonial-banner" method="POST" enctype="multipart/form-data">
                                     <label
-                                        style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; display: block;">Banner
+                                        style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; display: block;">Tag Banner
                                         Image : </label>
-                                    <input type="file" name="" required placeholder="Banner Image"
+                                    <input type="file" name="img" required placeholder="Banner Image"
                                         style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                     <button type="submit"
                                         style=" border:2px; border-style: solid; border-color: black; margin-left: 90%; margin-top: 20px; width: 10%; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 0px; border-radius: 5px; ">
