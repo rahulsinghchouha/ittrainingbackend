@@ -6,7 +6,7 @@ const ourStats = require("../models/ourStats");
 const { blogs , bannerImgBlog , blogDetailBanner} = require("../models/blog")
 const home = require('../models/home');
 const aboutUs = require("../models/aboutUs");
-const { tags } = require("../models/tag");
+const { tags,bannerImgTag } = require("../models/tag");
 
 const { successResponse, errorResponse, validationErrorWithData, successResponseWithData, notFoundResponse } = require("../helper/apiResponse");
 
@@ -175,7 +175,7 @@ exports.getBlogDetailBanner = async(req,res)=>{
     }
 }
 
-
+//TAG
 exports.getTags = async (req, res) => {
     try {
         // console.log("tag controller call");
@@ -188,7 +188,20 @@ exports.getTags = async (req, res) => {
         return errorResponse(res, "data not get please try again");
     }
 }
+exports.getTagBanner = async(req,res) =>{
+    try{
+            const data = await bannerImgTag.findOne({});
+                if(!data)
+                    return notFoundResponse(res,"tag banner not found",)
 
+            return successResponseWithData(res,"tag banner get succesfully",data);
+    }
+    catch(error)
+    {
+        console.log("error to get the tag banner",error);
+        return errorResponse(res,"tag banner not get");
+    }
+}
 
 exports.getContactUs = async (req, res) => {
     try {

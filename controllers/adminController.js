@@ -2,7 +2,7 @@ const { course, bannerImgCourse, courseDetailsBanner } = require("../models/crea
 const home = require("../models/home");
 const aboutUS = require("../models/aboutUs");
 const contactUs = require("../models/contactUs");
-const { tags } = require("../models/tag");
+const { tags , bannerImgTag } = require("../models/tag");
 const mongoose = require('mongoose');
 const { student } = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
@@ -21,7 +21,7 @@ const path = require("path");
 const fs = require("fs");
 const { deleteImage } = require("../config/storeFile");
 const exploreCategory = require("../models/exploreCategory");
-const { findByIdAndDelete } = require("../models/studentDetails");
+
 
 
 
@@ -1295,5 +1295,31 @@ exports.updateTag = async(req,res) =>{
             console.log("error to update the tag", error);
             return errorResponse(res, "tag not updated");
         }
+}
+exports.addTagBanner = async (req,res) =>{
+    
+    const img = req?.file?.filename;
+    if(!img)
+        return validationErrorWithData(res,"tag banner not found");
+
+    try{
+        const banner = await bannerImgTag.findOne({});
+
+        if(banner)
+        {
+            deleteImage(path.join(__dirname,"../public",banner.img),"tag banner img");
+            banner.img = img;
+            await banner.save();
+        }
+        else{
+            await bannerImgTag.create({img});
+        }
+        return successResponse(res,"tag banner created succesfully");
+    }
+    catch(error)
+    {
+        console.log("error to add tag banner",error);
+        return errorResponse(res,"error to add tag banner");
+    }
 }
 
