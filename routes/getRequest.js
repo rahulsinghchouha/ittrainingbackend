@@ -19,6 +19,7 @@ router.get("/get-our-stats",getRequest.getOurStats);
 //blog
 router.get("/get-blogs",getRequest.getBlogs);
 router.get("/get-blog-banner",getRequest.getBlogBanner);
+router.get("/get-blog-detail-banner",getRequest.getBlogDetailBanner);
 
 router.get("/get-contact-us",getRequest.getContactUs);
 router.get("/get-tags",getRequest.getTags);

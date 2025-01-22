@@ -3,7 +3,7 @@ const { student } = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");
-const { blogs , bannerImgBlog} = require("../models/blog")
+const { blogs , bannerImgBlog , blogDetailBanner} = require("../models/blog")
 const home = require('../models/home');
 const aboutUs = require("../models/aboutUs");
 const { tags } = require("../models/tag");
@@ -160,6 +160,21 @@ exports.getBlogBanner = async(req,res) =>{
         return errorResponse(res,"blog banner not get");
     }
 }
+exports.getBlogDetailBanner = async(req,res)=>{
+    try{
+            const data = await blogDetailBanner.findOne({});
+            if(!data)
+                return notFoundResponse(res,"blog banner not found");
+
+            return successResponseWithData(res,"blog details banner found",data);
+    }
+    catch(error)
+    {
+        console.log("blog detail banner not  found",error);
+        return errorResponse(res,"blog details banner not found");
+    }
+}
+
 
 exports.getTags = async (req, res) => {
     try {

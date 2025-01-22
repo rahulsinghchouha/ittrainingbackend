@@ -1215,8 +1215,6 @@ exports.addBlogBanner = async(req,res) =>{
 exports.addBlogDetailBanner = async(req,res) =>{
     const img = req.file?.filename;
 
-  //  console.log("img file",img);
-
     if(!img)
         return validationErrorWithData(res,"blog detail banner img not found");
 
@@ -1233,7 +1231,6 @@ exports.addBlogDetailBanner = async(req,res) =>{
                 await blogDetailBanner.create({img});
             }
             return successResponse(res,"banner uploaded succesfully");
-
     }
     catch(error)
     {
