@@ -662,7 +662,7 @@ exports.addTestimonialBanner = async (req, res) => {
         const banner = await bannerImgTestimonial.findOne({});
         if (banner) {
             deleteImage(path.join(__dirname, "../public", banner.img), "testimonial banner img");
-            banner.img = banner;
+            banner.img = img;
             await banner.save();
         }
         else {

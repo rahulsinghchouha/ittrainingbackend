@@ -1,5 +1,5 @@
 const { course, bannerImgCourse, courseDetailsBanner } = require('../models/createCourse');
-const { student } = require('../models/testimonial');
+const { student,bannerImgTestimonial } = require('../models/testimonial');
 const ourPartners = require("../models/ourPartners");
 const exploreCategory = require("../models/exploreCategory");
 const ourStats = require("../models/ourStats");
@@ -68,6 +68,7 @@ exports.getAboutUs = async (req, res) => {
         return errorResponse(res, "about us data not found");
     }
 }
+//Testimonial
 exports.getStudentPlaced = async (req, res) => {
     try {
         const data = await student.find();
@@ -79,6 +80,24 @@ exports.getStudentPlaced = async (req, res) => {
         errorResponse(res, "error to get the student placed");
     }
 }
+exports.getTestimonialBanner = async (req,res) =>{
+    try{
+        const data = await bannerImgTestimonial.findOne({});
+        if(!data)
+            return notFoundResponse(res,"testimonial banner not found");
+
+        return successResponseWithData(res,"tesimonial banner found",data);
+      }
+    catch(error)
+    {
+        console.log("error to get testimonial banner",error);
+        return errorResponse(res,"testimonial banner not found");
+    }
+
+}
+
+
+
 exports.getPartners = async (req, res) => {
     try {
         const data = await ourPartners.find();

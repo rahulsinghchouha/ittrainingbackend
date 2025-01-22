@@ -9,7 +9,10 @@ router.get("/course-banner-img",getRequest.getCourseBanner);
 router.get("/course-details-banner",getRequest.getCourseDetailsBanner);
 
 router.get("/get-about-us",getRequest.getAboutUs);
+//Testimonial
 router.get("/student-placed",getRequest.getStudentPlaced);
+router.get("/testimonial-banner",getRequest.getTestimonialBanner);
+
 router.get("/get-partners",getRequest.getPartners);
 
 router.get("/get-explore-card",getRequest.getExploreCard);
