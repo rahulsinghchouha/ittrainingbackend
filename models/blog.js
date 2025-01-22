@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-
-
 const blogSchema = new mongoose.Schema({
     img: {
         type: String,
@@ -35,7 +33,15 @@ const bannerImgSchema = new mongoose.Schema({
     }
 })
 
+const blogDetailBannerSch = new mongoose.Schema({
+    img:{
+        type:String,
+        required:true,
+    }
+})
+
 const blogs = mongoose.model("blogSchema", blogSchema);
 const bannerImgBlog = mongoose.model("bannerImgBlog", bannerImgSchema);
+const blogDetailBanner = mongoose.model("blogDetailBanner",blogDetailBannerSch);
 
-module.exports = { bannerImgBlog, blogs }
+module.exports = { bannerImgBlog, blogs, blogDetailBanner };

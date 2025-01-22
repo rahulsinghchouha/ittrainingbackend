@@ -8,7 +8,7 @@ const { student } = require("../models/testimonial");
 const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
-const { blogs,bannerImgBlog } = require("../models/blog");
+const { blogs,bannerImgBlog, blogDetailBanner } = require("../models/blog");
 
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
@@ -1210,6 +1210,35 @@ exports.addBlogBanner = async(req,res) =>{
     {
         console.log("Error to update the blog banner img",error);
         return errorResponse(res,"blog banner not updated");
+    }
+}
+exports.addBlogDetailBanner = async(req,res) =>{
+    const img = req.file?.filename;
+
+  //  console.log("img file",img);
+
+    if(!img)
+        return validationErrorWithData(res,"blog detail banner img not found");
+
+    try{
+            const banner = await blogDetailBanner.findOne({});
+
+            if(banner)
+            {
+                deleteImage(path.join(__dirname,"../public",banner.img),"blog detail banner");
+                banner.img = img;
+                await banner.save();
+            }
+            else{
+                await blogDetailBanner.create({img});
+            }
+            return successResponse(res,"banner uploaded succesfully");
+
+    }
+    catch(error)
+    {
+        console.log("error to upload image",error);
+        return errorResponse(res,"blog detail banner not updated");
     }
 }
 
