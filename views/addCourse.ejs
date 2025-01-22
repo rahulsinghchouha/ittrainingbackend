@@ -90,6 +90,16 @@
                     <div style="width: 70%;  display: flex; flex-direction: column; gap: 25px; ">
                         <div style="margin: 5px;  padding: 10px;">
                             <div >
+                                <% if (success && success.length > 0) { %>
+                                    <div  class="toast success-toast">
+                                        <%= success %>
+                                    </div>
+                                <% } %>
+                                <% if (error && error.length > 0) { %>
+                                    <div class="toast error-toast">
+                                        <%= error %>
+                                    </div>
+                                <% } %>
                                 <h1
                                 style="font-size: 26px; font-weight: 700; color: green; margin-top: 20px;">
                                  Course Banner and Details: </h1>

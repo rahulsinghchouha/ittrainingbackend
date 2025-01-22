@@ -104,8 +104,8 @@ exports.addHome = async (req, res) => {
         || !howToStart || !maximizeCareerHead || !blogHead
         || !jobReadyHead || !interviewPrepHead || !mentorsHead || !careerCounsilHead || !beforeCollegeHead
         || !bannerImage || !bannerBgImg || !maximizeCareerImg || !blogImg || !beforeCollegeImg) {
-        console.log("Validation error all the fields require for the home page");
-        return validationErrorWithData(res, "Please enter all the fields chek how to start field");
+            req.flash('error','data not found');
+            return res.redirect("/add-home");
     }
 
     const filterHowToStart = howToStart.filter(value => value != undefined && value != null);
@@ -145,18 +145,20 @@ exports.addHome = async (req, res) => {
 
 
             await home.findByIdAndUpdate(homeData._id, { $set: newhomeData }, { new: true });
-            return successResponse(res, "home updated succesfully");
+            req.flash('success','Home added succesfully');
+            return res.redirect("/add-home");
         }
         else {
             const newHome = new home(newhomeData);
             await newHome.save();
-            return successResponseWithData(res, "Home Added Succesfully");
+            req.flash('success','Home added succesfully');
+            return res.redirect("/add-home");
         }
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res, "home not added please Enter valid data and submit again")
-
+        req.flash('error','Home not added please try again');
+        return res.redirect("/add-home");
     }
 }
 exports.updateHome = async (req, res) => {
@@ -172,8 +174,8 @@ exports.updateHome = async (req, res) => {
     if (!bannerHeading || !chooseCourseHead || !upliftYourCareerHead
         || !howToStart || !maximizeCareerHead || !blogHead
         || !jobReadyHead || !interviewPrepHead || !mentorsHead || !careerCounsilHead || !beforeCollegeHead) {
-        console.log("Validation error all the fields require for the home page");
-        return validationErrorWithData(res, "Please enter all the fields chek how to start field");
+            req.flash('error','data not found');
+            return res.redirect("/dashboard");
     }
 
     //create new object to update them
@@ -217,16 +219,16 @@ exports.updateHome = async (req, res) => {
             }
             await home.findByIdAndUpdate(previousHome._id, { $set: newhomeData }, { new: true });
            req.flash('success','Dashboard updated succesfully')
-           res.redirect("/dashboard");
+           return res.redirect("/dashboard");
         }
         else {
-            req.flash('error','dashboard not updated');
-            res.redirect("/dashboard");
+           req.flash('error','dashboard not updated');
+           return res.redirect("/dashboard");
         }
     }
     catch (error) {
         req.flash('error','dashboard not updated');
-        res.redirect("/dashboard");
+        return res.redirect("/dashboard");
     }
 }
 
@@ -246,7 +248,8 @@ exports.addCourse = async (req, res) => {
     // console.log(courseName,category, overview, keyAreas, toolsInHand,benefits, eligibility, courseDuration, feeOptions, courseCurricullum,keyHighLights, jobRoles,fAQ, img);
 
     if (!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !filterCourseCurricullum || !keyHighLights || !certificate || !jobRoles || !filterFAQ || !img) {
-        return validationErrorWithData(res, "Enter all the required fields  to create a course");
+        req.flash('error','Enter all the require field');
+        return res.redirect("/add-course");
     }
 
     try {
@@ -264,11 +267,13 @@ exports.addCourse = async (req, res) => {
             jobRoles,
             fAQ: filterFAQ,
         })
-        return successResponse(res, "Course added succesfully");
+        req.flash('success','Course added succesfully');
+        return res.redirect("/add-course");
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res, "Course not added please add valid field and try again");
+        req.flash('error','course not added please try again');
+       return res.redirect("/add-course");
     }
 }
 exports.getCourseById = async (req, res) => {
@@ -294,7 +299,8 @@ exports.updateCourse = async (req, res) => {
     const { courseId, courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ } = req.body;
     const img = req.file?.filename;
     if (!courseId || !courseName || !category || !overview || !keyAreas || !toolsInHand || !benefits || !courseCurricullum || !keyHighLights || !certificate || !jobRoles || !fAQ) {
-        return validationErrorWithData(res, "Enter all the required fields  to create a course");
+        req.flash('error','course not found please try again');
+        return res.redirect(`/update-course/${courseId}`);
     }
     const updatedCourse = {
         courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ
@@ -303,7 +309,8 @@ exports.updateCourse = async (req, res) => {
         const courseDetails = await course.findById(courseId);
         if (!courseDetails) {
             console.log("course not found");
-            return notFoundResponse(res, "course not found");
+            req.flash('error','course not found please try again');
+            return res.redirect(`/update-course/${courseId}`);
         }
         if (img) {
             const oldImage = path.join(__dirname, "../public", courseDetails?.img);
@@ -311,11 +318,13 @@ exports.updateCourse = async (req, res) => {
             updatedCourse.img = img;
         }
         await course.findByIdAndUpdate(courseDetails._id, { $set: updatedCourse }, { new: true });
-        return successResponse(res, "course updated succesfully");
+        req.flash('success','course updated succesfully');
+        return res.redirect(`/update-course/${courseId}`);
     }
     catch (error) {
         console.log("Error to update the course ", error);
-        return errorResponse(res, "course not updated please try again");
+        req.flash('error','course not updated please try again');
+        return res.redirect(`/update-course/${courseId}`);
     }
 }
 exports.deleteCourse = async (req, res) => {
@@ -435,7 +444,8 @@ exports.addAboutUS = async (req, res) => {
 
     if (!yourImaginationHead || !totalStudentJoined || !ourJourneyHead || !ourBeliefsHead || !ourMissionHead || !missionDetails || !visionDetails || !valuesDetails
         || !bannerImage || !yourImaginationImg || !ourJourneyImg || !ourBeliefImg || !ourMissionImg) {
-        return validationErrorWithData(res, "Please Enter all the valid data and try");
+            req.flash('error','Enter all the require field');
+            return res.redirect('/add-aboutUs');
     }
 
     const aboutUsData = {
@@ -475,17 +485,20 @@ exports.addAboutUS = async (req, res) => {
 
 
             await aboutUS.findByIdAndUpdate(aboutData._id, { $set: aboutUsData }, { new: true });
-            return successResponse(res, "about us updated succesfully");
+            req.flash('success','About us added succesfully');
+            return res.redirect('/add-aboutUs');
         }
         else {
             const newabout = new aboutUS(aboutUsData);
             await newabout.save();
-            return successResponse(res, "about us created sucesfully");
+            req.flash('success','About us added succesfully');
+            return res.redirect('/add-aboutUs');
         }
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res, "about us not added please enter a valid data and try again");
+        req.flash('error','about us not added please try again');
+        return res.redirect('/add-aboutUs');
     }
 
 }
@@ -499,14 +512,16 @@ exports.updateAboutUs = async (req, res) => {
     //validate that data 
 
     if (!yourImaginationHead || !totalStudentJoined || !ourJourneyHead || !ourBeliefsHead || !ourMissionHead || !missionDetails || !visionDetails || !valuesDetails) {
-        return validationErrorWithData(res, "Please Enter all the valid data and try");
+        req.flash('error','Please Enter all the require field');
+        return res.redirect('/about-us');
     }
 
     try {
         const about = await aboutUS.findOne({});
 
         if (!about) {
-            return notFoundResponse(res, "about us not");
+            req.flash('error','about us not found');
+            return res.redirect('/about-us');
         }
         const updatedAbout = {
             yourImaginationHead,
@@ -545,17 +560,17 @@ exports.updateAboutUs = async (req, res) => {
             updatedAbout.ourMissionImg = ourMissionImg[0]?.filename;
         }
 
-
         await aboutUS.findByIdAndUpdate(about._id, { $set: updatedAbout }, { new: true });
 
-        return successResponse(res, "about us updated succesfully");
+        req.flash('success','about us updated succesfully');
+        return res.redirect('/about-us');
 
     }
     catch (error) {
         console.log("Error to update the course", error);
-        return errorResponse(res, "about us not updated");
+        req.flash('error','Error to update the home page');
+        return res.redirect('/about-us');
     }
-
 }
 
 
@@ -757,7 +772,8 @@ exports.addOurStats = async (req, res) => {
     const { mentors, experience, placedStudent, yearsOfJourney } = req.body;
 
     if (!mentors || !experience || !placedStudent || !yearsOfJourney) {
-        return validationErrorWithData(res, "our stats data not found");
+        req.flash("error","Enter all the require field");
+        return res.redirect('/add-ourStats')
     }
 
     const newStats = {
@@ -768,20 +784,20 @@ exports.addOurStats = async (req, res) => {
     }
 
     try {
-
         const stats = await ourStats.findOne({});
-
         if (stats) {
             await ourStats.findByIdAndUpdate(stats._id, { $set: newStats }, { new: true });
-            return successResponse(res, "stats updated succesfully");
         }
         else {
-            await ourStats.create(newStats);
-            return successResponse(res, "status added succesfully");
+            await ourStats.create(newStats);  
         }
+        req.flash("success","stats updated succesfully");
+        return res.redirect('/add-ourStats');
     }
     catch (error) {
-        return errorResponse(res, "stats not saved please try again");
+        console.log("error to update the stats",error);
+        req.flash("error","Error to update the stats");
+        return res.redirect('/add-ourStats')
     }
 
 

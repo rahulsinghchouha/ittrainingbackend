@@ -94,6 +94,16 @@
 
                             <!-- Our Stats -->
                             <div style=" margin-top: 20px; margin-bottom: 20px; ">
+                                <% if (success && success.length > 0) { %>
+                                    <div  class="toast success-toast">
+                                        <%= success %>
+                                    </div>
+                                <% } %>
+                                <% if (error && error.length > 0) { %>
+                                    <div class="toast error-toast">
+                                        <%= error %>
+                                    </div>
+                                <% } %>
                                 <h1
                                     style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); margin-top: 20px; ">
                                     About Us : </h1>

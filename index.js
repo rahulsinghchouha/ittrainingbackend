@@ -66,7 +66,7 @@ app.get("/home", (req, res) => {
     res.render("home");
 });
 app.get("/add-home", (req, res) => {
-    res.render("newHome");
+    res.render("newHome",{success:req.flash('success'), error:req.flash('error')});
 });
 //Course
 app.get("/course", async (req, res) => {
@@ -134,13 +134,13 @@ app.get("/update-course/:id", async (req, res) => {
         console.log("error to get the course", error);
     }
 
-    res.render("updateCourse", { courseDetails: object?.data, backendUrl: process.env.BACKEND_URL });
+    res.render("updateCourse", {success:req.flash('success'),error:req.flash('error') ,courseDetails: object?.data, backendUrl: process.env.BACKEND_URL });
 })
 
 
 
 app.get("/add-course", (req, res) => {
-    res.render("addCourse");
+    res.render("addCourse",{success:req.flash('success'),error:req.flash('error') });
 });
 //==========TESTIMONIAL PAGE============
 app.get("/our-testimonial", async (req, res) => {
@@ -327,11 +327,11 @@ app.get("/about-us", async (req, res) => {
         console.log("error to get data", error);
     }
 
-    res.render("aboutUs", { aboutUs: object.data, backendUrl: process.env.BACKEND_URL });
+    res.render("aboutUs", { success:req.flash('success'),error:req.flash('error') , aboutUs: object.data, backendUrl: process.env.BACKEND_URL });
 });
 
 app.get("/add-aboutUs", (req, res) => {
-    res.render("addAboutUs");
+    res.render("addAboutUs",{ success:req.flash('success'),error:req.flash('error') });
 });
 
 app.get("/add-partners", async (req, res) => {
@@ -405,7 +405,7 @@ app.get("/add-ourStats", async (req, res) => {
         console.log("error to fetch our stats", error);
     }
 
-    res.render("addOurStats", { ourStats: object?.data });
+    res.render("addOurStats", { success:req.flash('success'), error:req.flash('error'), ourStats: object?.data });
 
 });
 
