@@ -595,7 +595,7 @@ exports.updateAboutUs = async (req, res) => {
 exports.addStudentPlaced = async (req, res) => {
     const { name, profile, experience } = req.body;
     const img = req.file?.filename;
-   // console.log(name, profile, experience, img);
+    // console.log(name, profile, experience, img);
     //validation
     if (!name || !profile || !experience || !img) {
         req.flash('error', 'Please Enter all the require field');
@@ -752,7 +752,7 @@ exports.addContactUs = async (req, res) => {
         if (contactData) {
             const oldImage = path.join(__dirname, "../public", contactData.bannerImg);
             deleteImage(oldImage, "banner image contactus");
-            await contactUs.findByIdAndUpdate(contactData._id, { $set: newContact }, { new: true });           
+            await contactUs.findByIdAndUpdate(contactData._id, { $set: newContact }, { new: true });
         }
         else {
             const newContactData = new contactUs(newContact);
@@ -763,7 +763,7 @@ exports.addContactUs = async (req, res) => {
 
     }
     catch (error) {
-        console.log("contatc us error",error);
+        console.log("contatc us error", error);
         req.flash('error', 'contact us not added please try again');
         return res.redirect('/add-contactUs');
     }
@@ -1195,7 +1195,8 @@ exports.addBlog = async (req, res) => {
     const filterTags = [...new Set(tags)];
 
     if (!heading || !details || !img || !filterTags || !blogCategory) {
-        return validationErrorWithData(res, "All the fields required to create a blog");
+        req.flash('error', 'Please Enter all the require field');
+        return res.redirect("/add-newBlog")
     }
     try {
         await blogs.create({
@@ -1205,11 +1206,13 @@ exports.addBlog = async (req, res) => {
             img,
             tags: filterTags
         })
-        return successResponse(res, "blog added succesfully");
+        req.flash('success', 'Blog created succesfully');
+        return res.redirect("/add-newBlog")
     }
     catch (error) {
         console.log(error);
-        return errorResponse(res, "blog not added please try again");
+        req.flash('error', 'Blog not created please try again');
+        return res.redirect("/add-newBlog")
     }
 
 }
@@ -1219,15 +1222,15 @@ exports.updateBlog = async (req, res) => {
     const img = req.file?.filename;
 
     if (!blogId || !heading || !blogCategory || !details || !tags) {
-        return validationErrorWithData(res, "require all the details");
+        req.flash('error', 'Blog created succesfully');
+        return res.redirect(`/update-blog/${blogId}`);
     }
-
     try {
-
         const blog = await blogs.findById(blogId);
-
-        if (!blog) return notFoundResponse(res, "blog details not found");
-
+        if (!blog) {
+            req.flash('error', 'Blog not found');
+            return res.redirect(`/update-blog/${blogId}`);
+        }
         const updatedBlog = {
             heading,
             blogCategory,
@@ -1239,34 +1242,40 @@ exports.updateBlog = async (req, res) => {
             updatedBlog.img = img;
         }
         await blogs.findByIdAndUpdate(blogId, { $set: updatedBlog }, { new: true });
-
-        return successResponse(res, "blog details updated succesfully");
+        req.flash('success', 'Blog updated succesfully');
+        return res.redirect(`/update-blog/${blogId}`);
     }
     catch (error) {
-        console.log("Error to update the blog");
-        return errorResponse(res, "blog not updated");
+        req.flash('error', 'Blog not updated please try again');
+        return res.redirect(`/update-blog/${blogId}`);
     }
-
 }
 exports.deleteBlog = async (req, res) => {
     const { blogId } = req.query;
 
     if (!blogId) {
-        return validationErrorWithData(res, "blog id not found");
+        req.flash('error', 'Blog not found ');
+        return res.status(400).json({ redirect: "/blogs" }); // Send redir
     }
     try {
         const blog = await blogs.findById(blogId);
-        if (!blog) return notFoundResponse(res, "blog not found");
+        if (!blog)
+            {
+                req.flash('error', 'Blog not found ');
+                return res.status(404).json({ redirect: "/blogs" });
+            } 
 
         if (blog.img)
             deleteImage(path.join(__dirname, "../public", blog.img));
 
         await blogs.findByIdAndDelete(blogId);
-        return successResponse(res, "blog deleted succesfully");
+        req.flash('success', 'Blog deleted succesfully ');
+        return res.status(200).json({ redirect: "/blogs" });
     }
     catch (error) {
         console.log("error to delete the blog", error);
-        return errorResponse(res, "blog not deleted");
+        req.flash('error', 'Blog not deleted ');
+        return res.status(500).json({ redirect: "/blogs" });
     }
 }
 exports.getBlogById = async (req, res) => {
@@ -1292,7 +1301,8 @@ exports.addBlogBanner = async (req, res) => {
     const img = req.file?.filename;
 
     if (!img) {
-        return validationErrorWithData(res, "Blog banner img not found ");
+        req.flash('error', 'Blog Banner image not found');
+        return res.redirect("/add-newBlog")
     }
     try {
         const banner = await bannerImgBlog.findOne({});
@@ -1305,18 +1315,23 @@ exports.addBlogBanner = async (req, res) => {
         else {
             await bannerImgBlog.create({ img });
         }
-        return successResponse(res, "blog banner img add succesfully");
+        req.flash('success', 'Blog Banner added succesfully');
+        return res.redirect("/add-newBlog")
     }
     catch (error) {
         console.log("Error to update the blog banner img", error);
-        return errorResponse(res, "blog banner not updated");
+        req.flash('error', 'Blog Banner not updated please try again');
+        return res.redirect("/add-newBlog")
     }
 }
 exports.addBlogDetailBanner = async (req, res) => {
     const img = req.file?.filename;
 
     if (!img)
-        return validationErrorWithData(res, "blog detail banner img not found");
+      {
+        req.flash('error', 'Please Enter image');
+        return res.redirect("/add-newBlog")
+      }  
 
     try {
         const banner = await blogDetailBanner.findOne({});
@@ -1329,11 +1344,13 @@ exports.addBlogDetailBanner = async (req, res) => {
         else {
             await blogDetailBanner.create({ img });
         }
-        return successResponse(res, "banner uploaded succesfully");
+        req.flash('success', ' Blog Details Image updated succesfully');
+        return res.redirect("/add-newBlog")
     }
     catch (error) {
         console.log("error to upload image", error);
-        return errorResponse(res, "blog detail banner not updated");
+        req.flash('error', ' Blog Details Image not added');
+        return res.redirect("/add-newBlog")
     }
 }
 

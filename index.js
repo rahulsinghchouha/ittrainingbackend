@@ -217,7 +217,7 @@ app.get("/blogs", async (req, res) => {
     catch (error) {
         console.log("error to fetch the data ", error);
     }
-    res.render("blog", { blogs: object.data, backendUrl: process.env.BACKEND_URL });
+    res.render("blog", { success:req.flash('success'), error:req.flash('error'), blogs: object.data, backendUrl: process.env.BACKEND_URL });
 });
 
 app.get("/update-blog/:id", async (req, res) => {
@@ -258,12 +258,12 @@ app.get("/update-blog/:id", async (req, res) => {
         console.log("error", error);
     }
 
-    res.render("updateBlog", { blogDetails: object.data, tags:tags.data, backendUrl: process.env.BACKEND_URL });
+    res.render("updateBlog", { success:req.flash('success'), error:req.flash('error'), blogDetails: object.data, tags:tags.data, backendUrl: process.env.BACKEND_URL });
 
 })
 
 app.get("/add-newBlog", (req, res) => {
-    res.render("addNewBlog");
+    res.render("addNewBlog",{success:req.flash('success'), error:req.flash('error')});
 });
 
 app.get("/add-newTag", async (req, res) => {

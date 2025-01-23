@@ -91,6 +91,16 @@
                 <div style="width: 70%; margin-left: 150px; margin-top: 100px;">
 
                     <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <% if (success && success.length> 0) { %>
+                            <div class="toast success-toast">
+                                <%= success %>
+                            </div>
+                            <% } %>
+                        <% if (error && error.length> 0) { %>
+                                    <div class="toast error-toast">
+                                        <%= error %>
+                                    </div>
+                        <% } %>
 
                         <% blogs?.forEach(function(blog,index) {%>
                             <div
@@ -131,19 +141,15 @@
     </div>
     <script>
         async function deleteBlog(id) {
-           // console.log("id", id);
+            console.log("id", id);
             //here we send the post request and delete this categories
            
             try {
                 const response = await fetch(`/api/v1/admin/delete-blog?blogId=${id}`)
-                if (response.ok) {
-
-                    alert("blog deleted successfully!");
-
-                } else {
-                    // Handle server-side errors or non-2xx responses
-                    alert(`Error:  'Failed to delete blog.'}`);
-                }
+                const data = await response.json();
+                    if (data.redirect) {
+                        window.location.href = data.redirect; // Redirect manually
+                    }
             }
             catch (error) {
                 console.log("error", error);
