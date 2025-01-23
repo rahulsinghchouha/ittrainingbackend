@@ -300,14 +300,10 @@
                     },
                     body: JSON.stringify({ id })
                 })
-                if (response.ok) {
-
-                    alert("Category deleted successfully!");
-
-                } else {
-                    // Handle server-side errors or non-2xx responses
-                    alert(`Error:  'Failed to delete category.'}`);
-                }
+                const data = await response.json();
+                    if (data.redirect) {
+                        window.location.href = data.redirect; // Redirect manually
+                    }
             }
             catch (error) {
                 console.log("error", error);

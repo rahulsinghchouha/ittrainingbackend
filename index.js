@@ -303,10 +303,10 @@ app.get("/contact-us", async (req, res) => {
     catch (error) {
         console.log("error to get the contact us", error);
     }
-    res.render("contactUs", { contactData: object?.data, backendUrl: process.env?.BACKEND_URL });
+    res.render("contactUs", {success:req.flash('success'),error:req.flash('error'), contactData: object?.data, backendUrl: process.env?.BACKEND_URL });
 });
 app.get("/add-contactUs", (req, res) => {
-    res.render("addContactUs");
+    res.render("addContactUs",{success:req.flash('success'),error:req.flash('error')});
 });
 
 app.get("/about-us", async (req, res) => {

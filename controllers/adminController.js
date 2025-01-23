@@ -733,7 +733,8 @@ exports.addContactUs = async (req, res) => {
     // console.log(contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming, bannerImg);
     // validation
     if (!contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming || !bannerImg) {
-        return validationErrorWithData(res, "enter all the require field and try again");
+        req.flash('error', 'contact us data not found');
+        return res.redirect('/add-contactUs');
     }
     //new object
     const newContact = {
@@ -751,20 +752,20 @@ exports.addContactUs = async (req, res) => {
         if (contactData) {
             const oldImage = path.join(__dirname, "../public", contactData.bannerImg);
             deleteImage(oldImage, "banner image contactus");
-
-            await contactUs.findByIdAndUpdate(contactData._id, { $set: newContact }, { new: true });
-            return successResponseWithData(res, "contact data added succesfully");
+            await contactUs.findByIdAndUpdate(contactData._id, { $set: newContact }, { new: true });           
         }
         else {
             const newContactData = new contactUs(newContact);
             await newContactData.save();
-            return successResponseWithData(res, "contact data added succesfully");
         }
+        req.flash('success', 'contact us added succesfully');
+        return res.redirect('/add-contactUs');
 
     }
     catch (error) {
-        console.log(error);
-        return errorResponse(res, "contact us not added please verify the data and try again");
+        console.log("contatc us error",error);
+        req.flash('error', 'contact us not added please try again');
+        return res.redirect('/add-contactUs');
     }
 }
 exports.updateContactUs = async (req, res) => {
@@ -773,12 +774,14 @@ exports.updateContactUs = async (req, res) => {
     const { contactUsId, contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming } = req.body;
     //validation
     if (!contactUsId || !contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming) {
-        return validationErrorWithData(res, "data not get");
+        req.flash('error', 'Please Enter all the require fields');
+        return res.redirect('/contact-us');
     }
     try {
         const contactUsData = await contactUs.findById(contactUsId);
         if (!contactUsData) {
-            return notFoundResponse(res, "contact data not found");
+            req.flash('error', 'contact data not found');
+            return res.redirect('/contact-us');
         }
         const updatedContact = {
             contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming
@@ -789,11 +792,13 @@ exports.updateContactUs = async (req, res) => {
             updatedContact.bannerImg = bannerImg;
         }
         await contactUs.findByIdAndUpdate(contactUsData._id, { $set: updatedContact }, { new: true });
-        return successResponse(res, "contact us updated succesfully");
+        req.flash('success', 'contact data updated succesfully');
+        return res.redirect('/contact-us');
     }
     catch (error) {
         console.log("error to update the contact", error);
-        return errorResponse(res, "contact us not updated");
+        req.flash('error', 'contact data not updated please try again');
+        return res.redirect('/contact-us');
     }
 }
 
@@ -943,13 +948,13 @@ exports.deleteCategory = async (req, res) => {
     // console.log(id);
     if (!id) {
         req.flash('error', 'category not found');
-        return res.redirect("/add-categories");
+        return res.status(400).json({ redirect: "/add-categories" }); // Send redir
     }
     try {
         const category = await exploreCategory.findById(id);
         if (!category) {
             req.flash('error', 'category not found');
-            return res.redirect("/add-categories");
+            return res.status(404).json({ redirect: "/add-categories" }); // Send redir
         }
         if (category.bgImage) {
             const bgImage = path.join(__dirname, "../public", category.bgImage);
@@ -977,13 +982,12 @@ exports.deleteCategory = async (req, res) => {
         }
         await exploreCategory.findByIdAndDelete(id);
         req.flash('success', 'category deleted succesfully');
-        return res.redirect("/add-categories");
-
+        return res.status(200).json({ redirect: "/add-categories" }); // Send redir
     }
     catch (error) {
         console.log("Error in categories deletion", error);
         req.flash('error', 'category not deleted please try again');
-        return res.redirect("/add-categories");
+        return res.status(500).json({ redirect: "/add-categories" }); // Send redir
     }
 
 }
