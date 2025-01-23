@@ -1360,18 +1360,22 @@ exports.addTag = async (req, res) => {
     const { tag } = req.body;
 
     if (!tag) {
-        return validationErrorWithData(res, "data not found Please Enter a valid data");
+        req.flash('error', 'Please Enter the require field');
+        return res.redirect("/add-newTag")
     }
 
     try {
         await tags.create({ tag });
-        return successResponse(res, "Tag added Succesfully");
+        req.flash('success', 'Tags created succesfully');
+        return res.redirect("/add-newTag");
     }
     catch (error) {
         if (error.code === 11000) {
-            return duplicateDataError(res, "Cant add duplicate data ");
+            req.flash('error', "This tag is already created");
+            return res.redirect("/add-newTag")
         }
-        return errorResponse(res, "Please Enter a valid data and try again");
+        req.flash('error', "Tag not created please try again");
+        return res.redirect("/add-newTag")
     }
 
 }
@@ -1380,15 +1384,20 @@ exports.deleteTag = async (req, res) => {
     const { tagId } = req.body;
 
     if (!tagId)
-        return validationErrorWithData(res, "tag not found");
+      {
+        req.flash('error', "Tag not found");
+        return res.redirect("/add-newTag")
+      }  
 
     try {
         await tags.findByIdAndDelete(tagId);
-        return successResponse(res, "tag deleted succesfully");
+        req.flash('success', "Tag deleted succesfully");
+        return res.redirect("/add-newTag")
     }
     catch (error) {
         console.log("error to delete the tag", error);
-        return errorResponse(res, "tag not deleted");
+        req.flash('error', "Tag not deleted please try again");
+        return res.redirect("/add-newTag")
     }
 
 }
@@ -1397,25 +1406,35 @@ exports.updateTag = async (req, res) => {
     const { tagId, tag } = req.body;
 
     if (!tagId || !tag)
-        return validationErrorWithData(res, "tag not found");
+      {
+        req.flash('error', "Tag not found");
+        return res.redirect("/add-newTag")
+      } 
     // Validate tag ID format
     if (!mongoose.isValidObjectId(tagId)) {
-        return validationErrorWithData(res, "Invalid tag ID format");
+        req.flash('error', "Invalid Tag Id");
+        return res.redirect("/add-newTag")
     }
     try {
         await tags.findByIdAndUpdate(tagId, { $set: { tag } }, { new: true });
-        return successResponse(res, "tag updated succesfully");
+        req.flash('success', "Tag updated succesfully");
+        return res.redirect("/add-newTag")
     }
     catch (error) {
         console.log("error to update the tag", error);
-        return errorResponse(res, "tag not updated");
+        req.flash('error', "Tag not updated please try again");
+        return res.redirect("/add-newTag")
     }
 }
 exports.addTagBanner = async (req, res) => {
 
     const img = req?.file?.filename;
     if (!img)
-        return validationErrorWithData(res, "tag banner not found");
+    {
+        req.flash('error', "Banner Image not found");
+        return res.redirect("/add-newTag")
+    }
+    
 
     try {
         const banner = await bannerImgTag.findOne({});
@@ -1428,11 +1447,13 @@ exports.addTagBanner = async (req, res) => {
         else {
             await bannerImgTag.create({ img });
         }
-        return successResponse(res, "tag banner created succesfully");
+        req.flash('success', "Banner Image added succesfully");
+        return res.redirect("/add-newTag")
     }
     catch (error) {
         console.log("error to add tag banner", error);
-        return errorResponse(res, "error to add tag banner");
+        req.flash('error', "Banner not added please try again");
+        return res.redirect("/add-newTag")
     }
 }
 

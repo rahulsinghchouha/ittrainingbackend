@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Curriculum</title>
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+    <script src="/aejsFunction/ejsFunction.js"> </script>
 </head>
 
 <body>
@@ -80,14 +83,26 @@
                         style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
                         <div style="  width: 100%;  padding: 20px 20px; ">
                             <div style="margin: 0px;  padding: 10px;">
-
+                                <% if (success && success.length> 0) { %>
+                                    <div class="toast success-toast">
+                                        <%= success %>
+                                    </div>
+                                    <% } %>
+                                <% if (error && error.length> 0) { %>
+                                            <div class="toast error-toast">
+                                                <%= error %>
+                                            </div>
+                                <% } %>
+        
                                 <div>
-                                    <form action="api/v1/admin/add-tag-banner" method="post" enctype="multipart/form-data">
+                                    <form action="api/v1/admin/add-tag-banner" method="post"
+                                        enctype="multipart/form-data">
                                         <label
-                                            style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; margin-bottom: 10px; display: block;"> Add or Update Blog Details Banner
+                                            style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; margin-bottom: 10px; display: block;">
+                                            Add or Update Blog Details Banner
                                             Image : </label>
                                         <input type="file" name="img" required placeholder="Banner Image"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 40px; padding: 10px 10px;" />
+                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
                                         <button type="submit"
                                             style=" border:2px; border-style: solid; border-color: black; margin-left: 90%; margin-top: 20px; width: 10%; font-weight: 500; cursor: pointer; color: white; background-color: #1AAEF4;  height: 40px; text-align: center; padding-top: 0px; border-radius: 5px; ">
                                             Submit
@@ -165,187 +180,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="/css/tailwind.css" rel="stylesheet">
-    <link href="/css/index.css" rel="stylesheet">
-    <script src="/aejsFunction/ejsFunction.js"> </script>
-
-</head>
-
-<body>
-
-    <div>
-        <div style="display: flex; box-sizing: border-box; ">
-
-            <div
-                style=" width: 12%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
-
-                <figure style=" margin-left: 30px; margin-top: 20px; width: 180px; height: 70px; "
-                    class=" w-[100%] border-b-2 border-solid border-red-700">
-                    <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
-                </figure>
-                <div
-                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 40px; margin-top: 20px;  ">
-                    <div>
-                        <a href="/dashboard">
-                            <button
-                                style="cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius: 5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="home"> Home </button>
-                        </a>
-
-                    </div>
-                    <div>
-                        <a href="/course" onclick="this.classList.add('visited-active')">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="course">Courses </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/about-us">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton">
-                                About Us
-                            </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/blogs">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size:16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="Blogs">Blogs </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/our-testimonial">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="Testimonial">Testimonial </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/contact-us">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700;  "
-                                class="sidebarHomebButton" for="contact us">Contact Us </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 88%;">
-
-                <div
-                    style="width:100%; height: 100px; border-width:100%; border-bottom: 1px; border-style: solid; display: flex; justify-content: center; align-items: center;">
-                    <h1 style=" font-size: 36px; font-weight: 700; color: #1AAEF4;">
-                        Add New Blog</h1>
-                </div>
-
-                <div style=" margin-top: 60px; display: flex; justify-content: center;">
-                    <div
-                        style="width: 60%;  display: flex; flex-direction: column; justify-content: center; align-items: center; ">
-                        <div
-                            style=" height: 640px; width: 100%; border: 2px; border-style: solid; border-color: gray; padding: 20px 20px; overflow-y: scroll;">
-
-                            <div style=" margin-top: 20px; ">
-                                <h1
-                                    style="font-size: 26px; font-weight: 700; color: rgb(233, 6, 6); margin-top: 20px; margin-left:20px ;">
-                                    New Tag : </h1>
-
-                                <form>
-                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                            Add Tag Image : </label>
-                                        <input type="file" name="tagImage" placeholder=" Add Tag Image"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
-                                            min="0" />
-                                    </div>
-                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                            Add Tag Name : </label>
-                                        <input type="text" name="tagName" placeholder=" Add Tag Name"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
-                                            min="0" />
-                                    </div>
-                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                            Add Tag Heading : </label>
-                                        <input type="text" name="tagHeading" placeholder="Add Tag Heading"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
-                                            min="0" />
-                                    </div>
-                                    <div style="display: flex;  flex-direction: column;  gap: 10px; margin: 10px; ">
-                                        <label style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                            Add Tag Details : </label>
-                                        <input type="text" name="tagDetails" placeholder=" Add Tag Details"
-                                            style="border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;"
-                                            min="0" />
-                                    </div>
-                                </form>
-
-                            </div>
-
-
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-</body>
-
-</html> -->

@@ -284,7 +284,7 @@ app.get("/add-newTag", async (req, res) => {
         console.log("error", error);
     }
 
-    res.render("addNewTag",{tags:tags.data});
+    res.render("addNewTag",{ success:req.flash('success'),error:req.flash('error'), tags:tags.data});
 });
 
 app.get("/contact-us", async (req, res) => {
