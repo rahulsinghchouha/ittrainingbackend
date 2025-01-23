@@ -8,6 +8,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const flash = require("connect-flash");
 const session = require("express-session")
+const {isAuthenticated} = require("./middleware/session");
 
 const app = express();
 
@@ -24,7 +25,10 @@ app.use(express.static(path.join(__dirname, 'public'))); //serve static files im
 app.use(session({
     secret:process.env.EXPRESS_SESSION,
     resave:false,
-    saveUninitialized:true
+    saveUninitialized:true,
+    cookie:{secure:false,
+        maxAge:5 * 60 * 1000
+    }
 }))
 // Set up flash middleware
 app.use(flash());
@@ -62,14 +66,27 @@ app.get("/login", (req, res) => {
     res.render("index", { message: "" });
 });
 
-app.get("/home", (req, res) => {
+
+// Apply authentication middleware to routes that require authentication
+app.use('/admin', isAuthenticated);
+
+app.get("/admin/dashboard", async (req, res) => {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-home`);
+    const object = await response.json();
+    // console.log(object?.data);
+    res.render("dashboard", { success:req.flash('success'),error:req.flash('error') ,homePage: object?.data, backendUrl: process.env.BACKEND_URL });
+});
+
+
+
+app.get("/admin/home", (req, res) => {
     res.render("home");
 });
-app.get("/add-home", (req, res) => {
+app.get("/admin/add-home", (req, res) => {
     res.render("newHome",{success:req.flash('success'), error:req.flash('error')});
 });
 //Course
-app.get("/course", async (req, res) => {
+app.get("/admin/course", async (req, res) => {
    // console.log("Redirecting to /course with flash message",req.flash('success'));
     let object;
     let bannerCourse;
@@ -109,7 +126,7 @@ app.get("/course", async (req, res) => {
    // console.log("Redirecting to /course with flash messageee",req.flash('success'));
     res.render("courses", {success:req.flash('success'),error:req.flash('error') , courses: object?.data,bannerCourse: bannerCourse?.data , backendUrl: process.env.BACKEND_URL });
 });
-app.get("/update-course/:id", async (req, res) => {
+app.get("/admin/update-course/:id", async (req, res) => {
 
     const courseId = req.params.id;
 
@@ -140,11 +157,11 @@ app.get("/update-course/:id", async (req, res) => {
 
 
 
-app.get("/add-course", (req, res) => {
+app.get("/admin/add-course", (req, res) => {
     res.render("addCourse",{success:req.flash('success'),error:req.flash('error') });
 });
 //==========TESTIMONIAL PAGE============
-app.get("/our-testimonial", async (req, res) => {
+app.get("/admin/our-testimonial", async (req, res) => {
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/student-placed`);
@@ -163,7 +180,7 @@ app.get("/our-testimonial", async (req, res) => {
     }
     res.render("testimonial", { success:req.flash('success'),error:req.flash('error') , testimonials: object.data, backendUrl: process.env.BACKEND_URL });
 });
-app.get("/testimonial/update-testimonial/:id", async (req, res) => {
+app.get("/admin/testimonial/update-testimonial/:id", async (req, res) => {
 
     const testimonialId = req.params.id;
 
@@ -191,18 +208,13 @@ app.get("/testimonial/update-testimonial/:id", async (req, res) => {
 })
 
 
-app.get("/new-testimonial", (req, res) => {
+app.get("/admin/new-testimonial", (req, res) => {
     res.render("newTestimonial", {success:req.flash('success'),error:req.flash('error') });
 });
 
-app.get("/dashboard", async (req, res) => {
-    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-home`);
-    const object = await response.json();
-    // console.log(object?.data);
-    res.render("dashboard", { success:req.flash('success'),error:req.flash('error') ,homePage: object?.data, backendUrl: process.env.BACKEND_URL });
-});
+
 //=======================Blog Section===============
-app.get("/blogs", async (req, res) => {
+app.get("/admin/blogs", async (req, res) => {
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-blogs`);
@@ -220,7 +232,7 @@ app.get("/blogs", async (req, res) => {
     res.render("blog", { success:req.flash('success'), error:req.flash('error'), blogs: object.data, backendUrl: process.env.BACKEND_URL });
 });
 
-app.get("/update-blog/:id", async (req, res) => {
+app.get("/admin/update-blog/:id", async (req, res) => {
     const blogId = req.params?.id;
     let tags;
     let object;
@@ -262,11 +274,11 @@ app.get("/update-blog/:id", async (req, res) => {
 
 })
 
-app.get("/add-newBlog", (req, res) => {
+app.get("/admin/add-newBlog", (req, res) => {
     res.render("addNewBlog",{success:req.flash('success'), error:req.flash('error')});
 });
 
-app.get("/add-newTag", async (req, res) => {
+app.get("/admin/add-newTag", async (req, res) => {
 
     let tags;
 
@@ -287,7 +299,7 @@ app.get("/add-newTag", async (req, res) => {
     res.render("addNewTag",{ success:req.flash('success'),error:req.flash('error'), tags:tags.data});
 });
 
-app.get("/contact-us", async (req, res) => {
+app.get("/admin/contact-us", async (req, res) => {
     let object;
     try {
         const response = await fetch(`${process.env?.BACKEND_URL}/api/v1/get/get-contact-us`);
@@ -305,11 +317,11 @@ app.get("/contact-us", async (req, res) => {
     }
     res.render("contactUs", {success:req.flash('success'),error:req.flash('error'), contactData: object?.data, backendUrl: process.env?.BACKEND_URL });
 });
-app.get("/add-contactUs", (req, res) => {
+app.get("/admin/add-contactUs", (req, res) => {
     res.render("addContactUs",{success:req.flash('success'),error:req.flash('error')});
 });
 
-app.get("/about-us", async (req, res) => {
+app.get("/admin/about-us", async (req, res) => {
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-about-us`);
@@ -329,11 +341,11 @@ app.get("/about-us", async (req, res) => {
     res.render("aboutUs", { success:req.flash('success'),error:req.flash('error') , aboutUs: object.data, backendUrl: process.env.BACKEND_URL });
 });
 
-app.get("/add-aboutUs", (req, res) => {
+app.get("/admin/add-aboutUs", (req, res) => {
     res.render("addAboutUs",{ success:req.flash('success'),error:req.flash('error') });
 });
 
-app.get("/add-partners", async (req, res) => {
+app.get("/admin/add-partners", async (req, res) => {
 
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-partners`);
 
@@ -343,7 +355,7 @@ app.get("/add-partners", async (req, res) => {
     res.render("addPartners", {  success:req.flash('success'),error:req.flash('error') ,partners: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 
-app.get("/add-categories", async (req, res) => {
+app.get("/admin/add-categories", async (req, res) => {
 
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-explore-card`)
 
@@ -354,7 +366,7 @@ app.get("/add-categories", async (req, res) => {
     res.render("addCategories", { success:req.flash('success'), error:req.flash('error'), categories: object?.data, backendUrl: process.env.BACKEND_URL });
 });
 
-app.get("/update-category/:id", async (req, res) => {
+app.get("/admin/update-category/:id", async (req, res) => {
     const categoryId = req.params.id;
 
     let object;
@@ -386,7 +398,7 @@ app.get("/update-category/:id", async (req, res) => {
 })
 
 
-app.get("/add-ourStats", async (req, res) => {
+app.get("/admin/add-ourStats", async (req, res) => {
 
     let object;
 

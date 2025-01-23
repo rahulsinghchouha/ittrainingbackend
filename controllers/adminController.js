@@ -9,7 +9,6 @@ const ourStats = require("../models/ourStats");
 const addExploreCategory = require("../models/exploreCategory");
 const ourPartners = require("../models/ourPartners");
 const { blogs, bannerImgBlog, blogDetailBanner } = require("../models/blog");
-const fetch = require('node-fetch');
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
 const { validationErrorWithData, successResponse, errorResponse, notFoundResponse, successResponseWithData, duplicateDataError } = require("../helper/apiResponse");
@@ -21,7 +20,7 @@ const path = require("path");
 const fs = require("fs");
 const { deleteImage } = require("../config/storeFile");
 const exploreCategory = require("../models/exploreCategory");
-
+const session = require('express-session');
 
 
 
@@ -75,7 +74,9 @@ exports.adminLogin = async (req, res) => {
             if (isPassword) {
                 await mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
 
-                res.redirect("/dashboard")
+                req.session.user = email;
+
+                res.redirect("/admin/dashboard")
             }
             else {
                 res.render("index", { message: "incorrect password" })
@@ -105,7 +106,7 @@ exports.addHome = async (req, res) => {
         || !jobReadyHead || !interviewPrepHead || !mentorsHead || !careerCounsilHead || !beforeCollegeHead
         || !bannerImage || !bannerBgImg || !maximizeCareerImg || !blogImg || !beforeCollegeImg) {
         req.flash('error', 'data not found');
-        return res.redirect("/add-home");
+        return res.redirect("/admin/add-home");
     }
 
     const filterHowToStart = howToStart.filter(value => value != undefined && value != null);
@@ -146,19 +147,19 @@ exports.addHome = async (req, res) => {
 
             await home.findByIdAndUpdate(homeData._id, { $set: newhomeData }, { new: true });
             req.flash('success', 'Home added succesfully');
-            return res.redirect("/add-home");
+            return res.redirect("/admin/add-home");
         }
         else {
             const newHome = new home(newhomeData);
             await newHome.save();
             req.flash('success', 'Home added succesfully');
-            return res.redirect("/add-home");
+            return res.redirect("/admin/add-home");
         }
     }
     catch (error) {
         console.log(error);
         req.flash('error', 'Home not added please try again');
-        return res.redirect("/add-home");
+        return res.redirect("/admin/add-home");
     }
 }
 exports.updateHome = async (req, res) => {
@@ -175,7 +176,7 @@ exports.updateHome = async (req, res) => {
         || !howToStart || !maximizeCareerHead || !blogHead
         || !jobReadyHead || !interviewPrepHead || !mentorsHead || !careerCounsilHead || !beforeCollegeHead) {
         req.flash('error', 'data not found');
-        return res.redirect("/dashboard");
+        return res.redirect("/admin/dashboard");
     }
 
     //create new object to update them
@@ -219,16 +220,16 @@ exports.updateHome = async (req, res) => {
             }
             await home.findByIdAndUpdate(previousHome._id, { $set: newhomeData }, { new: true });
             req.flash('success', 'Dashboard updated succesfully')
-            return res.redirect("/dashboard");
+            return res.redirect("/admin/dashboard");
         }
         else {
             req.flash('error', 'dashboard not updated');
-            return res.redirect("/dashboard");
+            return res.redirect("/admin/dashboard");
         }
     }
     catch (error) {
         req.flash('error', 'dashboard not updated');
-        return res.redirect("/dashboard");
+        return res.redirect("/admin/dashboard");
     }
 }
 
@@ -249,7 +250,7 @@ exports.addCourse = async (req, res) => {
 
     if (!courseName || !category || !overview || !filterKeyAreas || !toolsInHand || !benefits || !filterCourseCurricullum || !keyHighLights || !certificate || !jobRoles || !filterFAQ || !img) {
         req.flash('error', 'Enter all the require field');
-        return res.redirect("/add-course");
+        return res.redirect("/admin/add-course");
     }
 
     try {
@@ -268,12 +269,12 @@ exports.addCourse = async (req, res) => {
             fAQ: filterFAQ,
         })
         req.flash('success', 'Course added succesfully');
-        return res.redirect("/add-course");
+        return res.redirect("/admin/add-course");
     }
     catch (error) {
         console.log(error);
         req.flash('error', 'course not added please try again');
-        return res.redirect("/add-course");
+        return res.redirect("/admin/add-course");
     }
 }
 exports.getCourseById = async (req, res) => {
@@ -300,7 +301,7 @@ exports.updateCourse = async (req, res) => {
     const img = req.file?.filename;
     if (!courseId || !courseName || !category || !overview || !keyAreas || !toolsInHand || !benefits || !courseCurricullum || !keyHighLights || !certificate || !jobRoles || !fAQ) {
         req.flash('error', 'course not found please try again');
-        return res.redirect(`/update-course/${courseId}`);
+        return res.redirect(`/admin/update-course/${courseId}`);
     }
     const updatedCourse = {
         courseName, category, overview, keyAreas, toolsInHand, benefits, courseCurricullum, keyHighLights, certificate, jobRoles, fAQ
@@ -310,7 +311,7 @@ exports.updateCourse = async (req, res) => {
         if (!courseDetails) {
             console.log("course not found", courseDetails);
             req.flash('error', 'course not found please try again');
-            return res.redirect(`/update-course/${courseId}`);
+            return res.redirect(`/admin/update-course/${courseId}`);
         }
         if (img) {
             const oldImage = path.join(__dirname, "../public", courseDetails?.img);
@@ -319,12 +320,12 @@ exports.updateCourse = async (req, res) => {
         }
         await course.findByIdAndUpdate(courseDetails._id, { $set: updatedCourse }, { new: true });
         req.flash('success', 'course updated succesfully');
-        return res.redirect(`/update-course/${courseId}`);
+        return res.redirect(`/admin/update-course/${courseId}`);
     }
     catch (error) {
         console.log("Error to update the course ", error);
         req.flash('error', 'course not updated please try again');
-        return res.redirect(`/update-course/${courseId}`);
+        return res.redirect(`/admin/update-course/${courseId}`);
     }
 }
 exports.deleteCourse = async (req, res) => {
@@ -332,14 +333,14 @@ exports.deleteCourse = async (req, res) => {
     if (!id) {
         console.log("course id not found");
         req.flash('error', 'course not found');
-        return res.status(400).json({ redirect: "/course" }); // Send redir
+        return res.status(400).json({ redirect: "/admin/course" }); // Send redir
     }
     try {
         const courseDetails = await course.findById(id);
         if (!courseDetails) {
             console.log("course not found", courseDetails);
             req.flash('error', 'course not found');
-            return res.status(404).json({ redirect: "/course" }); // Send redir
+            return res.status(404).json({ redirect: "/admin/course" }); // Send redir
         }
 
         const oldImage = path.join(__dirname, "../public", courseDetails.img);
@@ -347,12 +348,12 @@ exports.deleteCourse = async (req, res) => {
 
         await course.findByIdAndDelete(id);
         req.flash('success', 'course deleted succesfully ');
-        return res.status(200).json({ redirect: "/course" }); // Send redir
+        return res.status(200).json({ redirect: "/admin/course" }); // Send redir
     }
     catch (error) {
         console.log("Course not found ", error);
         req.flash('error', 'course not deleted please try again');
-        return res.status(500).json({ redirect: "/course" }); // Send redir
+        return res.status(500).json({ redirect: "/admin/course" }); // Send redir
     }
 }
 
@@ -362,7 +363,7 @@ exports.addCourseBannerImage = async (req, res) => {
 
     if (!img || !coursePageHeading) {
         req.flash('error', 'Enter all the require field');
-        return res.redirect('/add-course');
+        return res.redirect('/admin/add-course');
     }
     const newData = {
         img,
@@ -383,12 +384,12 @@ exports.addCourseBannerImage = async (req, res) => {
             // return successResponse(res, "course banner added succesfully");
         }
         req.flash('success', 'course banner added');
-        return res.redirect('/add-course');
+        return res.redirect('/admin/add-course');
     }
     catch (error) {
         console.log(error);
         req.flash('error', 'course banner not added please try again ');
-        return res.redirect('/add-course');
+        return res.redirect('/admin/add-course');
     }
 }
 exports.updateCourseBanner = async (req, res) => {
@@ -398,13 +399,13 @@ exports.updateCourseBanner = async (req, res) => {
     //validation
     if (!bannerId || !coursePageHeading) {
         req.flash('error', 'Enter all the require fields');
-        return res.redirect('/course');
+        return res.redirect('/admin/course');
     }
     try {
         const banner = await bannerImgCourse.findById(bannerId);
         if (!banner) {
             req.flash('error', 'banner not found');
-            return res.redirect('/course');
+            return res.redirect('/admin/course');
         }
         const updatedBanner = { coursePageHeading };
         if (img) {
@@ -413,12 +414,12 @@ exports.updateCourseBanner = async (req, res) => {
         }
         await bannerImgCourse.findByIdAndUpdate(banner._id, { $set: updatedBanner }, { new: true });
         req.flash('success', 'course banner updated succesfully');
-        return res.redirect('/course');
+        return res.redirect('/admin/course');
     }
     catch (error) {
         console.log("error to update the banner", error);
         req.flash('error', 'course banner not updated');
-        return res.redirect('/course');
+        return res.redirect('/admin/course');
     }
 }
 exports.addCourseDetailBanner = async (req, res) => {
@@ -426,7 +427,7 @@ exports.addCourseDetailBanner = async (req, res) => {
 
     if (!img) {
         req.flash('error', 'img not found');
-        return res.redirect("/add-course");
+        return res.redirect("/admin/add-course");
     }
 
 
@@ -441,12 +442,12 @@ exports.addCourseDetailBanner = async (req, res) => {
             await courseDetailsBanner.create({ img });
         }
         req.flash('success', 'img updated succesfully');
-        return res.redirect("/add-course");
+        return res.redirect("/admin/add-course");
     }
     catch (error) {
         console.log("error to update the course banner img", error);
         req.flash('error', 'course details banner not updated');
-        return res.redirect("/add-course");
+        return res.redirect("/admin/add-course");
     }
 }
 
@@ -462,7 +463,7 @@ exports.addAboutUS = async (req, res) => {
     if (!yourImaginationHead || !totalStudentJoined || !ourJourneyHead || !ourBeliefsHead || !ourMissionHead || !missionDetails || !visionDetails || !valuesDetails
         || !bannerImage || !yourImaginationImg || !ourJourneyImg || !ourBeliefImg || !ourMissionImg) {
         req.flash('error', 'Enter all the require field');
-        return res.redirect('/add-aboutUs');
+        return res.redirect('/admin/add-aboutUs');
     }
 
     const aboutUsData = {
@@ -503,19 +504,19 @@ exports.addAboutUS = async (req, res) => {
 
             await aboutUS.findByIdAndUpdate(aboutData._id, { $set: aboutUsData }, { new: true });
             req.flash('success', 'About us added succesfully');
-            return res.redirect('/add-aboutUs');
+            return res.redirect('/admin/add-aboutUs');
         }
         else {
             const newabout = new aboutUS(aboutUsData);
             await newabout.save();
             req.flash('success', 'About us added succesfully');
-            return res.redirect('/add-aboutUs');
+            return res.redirect('/admin/add-aboutUs');
         }
     }
     catch (error) {
         console.log(error);
         req.flash('error', 'about us not added please try again');
-        return res.redirect('/add-aboutUs');
+        return res.redirect('/admin/add-aboutUs');
     }
 
 }
@@ -530,7 +531,7 @@ exports.updateAboutUs = async (req, res) => {
 
     if (!yourImaginationHead || !totalStudentJoined || !ourJourneyHead || !ourBeliefsHead || !ourMissionHead || !missionDetails || !visionDetails || !valuesDetails) {
         req.flash('error', 'Please Enter all the require field');
-        return res.redirect('/about-us');
+        return res.redirect('/admin/about-us');
     }
 
     try {
@@ -538,7 +539,7 @@ exports.updateAboutUs = async (req, res) => {
 
         if (!about) {
             req.flash('error', 'about us not found');
-            return res.redirect('/about-us');
+            return res.redirect('/admin/about-us');
         }
         const updatedAbout = {
             yourImaginationHead,
@@ -580,13 +581,13 @@ exports.updateAboutUs = async (req, res) => {
         await aboutUS.findByIdAndUpdate(about._id, { $set: updatedAbout }, { new: true });
 
         req.flash('success', 'about us updated succesfully');
-        return res.redirect('/about-us');
+        return res.redirect('/admin/about-us');
 
     }
     catch (error) {
         console.log("Error to update the course", error);
         req.flash('error', 'Error to update the home page');
-        return res.redirect('/about-us');
+        return res.redirect('/admin/about-us');
     }
 }
 
@@ -599,7 +600,7 @@ exports.addStudentPlaced = async (req, res) => {
     //validation
     if (!name || !profile || !experience || !img) {
         req.flash('error', 'Please Enter all the require field');
-        return res.redirect('/new-testimonial');
+        return res.redirect('/admin/new-testimonial');
     }
 
     try {
@@ -610,12 +611,12 @@ exports.addStudentPlaced = async (req, res) => {
             profile
         })
         req.flash('success', 'Testimonial added succesfully');
-        return res.redirect('/new-testimonial');
+        return res.redirect('/admin/new-testimonial');
     }
     catch (error) {
         console.log("Error", error);
         req.flash('error', 'testimonail not added');
-        return res.redirect('/new-testimonial');
+        return res.redirect('/admin/new-testimonial');
     }
 }
 exports.getTestimonialById = async (req, res) => {
@@ -641,13 +642,13 @@ exports.updateTestimonial = async (req, res) => {
     //validation
     if (!studentId || !name || !profile || !experience) {
         req.flash('error', 'Please Enter all the require field');
-        return res.redirect(`/testimonial/update-testimonial/${studentId}`);
+        return res.redirect(`/admin/testimonial/update-testimonial/${studentId}`);
     }
     try {
         const studentDetails = await student.findById(studentId);
         if (!studentDetails) {
             req.flash('error', 'student details not found');
-            return res.redirect(`/testimonial/update-testimonial/${studentId}`);
+            return res.redirect(`/admin/testimonial/update-testimonial/${studentId}`);
         }
         const updatedTestimonial = {
             name, profile, experience
@@ -659,26 +660,26 @@ exports.updateTestimonial = async (req, res) => {
         }
         await student.findByIdAndUpdate(studentDetails._id, { $set: updatedTestimonial }, { new: true })
         req.flash('success', 'student updated succesfully');
-        return res.redirect(`/testimonial/update-testimonial/${studentId}`)
+        return res.redirect(`/admin/testimonial/update-testimonial/${studentId}`)
     }
     catch (error) {
         console.log("error to update the data", error);
         req.flash('error', 'student details not updated please try again');
-        return res.redirect(`/testimonial/update-testimonial/${studentId}`)
+        return res.redirect(`/admin/testimonial/update-testimonial/${studentId}`)
     }
 }
 exports.deleteTestimonial = async (req, res) => {
     const { id } = req.body;
     if (!id) {
         req.flash('error', 'testimonail not found');
-        return res.status(400).json({ redirect: "/our-testimonial" }); // Send redir
+        return res.status(400).json({ redirect: "/admin/our-testimonial" }); // Send redir
     }
 
     try {
         const testimonial = await student.findById(id);
         if (!testimonial) {
             req.flash('error', 'testimonail not found');
-            return res.status(404).json({ redirect: "/our-testimonial" });
+            return res.status(404).json({ redirect: "/admin/our-testimonial" });
         }
         if (testimonial.img) {
             const oldImage = path.join(__dirname, "../public", testimonial.img);
@@ -686,12 +687,12 @@ exports.deleteTestimonial = async (req, res) => {
         }
         await student.deleteOne(testimonial._id);
         req.flash("success", "Testimonial deleted successfully");
-        return res.status(200).json({ redirect: "/our-testimonial" }); // Send redir
+        return res.status(200).json({ redirect: "/admin/our-testimonial" }); // Send redir
     }
     catch (error) {
         console.log("Error to delete the testimonial", error);
         req.flash('error', 'testimonail not deleted');
-        return res.status(500).json({ redirect: "/our-testimonial" }); // Send redir
+        return res.status(500).json({ redirect: "/admin/our-testimonial" }); // Send redir
     }
 }
 exports.addTestimonialBanner = async (req, res) => {
@@ -700,7 +701,7 @@ exports.addTestimonialBanner = async (req, res) => {
 
     if (!img) {
         req.flash('error', 'Img not found');
-        return res.redirect('/new-testimonial');
+        return res.redirect('/admin/new-testimonial');
     }
 
     try {
@@ -714,13 +715,13 @@ exports.addTestimonialBanner = async (req, res) => {
             await bannerImgTestimonial.create({ img });
         }
         req.flash('success', 'Testimonial Banner added succesfully');
-        return res.redirect('/new-testimonial');
+        return res.redirect('/admin/new-testimonial');
 
     }
     catch (error) {
         console.log("Error to update the testimonial banner", error);
         req.flash('error', 'Testimonial Banner not added please try again');
-        return res.redirect('/new-testimonial');
+        return res.redirect('/admin/new-testimonial');
 
     }
 }
@@ -734,7 +735,7 @@ exports.addContactUs = async (req, res) => {
     // validation
     if (!contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming || !bannerImg) {
         req.flash('error', 'contact us data not found');
-        return res.redirect('/add-contactUs');
+        return res.redirect('/admin/add-contactUs');
     }
     //new object
     const newContact = {
@@ -759,13 +760,13 @@ exports.addContactUs = async (req, res) => {
             await newContactData.save();
         }
         req.flash('success', 'contact us added succesfully');
-        return res.redirect('/add-contactUs');
+        return res.redirect('/admin/add-contactUs');
 
     }
     catch (error) {
         console.log("contatc us error", error);
         req.flash('error', 'contact us not added please try again');
-        return res.redirect('/add-contactUs');
+        return res.redirect('/admin/add-contactUs');
     }
 }
 exports.updateContactUs = async (req, res) => {
@@ -775,13 +776,13 @@ exports.updateContactUs = async (req, res) => {
     //validation
     if (!contactUsId || !contactUsHead || !officeAddress || !contactUsNumber || !contactUsEmail || !officeTiming) {
         req.flash('error', 'Please Enter all the require fields');
-        return res.redirect('/contact-us');
+        return res.redirect('/admin/contact-us');
     }
     try {
         const contactUsData = await contactUs.findById(contactUsId);
         if (!contactUsData) {
             req.flash('error', 'contact data not found');
-            return res.redirect('/contact-us');
+            return res.redirect('/admin/contact-us');
         }
         const updatedContact = {
             contactUsHead, officeAddress, contactUsNumber, contactUsEmail, officeTiming
@@ -793,12 +794,12 @@ exports.updateContactUs = async (req, res) => {
         }
         await contactUs.findByIdAndUpdate(contactUsData._id, { $set: updatedContact }, { new: true });
         req.flash('success', 'contact data updated succesfully');
-        return res.redirect('/contact-us');
+        return res.redirect('/admin/contact-us');
     }
     catch (error) {
         console.log("error to update the contact", error);
         req.flash('error', 'contact data not updated please try again');
-        return res.redirect('/contact-us');
+        return res.redirect('/admin/contact-us');
     }
 }
 
@@ -810,7 +811,7 @@ exports.addOurStats = async (req, res) => {
 
     if (!mentors || !experience || !placedStudent || !yearsOfJourney) {
         req.flash("error", "Enter all the require field");
-        return res.redirect('/add-ourStats')
+        return res.redirect('/admin/add-ourStats')
     }
 
     const newStats = {
@@ -829,12 +830,12 @@ exports.addOurStats = async (req, res) => {
             await ourStats.create(newStats);
         }
         req.flash("success", "stats updated succesfully");
-        return res.redirect('/add-ourStats');
+        return res.redirect('/admin/add-ourStats');
     }
     catch (error) {
         console.log("error to update the stats", error);
         req.flash("error", "Error to update the stats");
-        return res.redirect('/add-ourStats')
+        return res.redirect('/admin/add-ourStats')
     }
 
 
@@ -893,7 +894,7 @@ exports.addExploreCategory = async (req, res) => {
     if (!heading || !categoryDetailsImg || !para || !categoryDetailsWhy || !importance || !impPara || !processGrowthandSkill || !filterDetailsCard || !bgImage || !img || !bannerImg || !filterDetailsCardImg) {
 
         req.flash('error', 'Please Enter all the require field');
-        return res.redirect("/add-categories");
+        return res.redirect("/admin/add-categories");
     }
 
 
@@ -912,12 +913,12 @@ exports.addExploreCategory = async (req, res) => {
             processGrowthandSkill
         });
         req.flash('success', 'Category Created succesfully');
-        return res.redirect("/add-categories");
+        return res.redirect("/admin/add-categories");
     }
     catch (error) {
         console.log(error);
         req.flash('error', 'Category not created please try again');
-        return res.redirect("/add-categories");
+        return res.redirect("/admin/add-categories");
     }
 
 }
@@ -948,13 +949,13 @@ exports.deleteCategory = async (req, res) => {
     // console.log(id);
     if (!id) {
         req.flash('error', 'category not found');
-        return res.status(400).json({ redirect: "/add-categories" }); // Send redir
+        return res.status(400).json({ redirect: "/admin/add-categories" }); // Send redir
     }
     try {
         const category = await exploreCategory.findById(id);
         if (!category) {
             req.flash('error', 'category not found');
-            return res.status(404).json({ redirect: "/add-categories" }); // Send redir
+            return res.status(404).json({ redirect: "/admin/add-categories" }); // Send redir
         }
         if (category.bgImage) {
             const bgImage = path.join(__dirname, "../public", category.bgImage);
@@ -982,12 +983,12 @@ exports.deleteCategory = async (req, res) => {
         }
         await exploreCategory.findByIdAndDelete(id);
         req.flash('success', 'category deleted succesfully');
-        return res.status(200).json({ redirect: "/add-categories" }); // Send redir
+        return res.status(200).json({ redirect: "/admin/add-categories" }); // Send redir
     }
     catch (error) {
         console.log("Error in categories deletion", error);
         req.flash('error', 'category not deleted please try again');
-        return res.status(500).json({ redirect: "/add-categories" }); // Send redir
+        return res.status(500).json({ redirect: "/admin/add-categories" }); // Send redir
     }
 
 }
@@ -1030,7 +1031,7 @@ exports.updateCategory = async (req, res) => {
 
     if (!categoryId || !heading || !para || !categoryDetailsWhy || !importance || !impPara || !processGrowthandSkill || !detailsCard) {
         req.flash('error', 'please enter all the require details');
-        return res.redirect(`/update-category/${categoryId}`);
+        return res.redirect(`/admin/update-category/${categoryId}`);
     }
 
     const updateCategory = {
@@ -1041,7 +1042,7 @@ exports.updateCategory = async (req, res) => {
 
         if (!category) {
             req.flash('error', 'category not found');
-            return res.redirect(`/update-category/${categoryId}`);
+            return res.redirect(`/admin/update-category/${categoryId}`);
         }
 
         //update card image
@@ -1090,12 +1091,12 @@ exports.updateCategory = async (req, res) => {
         await exploreCategory.findByIdAndUpdate(category._id, { $set: updateCategory }, { new: true });
 
         req.flash('success', 'category updated succesfully');
-        return res.redirect(`/update-category/${categoryId}`);
+        return res.redirect(`/admin/update-category/${categoryId}`);
     }
     catch (error) {
         console.log("Error to update the category", error);
         req.flash('error', 'category not updated');
-        return res.redirect(`/update-category/${categoryId}`);
+        return res.redirect(`/admin/update-category/${categoryId}`);
     }
 }
 
@@ -1106,18 +1107,18 @@ exports.addOurPartners = async (req, res) => {
 
     if (!img) {
         req.flash('error', 'img not found');
-        return res.redirect("/add-partners")
+        return res.redirect("/admin/add-partners")
     }
 
     try {
         await ourPartners.create({ img: img });
         req.flash('success', 'partner added succesfully');
-        return res.redirect("/add-partners")
+        return res.redirect("/admin/add-partners")
     }
     catch (error) {
         console.log(error);
         req.flash('error', 'partner not added please try again');
-        return res.redirect("/add-partners");
+        return res.redirect("/admin/add-partners");
     }
 
 }
@@ -1129,7 +1130,7 @@ exports.updateOurPartners = async (req, res) => {
 
     if (!img || !partnerId) {
         req.flash('error', 'enter all the require field');
-        return res.redirect("/add-partners")
+        return res.redirect("/admin/add-partners")
     }
 
     try {
@@ -1137,7 +1138,7 @@ exports.updateOurPartners = async (req, res) => {
         //console.log(partner);
         if (!partner) {
             req.flash('error', 'partner not found please try again');
-            return res.redirect("/add-partners")
+            return res.redirect("/admin/add-partners")
         }
         const oldImage = path.join(__dirname, '../public', partner.img);
         deleteImage(oldImage, "update partner");
@@ -1146,12 +1147,12 @@ exports.updateOurPartners = async (req, res) => {
         await partner.save();
 
         req.flash('success', 'partner updated succesfully');
-        return res.redirect("/add-partners")
+        return res.redirect("/admin/add-partners")
     }
     catch (error) {
         console.log("error", error);
         req.flash('error', 'partner not updated please try again');
-        return res.redirect("/add-partners");
+        return res.redirect("/admin/add-partners");
     }
 
 }
@@ -1160,7 +1161,7 @@ exports.deleteOurPartner = async (req, res) => {
     const { partnerId } = req.body;
     if (!partnerId) {
         req.flash('error', 'partnerId not found please try again');
-        return res.redirect("/add-partners")
+        return res.redirect("/admin/add-partners")
     }
     try {
 
@@ -1168,7 +1169,7 @@ exports.deleteOurPartner = async (req, res) => {
 
         if (!partner) {
             req.flash('error', 'partner not found ');
-            return res.redirect("/add-partners")
+            return res.redirect("/admin/add-partners")
         }
 
 
@@ -1178,12 +1179,12 @@ exports.deleteOurPartner = async (req, res) => {
 
         await ourPartners.findByIdAndDelete(partnerId);
         req.flash('success', 'partner deleted succesfully');
-        return res.redirect("/add-partners")
+        return res.redirect("/admin/add-partners")
     }
     catch (error) {
         console.log("error to delete partner", error);
         req.flash('error', 'partner not deleted please try again');
-        return res.redirect("/add-partners");
+        return res.redirect("/admin/add-partners");
     }
 }
 
@@ -1196,7 +1197,7 @@ exports.addBlog = async (req, res) => {
 
     if (!heading || !details || !img || !filterTags || !blogCategory) {
         req.flash('error', 'Please Enter all the require field');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
     try {
         await blogs.create({
@@ -1207,12 +1208,12 @@ exports.addBlog = async (req, res) => {
             tags: filterTags
         })
         req.flash('success', 'Blog created succesfully');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
     catch (error) {
         console.log(error);
         req.flash('error', 'Blog not created please try again');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
 
 }
@@ -1223,13 +1224,13 @@ exports.updateBlog = async (req, res) => {
 
     if (!blogId || !heading || !blogCategory || !details || !tags) {
         req.flash('error', 'Blog created succesfully');
-        return res.redirect(`/update-blog/${blogId}`);
+        return res.redirect(`/admin/update-blog/${blogId}`);
     }
     try {
         const blog = await blogs.findById(blogId);
         if (!blog) {
             req.flash('error', 'Blog not found');
-            return res.redirect(`/update-blog/${blogId}`);
+            return res.redirect(`/admin/update-blog/${blogId}`);
         }
         const updatedBlog = {
             heading,
@@ -1243,11 +1244,11 @@ exports.updateBlog = async (req, res) => {
         }
         await blogs.findByIdAndUpdate(blogId, { $set: updatedBlog }, { new: true });
         req.flash('success', 'Blog updated succesfully');
-        return res.redirect(`/update-blog/${blogId}`);
+        return res.redirect(`/admin/update-blog/${blogId}`);
     }
     catch (error) {
         req.flash('error', 'Blog not updated please try again');
-        return res.redirect(`/update-blog/${blogId}`);
+        return res.redirect(`/admin/update-blog/${blogId}`);
     }
 }
 exports.deleteBlog = async (req, res) => {
@@ -1255,14 +1256,14 @@ exports.deleteBlog = async (req, res) => {
 
     if (!blogId) {
         req.flash('error', 'Blog not found ');
-        return res.status(400).json({ redirect: "/blogs" }); // Send redir
+        return res.status(400).json({ redirect: "/admin/blogs" }); // Send redir
     }
     try {
         const blog = await blogs.findById(blogId);
         if (!blog)
             {
                 req.flash('error', 'Blog not found ');
-                return res.status(404).json({ redirect: "/blogs" });
+                return res.status(404).json({ redirect: "/admin/blogs" });
             } 
 
         if (blog.img)
@@ -1270,12 +1271,12 @@ exports.deleteBlog = async (req, res) => {
 
         await blogs.findByIdAndDelete(blogId);
         req.flash('success', 'Blog deleted succesfully ');
-        return res.status(200).json({ redirect: "/blogs" });
+        return res.status(200).json({ redirect: "/admin/blogs" });
     }
     catch (error) {
         console.log("error to delete the blog", error);
         req.flash('error', 'Blog not deleted ');
-        return res.status(500).json({ redirect: "/blogs" });
+        return res.status(500).json({ redirect: "/admin/blogs" });
     }
 }
 exports.getBlogById = async (req, res) => {
@@ -1302,7 +1303,7 @@ exports.addBlogBanner = async (req, res) => {
 
     if (!img) {
         req.flash('error', 'Blog Banner image not found');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
     try {
         const banner = await bannerImgBlog.findOne({});
@@ -1316,12 +1317,12 @@ exports.addBlogBanner = async (req, res) => {
             await bannerImgBlog.create({ img });
         }
         req.flash('success', 'Blog Banner added succesfully');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
     catch (error) {
         console.log("Error to update the blog banner img", error);
         req.flash('error', 'Blog Banner not updated please try again');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
 }
 exports.addBlogDetailBanner = async (req, res) => {
@@ -1330,7 +1331,7 @@ exports.addBlogDetailBanner = async (req, res) => {
     if (!img)
       {
         req.flash('error', 'Please Enter image');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
       }  
 
     try {
@@ -1345,12 +1346,12 @@ exports.addBlogDetailBanner = async (req, res) => {
             await blogDetailBanner.create({ img });
         }
         req.flash('success', ' Blog Details Image updated succesfully');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
     catch (error) {
         console.log("error to upload image", error);
         req.flash('error', ' Blog Details Image not added');
-        return res.redirect("/add-newBlog")
+        return res.redirect("/admin/add-newBlog")
     }
 }
 
@@ -1361,21 +1362,21 @@ exports.addTag = async (req, res) => {
 
     if (!tag) {
         req.flash('error', 'Please Enter the require field');
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
 
     try {
         await tags.create({ tag });
         req.flash('success', 'Tags created succesfully');
-        return res.redirect("/add-newTag");
+        return res.redirect("/admin/add-newTag");
     }
     catch (error) {
         if (error.code === 11000) {
             req.flash('error', "This tag is already created");
-            return res.redirect("/add-newTag")
+            return res.redirect("/admin/add-newTag")
         }
         req.flash('error', "Tag not created please try again");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
 
 }
@@ -1386,18 +1387,18 @@ exports.deleteTag = async (req, res) => {
     if (!tagId)
       {
         req.flash('error', "Tag not found");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
       }  
 
     try {
         await tags.findByIdAndDelete(tagId);
         req.flash('success', "Tag deleted succesfully");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
     catch (error) {
         console.log("error to delete the tag", error);
         req.flash('error', "Tag not deleted please try again");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
 
 }
@@ -1408,22 +1409,22 @@ exports.updateTag = async (req, res) => {
     if (!tagId || !tag)
       {
         req.flash('error', "Tag not found");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
       } 
     // Validate tag ID format
     if (!mongoose.isValidObjectId(tagId)) {
         req.flash('error', "Invalid Tag Id");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
     try {
         await tags.findByIdAndUpdate(tagId, { $set: { tag } }, { new: true });
         req.flash('success', "Tag updated succesfully");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
     catch (error) {
         console.log("error to update the tag", error);
         req.flash('error', "Tag not updated please try again");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
 }
 exports.addTagBanner = async (req, res) => {
@@ -1432,7 +1433,7 @@ exports.addTagBanner = async (req, res) => {
     if (!img)
     {
         req.flash('error', "Banner Image not found");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
     
 
@@ -1448,12 +1449,12 @@ exports.addTagBanner = async (req, res) => {
             await bannerImgTag.create({ img });
         }
         req.flash('success', "Banner Image added succesfully");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
     catch (error) {
         console.log("error to add tag banner", error);
         req.flash('error', "Banner not added please try again");
-        return res.redirect("/add-newTag")
+        return res.redirect("/admin/add-newTag")
     }
 }
 
