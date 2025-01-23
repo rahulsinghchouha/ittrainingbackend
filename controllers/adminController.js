@@ -328,35 +328,34 @@ exports.updateCourse = async (req, res) => {
     }
 }
 exports.deleteCourse = async (req, res) => {
-
     const { id } = req.body;
     if (!id) {
         console.log("course id not found");
         req.flash('error', 'course not found');
-        return res.redirect('/course');
+        return res.status(400).json({ redirect: "/course" }); // Send redir
     }
     try {
+        const courseDetails = await course.findById(id);
+        if (!courseDetails) {
+            console.log("course not found", courseDetails);
+            req.flash('error', 'course not found');
+            return res.status(404).json({ redirect: "/course" }); // Send redir
+        }
 
-        // const courseDetails = await course.findById(id);
-        // if (!courseDetails) {
-        //     console.log("course not found",courseDetails);
-        // req.flash('error', 'course');
-        // return res.redirect('/course');
-        // }
+        const oldImage = path.join(__dirname, "../public", courseDetails.img);
+        deleteImage(oldImage, "course image");
 
-        // const oldImage = path.join(__dirname, "../public", courseDetails.img);
-        // deleteImage(oldImage, "course image");
-
-        // await course.findByIdAndDelete(id);
-        req.flash('success', 'course deleted succesfully ggg');
-        return res.redirect("/course");
+        await course.findByIdAndDelete(id);
+        req.flash('success', 'course deleted succesfully ');
+        return res.status(200).json({ redirect: "/course" }); // Send redir
     }
     catch (error) {
         console.log("Course not found ", error);
         req.flash('error', 'course not deleted please try again');
-        return res.redirect('/course');
+        return res.status(500).json({ redirect: "/course" }); // Send redir
     }
 }
+
 exports.addCourseBannerImage = async (req, res) => {
     const img = req.file?.filename;
     const { coursePageHeading } = req.body;
@@ -425,12 +424,11 @@ exports.updateCourseBanner = async (req, res) => {
 exports.addCourseDetailBanner = async (req, res) => {
     const img = req.file?.filename;
 
-    if (!img)
-    {
+    if (!img) {
         req.flash('error', 'img not found');
         return res.redirect("/add-course");
     }
-        
+
 
     try {
         const banner = await courseDetailsBanner.findOne({});
@@ -597,7 +595,7 @@ exports.updateAboutUs = async (req, res) => {
 exports.addStudentPlaced = async (req, res) => {
     const { name, profile, experience } = req.body;
     const img = req.file?.filename;
-    console.log(name, profile, experience, img);
+   // console.log(name, profile, experience, img);
     //validation
     if (!name || !profile || !experience || !img) {
         req.flash('error', 'Please Enter all the require field');
@@ -642,12 +640,14 @@ exports.updateTestimonial = async (req, res) => {
     const img = req.file?.filename;
     //validation
     if (!studentId || !name || !profile || !experience) {
-        return validationErrorWithData(res, "data not found");
+        req.flash('error', 'Please Enter all the require field');
+        return res.redirect(`/testimonial/update-testimonial/${studentId}`);
     }
     try {
         const studentDetails = await student.findById(studentId);
         if (!studentDetails) {
-            return notFoundResponse(res, "student details not found");
+            req.flash('error', 'student details not found');
+            return res.redirect(`/testimonial/update-testimonial/${studentId}`);
         }
         const updatedTestimonial = {
             name, profile, experience
@@ -658,40 +658,40 @@ exports.updateTestimonial = async (req, res) => {
             updatedTestimonial.img = img;
         }
         await student.findByIdAndUpdate(studentDetails._id, { $set: updatedTestimonial }, { new: true })
-        return successResponse(res, "student updated");
+        req.flash('success', 'student updated succesfully');
+        return res.redirect(`/testimonial/update-testimonial/${studentId}`)
     }
     catch (error) {
         console.log("error to update the data", error);
-        return errorResponse(res, "testimonial not updated");
+        req.flash('error', 'student details not updated please try again');
+        return res.redirect(`/testimonial/update-testimonial/${studentId}`)
     }
 }
 exports.deleteTestimonial = async (req, res) => {
     const { id } = req.body;
-    if (!id)
-    {
+    if (!id) {
         req.flash('error', 'testimonail not found');
-        return res.redirect('/our-testimonial');
+        return res.status(400).json({ redirect: "/our-testimonial" }); // Send redir
     }
-        
 
     try {
-        // const testimonial = await student.findById(id);
-        // if (!testimonial) {
-        //     req.flash('error', 'testimonail not found');
-        //     return res.redirect('/our-testimonial');
-        // }
-        // if (testimonial.img) {
-        //     const oldImage = path.join(__dirname, "../public", testimonial.img);
-        //     deleteImage(oldImage, "testimonial Image");
-        // }
-        // await student.deleteOne(testimonial._id);
+        const testimonial = await student.findById(id);
+        if (!testimonial) {
+            req.flash('error', 'testimonail not found');
+            return res.status(404).json({ redirect: "/our-testimonial" });
+        }
+        if (testimonial.img) {
+            const oldImage = path.join(__dirname, "../public", testimonial.img);
+            deleteImage(oldImage, "testimonial Image");
+        }
+        await student.deleteOne(testimonial._id);
         req.flash("success", "Testimonial deleted successfully");
-        res.status(200).json({ redirect: "/our-testimonial" }); // Send redir
+        return res.status(200).json({ redirect: "/our-testimonial" }); // Send redir
     }
     catch (error) {
         console.log("Error to delete the testimonial", error);
         req.flash('error', 'testimonail not deleted');
-        return res.redirect('/our-testimonial');
+        return res.status(500).json({ redirect: "/our-testimonial" }); // Send redir
     }
 }
 exports.addTestimonialBanner = async (req, res) => {
@@ -700,7 +700,7 @@ exports.addTestimonialBanner = async (req, res) => {
 
     if (!img) {
         req.flash('error', 'Img not found');
-         return res.redirect('/new-testimonial');
+        return res.redirect('/new-testimonial');
     }
 
     try {

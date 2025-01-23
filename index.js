@@ -145,7 +145,6 @@ app.get("/add-course", (req, res) => {
 });
 //==========TESTIMONIAL PAGE============
 app.get("/our-testimonial", async (req, res) => {
-
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/student-placed`);
@@ -184,12 +183,11 @@ app.get("/testimonial/update-testimonial/:id", async (req, res) => {
         if (!object || !object.data) {
             throw new Error("Error to find the object");
         }
-
     }
     catch (error) {
         console.log("Error to get the testimonial details", error);
     }
-    res.render("updateTestimonial", { testimonialDetails: object?.data, backendUrl: process.env.BACKEND_URL });
+    res.render("updateTestimonial", {success:req.flash('success'),error:req.flash('error'), testimonialDetails: object?.data, backendUrl: process.env.BACKEND_URL });
 })
 
 
