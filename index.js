@@ -70,7 +70,7 @@ app.get("/add-home", (req, res) => {
 });
 //Course
 app.get("/course", async (req, res) => {
-
+   // console.log("Redirecting to /course with flash message",req.flash('success'));
     let object;
     let bannerCourse;
     try {
@@ -106,7 +106,8 @@ app.get("/course", async (req, res) => {
     catch (error) {
         console.log("error to get the courses", error);
     }
-    res.render("courses", { courses: object?.data,bannerCourse: bannerCourse?.data , backendUrl: process.env.BACKEND_URL });
+   // console.log("Redirecting to /course with flash messageee",req.flash('success'));
+    res.render("courses", {success:req.flash('success'),error:req.flash('error') , courses: object?.data,bannerCourse: bannerCourse?.data , backendUrl: process.env.BACKEND_URL });
 });
 app.get("/update-course/:id", async (req, res) => {
 
@@ -161,7 +162,7 @@ app.get("/our-testimonial", async (req, res) => {
     catch (error) {
         console.log("error to get the testimonial", error);
     }
-    res.render("testimonial", { testimonials: object.data, backendUrl: process.env.BACKEND_URL });
+    res.render("testimonial", { success:req.flash('success'),error:req.flash('error') , testimonials: object.data, backendUrl: process.env.BACKEND_URL });
 });
 app.get("/testimonial/update-testimonial/:id", async (req, res) => {
 
@@ -193,7 +194,7 @@ app.get("/testimonial/update-testimonial/:id", async (req, res) => {
 
 
 app.get("/new-testimonial", (req, res) => {
-    res.render("newTestimonial");
+    res.render("newTestimonial", {success:req.flash('success'),error:req.flash('error') });
 });
 
 app.get("/dashboard", async (req, res) => {

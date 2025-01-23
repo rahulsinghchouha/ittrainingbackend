@@ -83,36 +83,48 @@
                     </a>
                 </div>
                 <div style="width: 80%; margin-left: 150px; margin-top: 100px;">
+                    <% if (success && success.length> 0) { %>
+                        <div class="toast success-toast">
+                            <%= success %>
+                        </div>
+                        <% } %>
+                            <% if (error && error.length> 0) { %>
+                                <div class="toast error-toast">
+                                    <%= error %>
+                                </div>
+                                <% } %>
+                                    <div style="display: flex; flex-direction: column; gap: 20px;">
 
-                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                                        <% testimonials?.forEach(function(testimonial,index) {%>
+                                            <div
+                                                style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
+                                                <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                                    Student Name : </p>
+                                                <p
+                                                    style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                                    <%= testimonial?.name %>
+                                                </p>
+                                                <p
+                                                    style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                                    <%= testimonial?.profile %>
+                                                </p>
+                                                <figure style="height: 70px; width: 70px;">
+                                                    <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
+                                                        src="<%= backendUrl %>/<%= testimonial?.img %>"
+                                                        alt="course image" />
+                                                </figure>
 
-                        <% testimonials?.forEach(function(testimonial,index) {%>
-                            <div
-                                style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
-                                <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
-                                    Student Name : </p>
-                                <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
-                                    <%= testimonial?.name %>
-                                </p>
-                                <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
-                                    <%= testimonial?.profile %>
-                                </p>
-                                <figure style="height: 70px; width: 70px;">
-                                    <img style="height: 100%; width: 100%; object-fit: cover; border-radius: 5px;"
-                                        src="<%= backendUrl %>/<%= testimonial?.img %>" alt="course image" />
-                                </figure>
-
-                                <button onclick="deleteTestimonial('<%= testimonial._id %>')"
-                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
-                                    Delete </button>
-                                <button onclick="updateTestimonial('<%= testimonial._id %>')"
-                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
-                                    Update </button>
+                                                <button onclick="deleteTestimonial('<%= testimonial._id %>')"
+                                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
+                                                    Delete </button>
+                                                <button onclick="updateTestimonial('<%= testimonial._id %>')"
+                                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
+                                                    Update </button>
 
 
-                            </div>
-                            <%}) %>
-                    </div>
+                                            </div>
+                                            <%}) %>
+                                    </div>
                 </div>
             </div>
         </div>
@@ -129,16 +141,19 @@
                     body: JSON.stringify({ id })
                 })
                 if (response.ok) {
-                    alert("student deleted successfully!");
+                    const data = await response.json();
+                    if (data.redirect) {
+                        window.location.href = data.redirect; // Redirect manually
+                    }
                 } else {
-                    // Handle server-side errors or non-2xx responses
-                    alert(`Error:  'Failed to delete student.'}`);
+                    console.error("Failed to delete testimonial");
                 }
             }
             catch (error) {
                 console.log("error", error);
             }
         }
+
         function updateTestimonial(id) {
             console.log(id);
             window.location.href = `/testimonial/update-testimonial/${id}`

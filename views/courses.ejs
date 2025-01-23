@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+
     <link href="/css/tailwind.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet" />
     <link href="/css/index.css" rel="stylesheet">
     <script src="/aejsFunction/ejsFunction.js"> </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/ui/trumbowyg.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.26.0/trumbowyg.min.js"></script>
@@ -89,7 +92,18 @@
 
                 <div style="width: 80%; margin-left: auto; margin-right: auto; margin-top: 30px;">
                     <!-- Update and Delete the Course -->
-                    <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update the Course Page - </h1>
+                    <% if (success && success.length > 0) { %>
+                        <div  class="toast success-toast">
+                            <%= success %>
+                        </div>
+                    <% } %>
+                    <% if (error && error.length > 0) { %>
+                        <div class="toast error-toast">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                   
+                    <h1 style=" font-size: 20px; color: green; font-weight: 700;">  <%= success %> - </h1>
 
                     <div style="margin-bottom: 70px;">
                         <form action="/api/v1/admin/update-course-banner" method="POST" enctype="multipart/form-data">
@@ -119,7 +133,7 @@
                             </button>
                         </form>
                     </div>
-
+                   
 
                     <h1 style=" font-size: 20px; color: green; font-weight: 700;"> Update And Delete The Course - </h1>
 
@@ -186,15 +200,8 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({ id })
-                })
-                if (response.ok) {
-
-                    alert("Category deleted successfully!");
-
-                } else {
-                    // Handle server-side errors or non-2xx responses
-                    alert(`Error:  'Failed to delete category.'}`);
-                }
+                })           
+             
             }
             catch (error) {
                 console.log("error", error);
