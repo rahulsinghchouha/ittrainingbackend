@@ -152,13 +152,13 @@ exports.getExploreCard = async (req, res) => {
 }
 exports.getCategoryByName = async (req, res) => {
 
-    const { name } = req.query;
-
-    if (!name) {
+    const { categories } = req.query;
+    
+    if (!categories) {
         return validationErrorWithData(res, "name not found");
     }
     try {
-        const data = await exploreCategory.findOne({ heading: { $regex: name, $options: 'i' } });
+        const data = await exploreCategory.findOne({ heading: { $regex: categories, $options: 'i' } });
 
         if (!data)
             return notFoundResponse(res, "category not found");

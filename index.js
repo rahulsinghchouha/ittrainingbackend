@@ -122,10 +122,9 @@ app.get("/admin/course", async (req, res) => {
    // console.log("Redirecting to /course with flash messageee",req.flash('success'));
     res.render("courses", {success:req.flash('success'),error:req.flash('error') , courses: object?.data,bannerCourse: bannerCourse?.data , backendUrl: process.env.BACKEND_URL });
 });
+
 app.get("/admin/update-course/:id", async (req, res) => {
-
     const courseId = req.params.id;
-
     let object;
     try {
         const response = await fetch(`${process.env.BACKEND_URL}/api/v1/admin/get-course-by-id`, {
@@ -139,7 +138,6 @@ app.get("/admin/update-course/:id", async (req, res) => {
             throw new Error("not a valid course category API Call");
         }
         object = await response.json();
-
         if (!object || !object.data) {
             throw new Error("course Details not found");
         }
@@ -147,7 +145,6 @@ app.get("/admin/update-course/:id", async (req, res) => {
     catch (error) {
         console.log("error to get the course", error);
     }
-
     res.render("updateCourse", {success:req.flash('success'),error:req.flash('error') ,courseDetails: object?.data, backendUrl: process.env.BACKEND_URL });
 })
 

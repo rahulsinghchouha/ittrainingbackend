@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 80%; margin-left: 20%;">
+            <div class="rightDiv">
                 <% if (success && success.length > 0) { %>
                     <div  class="toast success-toast">
                         <%= success %>
@@ -98,7 +98,7 @@
                             
                             <div style="margin: 5px;  padding: 10px;">
 
-                                <form action="api/v1/admin/add-testimonial-banner" method="POST" enctype="multipart/form-data">
+                                <form action="/api/v1/admin/add-testimonial-banner" method="POST" enctype="multipart/form-data">
                                     <label
                                         style="font-size: 20px; font-weight: 400; color: #1AAEF4; margin-top: 0px; display: block;">Testimonial Banner
                                         Image : </label>
