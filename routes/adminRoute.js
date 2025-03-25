@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const admin = require("../controllers/adminController");
 const {upload} = require("../config/storeFile");
+const studentController = require("../controllers/studentDetils");
 
 
 router.post("/add-admin",admin.addAdmin);
@@ -87,6 +88,12 @@ router.post("/add-tag-banner",upload.single("img"),admin.addTagBanner);
 //contact us
 router.post("/add-contact-us",upload.single("bannerImg"),admin.addContactUs);
 router.post("/update-contact-us",upload.single("bannerImg"),admin.updateContactUs);
+
+
+
+//For get the student details
+
+router.get("/student-data",studentController.getStudentData);
 
 
 module.exports = router;

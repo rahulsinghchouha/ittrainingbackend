@@ -5,10 +5,6 @@ const ExcelJs = require('exceljs');
 const fs = require('fs');
 const path = require('path');
 
-async function checkWorkBook(filePath) {
-
-}
-
 
 async function saveDataToExcel(name, email, phone, course, joiningTime, message) {
 
@@ -78,7 +74,7 @@ exports.studentForm = async (req, res) => {
     const { name, email, phone, course, joiningTime, message } = req.body;
 
     //data validation
-    if (!name || !email || !phone || !course ) {
+    if (!name || !email || !phone || !course) {
         return validationErrorWithData(res, "data validation failed");
     }
     //enter the data into db
@@ -93,7 +89,7 @@ exports.studentForm = async (req, res) => {
                 message
             })
 
-            const response = await saveDataToExcel(name, email, phone, course, joiningTime, message);
+        const response = await saveDataToExcel(name, email, phone, course, joiningTime, message);
 
         console.log("response of excel", response.success);
 
@@ -103,6 +99,23 @@ exports.studentForm = async (req, res) => {
         console.log("error", error);
         return errorResponse(res, "data not submited please verify the data");
     }
+}
+
+
+exports.getStudentData = async (req, res) => {
+
+    const filePath = path.join(__dirname, "../", 'studentData.xlsx');
+
+    if (fs.existsSync(filePath)) {
+        res.download(filePath, 'studentData.xlsx', (err) => {
+            if (err)
+                res.status(500).send({ success: false, message: "Student Data File not downloaded please try again" });
+        })
+    }
+    else {
+        res.status(404).send("file not found");
+    }
+
 }
 
 
