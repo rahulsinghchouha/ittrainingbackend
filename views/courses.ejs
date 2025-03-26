@@ -24,7 +24,7 @@
             <%- include('./sidebar') %>
             <div class="rightDiv" >
 
-                <div class="addNewDiv" >
+                <div  class="addNewDiv dashboardTopLink" >
                     <a href="/admin/add-course">
                         <button class="addNewBtn">Add New</button>
                     </a>
@@ -88,11 +88,11 @@
 
                                         <% courses?.forEach(function(course,index) {%>
                                             <div
-                                                style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
-                                                <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                                style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;  align-items: center;  justify-content: space-between; margin: 10px;">
+                                                <p style="font-size: 18px; line-height: 21px; font-weight: 400; color: #1AAEF4;">
                                                     Course Name : </p>
                                                 <p
-                                                    style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                                    style="font-size: 18px; line-height: 21px; font-weight: 700; color: green; ">
                                                     <%= course?.courseName %>
                                                 </p>
                                                 <figure style="height: 70px; width: 70px;">
@@ -101,10 +101,10 @@
                                                 </figure>
 
                                                 <button onclick="deleteCourse('<%= course._id %>')"
-                                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
+                                                    style="width: 100px; padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
                                                     Delete </button>
                                                 <button onclick="updateCourse('<%= course._id %>')"
-                                                    style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
+                                                    style="width: 100px; padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
                                                     Update </button>
 
 

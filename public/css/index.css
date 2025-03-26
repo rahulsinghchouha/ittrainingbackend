@@ -98,5 +98,54 @@ h1{
     color: white !important;
 }
 
+@media only screen and (max-width:1600px) {
+    .dashboardTopLink{
+        gap:30px !important;
+    }
+}
+@media only screen and (max-width:1400px) {
+    .dashboardTopLink a button , .dashboardTopLink button {
+        width: 130px !important;
+        height: 46px !important;
+    }
+}
+
+@media only screen and (max-width:1321px) {
+    .dashboardTopLink a button, .dashboardTopLink button {
+        width: 110px !important;
+        height: 40px !important;
+    }
+    
+}
+
+@media only screen and (max-width:1200px) {
+    .dashboardTopLink a button, .dashboardTopLink button {
+        width: 110px !important;
+        height: 40px !important;
+    }
+    .dashboardTopLink{
+        gap:15px !important;
+    }
+    
+}
+
+@media only screen and (max-width:1024px) {
+
+    .dashboardTopLink a button, .dashboardTopLink button {
+        width: 100px !important;
+        height: 38px !important;
+    }
+   
+    .dashboardTopLink{
+        gap:0px !important;
+    }
+    
+}
+
+
+
+
+
+
 
 

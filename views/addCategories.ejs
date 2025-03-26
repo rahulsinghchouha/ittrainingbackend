@@ -22,7 +22,7 @@
         <div style="display: flex; box-sizing: border-box; ">
 
             <%- include('./sidebar') %>
-            
+
             <div style="width: 80%; margin-left: 20%;">
 
                 <div
@@ -32,7 +32,7 @@
                 </div>
 
                 <div style=" margin-top: 60px; display: flex; margin-left: 50px;">
-                    <div style="width: 60%;  display: flex; flex-direction: column;  ">
+                    <div style="width: 90%;  display: flex; flex-direction: column;  ">
                         <div style="  width: 100%;  padding: 20px 20px; ">
                             <% if (success && success.length > 0) { %>
                                 <div  class="toast success-toast">
@@ -51,10 +51,10 @@
 
                                 <% categories?.forEach(function(category,index) {%>
                                     <div
-                                        style="display: flex;  align-items: center;  justify-content: space-between; margin: 10px;">
-                                        <p style="font-size: 20px; font-weight: 400; color: #1AAEF4;">
+                                        style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;  align-items: center;  justify-content: space-between; margin: 10px;">
+                                        <p style="font-size: 18px; line-height: 21px; font-weight: 400; color: #1AAEF4;">
                                             Category Name : </p>
-                                        <p style="font-size: 20px; line-height: 22px; font-weight: 700; color: green; ">
+                                        <p style="font-size: 18px; line-height: 21px; font-weight: 700; color: green; ">
                                             <%= category?.heading %>
                                         </p>
                                         <figure style="height: 70px; width: 70px;">
@@ -64,10 +64,10 @@
                                         </figure>
 
                                         <button onclick="deleteCategories('<%= category._id %>')"
-                                            style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
+                                            style="width: 100px; padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: red; color: white;">
                                             Delete </button>
                                         <button onclick="updateCategory('<%= category._id %>')"
-                                            style="padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
+                                            style="width: 100px;  padding: 7px 20px; border: 1px; border-style: solid; border-color: black; font-size: 16px; font-weight: 500; background-color: green; color: white;">
                                             Update </button>
 
 
