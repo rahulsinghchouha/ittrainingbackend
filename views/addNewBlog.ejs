@@ -18,62 +18,7 @@
     <div>
         <div style="display: flex; box-sizing: border-box; ">
 
-            <div
-                style="position: fixed; width: 20%;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
-
-                <figure style=" margin-left: 60px; margin-top: 20px; width: 180px; height: 70px; "
-                    class=" w-[100%] border-b-2 border-solid border-red-700">
-                    <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
-                </figure>
-                <div
-                    style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 80px; margin-top: 20px;  ">
-                    <div>
-                        <a href="/admin/dashboard">
-                            <button
-                                style="cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius: 5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="home"> Home </button>
-                        </a>
-
-                    </div>
-                    <div>
-                        <a href="/admin/course" onclick="this.classList.add('visited-active')">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="course">Courses </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/admin/about-us">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton">
-                                About Us
-                            </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/admin/blogs">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size:16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="Blogs">Blogs </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/admin/our-testimonial">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
-                                class="sidebarHomebButton" for="Testimonial">Testimonial </button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/admin/contact-us">
-                            <button
-                                style=" cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700;  "
-                                class="sidebarHomebButton" for="contact us">Contact Us </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <%- include('./sidebar') %>
             <div style="width: 80%; margin-left: 20%;">
 
                 <div

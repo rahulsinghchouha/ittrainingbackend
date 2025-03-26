@@ -18,14 +18,7 @@ h1{
 .sidebarHomebButton{
     background-color: #cecece ;
 }
-.sidebarHomebButton:hover{
-    background-color: #1AAEF4;
-    color: white;
-}
-.sidebarHomebButton:active{
-    background-color: #1AAEF4;
-    color: white;
-}
+
 
 .toast {
     position: fixed;
@@ -95,14 +88,15 @@ h1{
     margin-left: 40px;
 }
 
+/* a:active, a:focus, a:focus-visible, a:target{
+    background-color: #1AAEF4 !important;
+    color: white !important;
+} */
 
-
-
-
-
-
-
-
+.view-active{
+    background-color: #1AAEF4 !important;
+    color: white !important;
+}
 
 
 

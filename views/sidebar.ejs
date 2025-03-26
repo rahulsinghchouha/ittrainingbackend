@@ -1,0 +1,71 @@
+<div
+    style=" width: 20%; position: fixed;  height: 100vh; display: flex; flex-direction: column; border-left: 0px; border-bottom: 0px; border-top: 0px; border-right: 1px; border-color: #1AAEF4; border-style: solid;">
+
+    <figure style=" margin-left: 60px; margin-top: 20px; width: 180px; height: 70px; "
+        class=" w-[100%] border-b-2 border-solid border-red-700">
+        <img src="/It_training_logo.svg" style="width: 100%; height: auto;" />
+    </figure>
+    <div style=" width: 100%; display: flex; flex-direction: column; gap: 30px; margin-left: 80px; margin-top: 20px;  ">
+        <div>
+            <a href="/admin/dashboard" class="sidebarHomebButton" for="home"
+                style="display: block; text-align: center;  cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius: 5px; font-size: 16px; font-weight: 700; ">
+                Home
+            </a>
+        </div>
+        <div>
+            <a href="/admin/course"
+                style=" display: block; text-align: center;  cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
+                class="sidebarHomebButton" for="course">
+                Courses
+            </a>
+        </div>
+        <div>
+            <a href="/admin/about-us"
+                style=" display: block; text-align: center; cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
+                class="sidebarHomebButton">
+
+                About Us
+
+            </a>
+        </div>
+        <div>
+            <a href="/admin/blogs"
+                style=" display: block; text-align: center; cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size:16px; font-weight: 700; "
+                class="sidebarHomebButton" for="Blogs">
+
+                Blogs
+            </a>
+        </div>
+        <div>
+            <a href="/admin/our-testimonial"
+                style=" display: block; text-align: center; cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700; "
+                class="sidebarHomebButton" for="Testimonial">
+                Testimonial
+            </a>
+        </div>
+        <div>
+            <a href="/admin/contact-us"
+                style="  display: block; text-align: center; cursor: pointer; border: none; padding: 7px 0px; width: 120px; border-radius:5px; font-size: 16px; font-weight: 700;  "
+                class="sidebarHomebButton" for="contact us">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const links = document.querySelectorAll('.sidebarHomebButton');
+        const currentUrl = window.location.pathname;
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentUrl) {
+                link.classList.add('view-active')
+            }
+            else {
+                link.classList.remove('view-active');
+            }
+        })
+
+    })
+</script>

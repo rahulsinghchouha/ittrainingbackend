@@ -251,12 +251,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// function addPartners() {
-//     const container = document.getElementById("partner-container");
 
-//     container.insertAdjacentHTML('beforeend', `
-//        <input type="file" name="img" required
-//                                             placeholder="Add Job Roles"
-//                                             style=" margin-top:15px; border: 1px; border-style: solid; width: 100%; height: 60px; padding: 10px 10px;" />
-//                                 ` );
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+

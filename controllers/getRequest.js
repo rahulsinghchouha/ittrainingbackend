@@ -27,7 +27,10 @@ exports.getHome = async (req, res) => {
     }
 }
 
+//----------------------------COURSE-----------------------------
+
 exports.getCourseCard = async (req, res) => {
+   
     try {
         const data = await course.find();
         if(!data)
@@ -89,6 +92,7 @@ exports.getAboutUs = async (req, res) => {
 }
 //Testimonial
 exports.getStudentPlaced = async (req, res) => {
+   
     try {
         const data = await student.find();
         if(!data)
@@ -137,6 +141,9 @@ exports.getPartners = async (req, res) => {
     }
 }
 exports.getExploreCard = async (req, res) => {
+
+   
+
     try {
         const data = await exploreCategory.find();
         if(!data)
@@ -230,7 +237,7 @@ exports.getBlogDetailBanner = async(req,res)=>{
 //TAG
 exports.getTags = async (req, res) => {
     try {
-        // console.log("tag controller call");
+       
         const data = await tags.find();
         if(!data)
             return notFoundResponse(res,"Tags not found");
@@ -261,6 +268,7 @@ exports.getTagBanner = async(req,res) =>{
 exports.getContactUs = async (req, res) => {
     try {
 
+        
         const data = await contactUs.findOne({});
         if(!data)
             return notFoundResponse(res,"contact us not found");
