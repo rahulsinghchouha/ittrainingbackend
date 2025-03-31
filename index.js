@@ -55,7 +55,7 @@ dbConnect();
 
 const corsOptions = {
     origin: (origin, callback) => {
-        if (!origin || ["http://localhost:3000", "http://localhost:5173", "https://ittrainings-csxl.onrender.com","https://ittrainingbackend.vercel.app"].includes(origin)) {
+        if (!origin || ["http://localhost:3000", "http://localhost:4000","http://localhost:5173", "https://ittrainings-csxl.onrender.com","https://ittrainingbackend.vercel.app"].includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
