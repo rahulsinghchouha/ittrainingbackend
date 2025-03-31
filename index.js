@@ -29,19 +29,22 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 //express - session
+
 app.use(session({
-    secret: process.env.EXPRESS_SESSION, // Encryption secret
-    resave: false, // Don't save unchanged sessions
-    saveUninitialized: false, // Don't create sessions for unauthenticated users
+    secret: process.env.EXPRESS_SESSION,
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env.DATABASE_URL, // Your MongoDB connection string
-        ttl: 14 * 24 * 60 * 60 // Session TTL in seconds (14 days)
+        mongoUrl: process.env.DATABASE_URL,
+        ttl: 14 * 24 * 60 * 60, // 14 days
+        autoRemove: 'native' // Automatic cleanup
     }),
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-        maxAge: 60 * 60 * 1000, // Browser cookie expiration (1 hour)
-        sameSite: 'lax', // CSRF protection
-        httpOnly: true // Prevent client-side JS access
+        secure: true, // REQUIRED for Vercel
+        httpOnly: true,
+        sameSite: 'none', // Needed if your frontend is on a different domain
+        domain: '.vercel.app', // Match your Vercel domain
+        maxAge: 60 * 60 * 1000 // 1 hour
     }
 }));
 // Set up flash middleware
@@ -81,7 +84,7 @@ app.get("/login", (req, res) => {
 
 
 // Apply authentication middleware to routes that require authentication
-app.use('/admin', isAuthenticated);
+app.use('/admin',  isAuthenticated);
 
 app.get("/admin/dashboard", async (req, res) => {
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/get/get-home`);

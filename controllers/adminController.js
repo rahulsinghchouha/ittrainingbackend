@@ -73,8 +73,19 @@ exports.adminLogin = async (req, res) => {
 
             if (isPassword) {
                 await mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
+               
+                req.session.user = {
+                    email: email,
+                    id: isAdmin._id.toString()
+                };
 
-                req.session.user = email;
+                await new Promise((resolve, reject) => {
+                    req.session.save(err => {
+                        if (err) reject(err);
+                        else resolve();
+                    });
+                });
+    
 
                 return res.redirect("/admin/dashboard")
             }
