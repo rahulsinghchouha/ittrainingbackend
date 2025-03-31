@@ -40,9 +40,15 @@ dbConnect();
 //cors
 
 const corsOptions = {
-    origin: "*",
-    methods: 'GET,POST,DELETE,PUT',
-    allowedHeaders: 'Content-Type,Authorization',
+    origin: (origin, callback) => {
+        if (!origin || ["http://localhost:3000", "http://localhost:5173", "https://ittrainings-csxl.onrender.com"].includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }
 app.use(cors(corsOptions));
