@@ -1,4 +1,4 @@
-  {
+{
     "version": 2,
     "builds": [
       {
@@ -12,12 +12,8 @@
         "dest": "/index.js"
       },
       {
-        "src": "/public/(.*)",
+        "src": "/(.*)",
         "dest": "/public/$1"
       }
-    ],
-    "static": {
-      "public": "public"
-    }
+    ]
   }
-  
