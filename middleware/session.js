@@ -1,29 +1,13 @@
 exports.isAuthenticated = async (req, res, next) => {
-    try {
-        await new Promise((resolve, reject) => {
-            req.session.reload(err => {
-                if (err) reject(err);
-                else resolve();
-            });
-        });
+      console.log("inside the cookies", req.session);
+    const token = req.session.token; // Ensure 'token' matches the name used in res.cookie
 
-        if (req.session?.user) {
-            return next();
-        }
-        // Clear invalid session cookie if exists
-        else {
-            res.clearCookie('connect.sid');
-            return res.redirect('/login');
-        }
-
-
+    if (token) {
+        console.log("token found", token);
+        return next();
+    } else {
+        console.log("token not found", token);
+        return res.redirect('/login?error=session_expired');
     }
-
-    catch (error) {
-        console.error('Auth middleware error:', error);
-        return res.redirect('/login');
-
-    }
-
-
-}
+   
+  };

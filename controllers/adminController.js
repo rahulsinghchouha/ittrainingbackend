@@ -12,7 +12,7 @@ const { blogs, bannerImgBlog, blogDetailBanner } = require("../models/blog");
 const bcrypt = require("bcrypt");
 const admin = require("../models/admin");
 const { validationErrorWithData, successResponse, errorResponse, notFoundResponse, successResponseWithData, duplicateDataError } = require("../helper/apiResponse");
-
+const jwt = require('jsonwebtoken');
 const mailSender = require("../utils/mailSender");
 
 const { loginSuccess } = require("../mail/template/loginSuccess");
@@ -21,8 +21,6 @@ const fs = require("fs");
 const { deleteImage } = require("../config/storeFile");
 const exploreCategory = require("../models/exploreCategory");
 //const session = require('express-session');
-
-
 
 //ADD ADMIN
 
@@ -54,7 +52,7 @@ exports.adminLogin = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-       return res.render("index", { message: "Enter all the require fields" })
+        return res.render("index", { message: "Enter all the require fields" })
     }
 
     try {
@@ -68,24 +66,25 @@ exports.adminLogin = async (req, res) => {
         else {
             const hashedPassword = isAdmin.password;
 
-
             const isPassword = await bcrypt.compare(password, hashedPassword);
 
             if (isPassword) {
                 await mailSender(email, "Login as Admin Succesfully", loginSuccess(email));
-               
-                req.session.user = {
-                    email: email,
-                    id: isAdmin._id.toString()
-                };
 
-                await new Promise((resolve, reject) => {
-                    req.session.save(err => {
-                        if (err) reject(err);
-                        else resolve();
-                    });
-                });
-    
+                const secretKey = 'rahulcits';
+                const userData =
+                {
+                    email: email,
+                    password: password,
+                }
+
+                const token = jwt.sign(userData, secretKey, { expiresIn: '1h' });
+
+                // console.log("token is created", token);
+
+
+                req.session.token = token;
+                console.log("request session", req.session);
 
                 return res.redirect("/admin/dashboard")
             }
@@ -96,7 +95,7 @@ exports.adminLogin = async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        return  res.render("index", { message: "Oops! Email and/or password are incorrect" });
+        return res.render("index", { message: "Oops! Email and/or password are incorrect" });
     }
 }
 
@@ -1271,11 +1270,10 @@ exports.deleteBlog = async (req, res) => {
     }
     try {
         const blog = await blogs.findById(blogId);
-        if (!blog)
-            {
-                req.flash('error', 'Blog not found ');
-                return res.status(404).json({ redirect: "/admin/blogs" });
-            } 
+        if (!blog) {
+            req.flash('error', 'Blog not found ');
+            return res.status(404).json({ redirect: "/admin/blogs" });
+        }
 
         if (blog.img)
             deleteImage(path.join(__dirname, "../public", blog.img));
@@ -1339,11 +1337,10 @@ exports.addBlogBanner = async (req, res) => {
 exports.addBlogDetailBanner = async (req, res) => {
     const img = req.file?.filename;
 
-    if (!img)
-      {
+    if (!img) {
         req.flash('error', 'Please Enter image');
         return res.redirect("/admin/add-newBlog")
-      }  
+    }
 
     try {
         const banner = await blogDetailBanner.findOne({});
@@ -1395,11 +1392,10 @@ exports.deleteTag = async (req, res) => {
 
     const { tagId } = req.body;
 
-    if (!tagId)
-      {
+    if (!tagId) {
         req.flash('error', "Tag not found");
         return res.redirect("/admin/add-newTag")
-      }  
+    }
 
     try {
         await tags.findByIdAndDelete(tagId);
@@ -1417,11 +1413,10 @@ exports.updateTag = async (req, res) => {
 
     const { tagId, tag } = req.body;
 
-    if (!tagId || !tag)
-      {
+    if (!tagId || !tag) {
         req.flash('error', "Tag not found");
         return res.redirect("/admin/add-newTag")
-      } 
+    }
     // Validate tag ID format
     if (!mongoose.isValidObjectId(tagId)) {
         req.flash('error', "Invalid Tag Id");
@@ -1441,12 +1436,11 @@ exports.updateTag = async (req, res) => {
 exports.addTagBanner = async (req, res) => {
 
     const img = req?.file?.filename;
-    if (!img)
-    {
+    if (!img) {
         req.flash('error', "Banner Image not found");
         return res.redirect("/admin/add-newTag")
     }
-    
+
 
     try {
         const banner = await bannerImgTag.findOne({});

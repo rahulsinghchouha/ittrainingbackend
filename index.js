@@ -29,24 +29,16 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 //express - session
+app.set('trust proxy', 1) // trust first proxy
 
 app.use(session({
-    secret: process.env.EXPRESS_SESSION,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.DATABASE_URL,
-        ttl: 14 * 24 * 60 * 60, // 14 days
-        autoRemove: 'native' // Automatic cleanup
-    }),
-    cookie: {
-        secure: true, // REQUIRED for Vercel
-        httpOnly: true,
-        sameSite: 'none', // Needed if your frontend is on a different domain
-        domain: '.vercel.app', // Match your Vercel domain
-        maxAge: 60 * 60 * 1000 // 1 hour
-    }
-}));
+  secret: `${process.env.EXPRESS_SESSION}`,
+  resave: false,//refresh 
+  saveUninitialized: true, //empty cookie also saveThis, can be useful if you want to create a session for every user, even those who haven’t interacted with the application yet.
+  store:MongoStore.create({
+    mongoUrl: `${process.env.DATABASE_URL}`,
+  })
+}))
 // Set up flash middleware
 app.use(flash());
 
