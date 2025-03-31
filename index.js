@@ -20,7 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For parsing URL-encoded data
 //app.use(upload.array()); // for parsing multipart/form-data
 app.use(express.static(path.join(__dirname, 'public'))); //serve static files images
-//app.use('/public', express.static(path.join(__dirname, 'public')));
+
+//EJS Setup
+
+app.set('view engine', 'ejs'); // Tells Express to use EJS for rendering views.
+app.set('views', path.join(__dirname, 'views')); 
 
 
 //express - session
@@ -61,9 +65,6 @@ app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/get", getRoute);
 
 
-//EJS Setup
-
-app.set('view engine', 'ejs'); // Tells Express to use EJS for rendering views.
 
 
 app.get("/login", (req, res) => {
