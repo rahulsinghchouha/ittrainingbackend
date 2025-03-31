@@ -1,4 +1,4 @@
-{
+  {
     "version": 2,
     "builds": [
       {
@@ -10,6 +10,14 @@
       {
         "src": "/api/(.*)",
         "dest": "/index.js"
+      },
+      {
+        "src": "/public/(.*)",
+        "dest": "/public/$1"
       }
-    ]
+    ],
+    "static": {
+      "public": "public"
+    }
   }
+  
