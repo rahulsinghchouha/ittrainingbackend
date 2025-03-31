@@ -54,7 +54,7 @@ exports.adminLogin = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.render("index", { message: "Enter all the require fields" })
+       return res.render("index", { message: "Enter all the require fields" })
     }
 
     try {
@@ -62,7 +62,7 @@ exports.adminLogin = async (req, res) => {
         const isAdmin = await admin.findOne({ email });
 
         if (!isAdmin) {
-            res.render("index", { message: "Admin not Found Please Enter a Valid Email" })
+            return res.render("index", { message: "Admin not Found Please Enter a Valid Email" })
         }
 
         else {
@@ -76,16 +76,16 @@ exports.adminLogin = async (req, res) => {
 
                 req.session.user = email;
 
-                res.redirect("/admin/dashboard")
+                return res.redirect("/admin/dashboard")
             }
             else {
-                res.render("index", { message: "incorrect password" })
+                return res.render("index", { message: "incorrect password" })
             }
         }
     }
     catch (error) {
         console.log(error);
-        res.render("index", { message: "Oops! Email and/or password are incorrect" });
+        return  res.render("index", { message: "Oops! Email and/or password are incorrect" });
     }
 }
 

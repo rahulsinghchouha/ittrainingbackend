@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-       Home Page
+        Home Page
     </title>
     <link href="/css/tailwind.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
@@ -27,25 +27,27 @@
 
                 <p style="margin-top: 5px;">Start managing your website</p>
                 <form method="post" action="/api/v1/admin/admin-login">
-                  
-                  <% if(message) { %>
-                    <p style="margin-top: 15px; color: red; "><%= message %></p>
-                  <% } %> 
-                  
-                    <input style="margin-top: 20px;" name="email" required="true"
-                        class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
-                        type="email" placeholder="Email" />
+
+                    <% if(message) { %>
+                        <p style="margin-top: 15px; color: red; ">
+                            <%= message %>
+                        </p>
+                        <% } %>
+
+                            <input style="margin-top: 20px;" name="email" required="true"
+                                class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
+                                type="email" placeholder="Email" />
 
 
-                    <input style="margin-top: 20px;" name="password"  required="true"
-                        class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
-                        type="password" placeholder="Password" />
+                            <input style="margin-top: 20px;" name="password" required="true"
+                                class="border-[1px] border-solid w-[100%] h-[75px] focus:outline-none email-input mt-[10px]"
+                                type="password" placeholder="Password" />
 
-                    <button style="color: #1AAEF4; margin-top: 7px; font-size: 14px;"> Forgot Password </button>
+                            <button style="color: #1AAEF4; margin-top: 7px; font-size: 14px;"> Forgot Password </button>
 
-                    <button type="submit"
-                        style="background-color: #1AAEF4; padding: 8px; width: 100%; margin-top: 15px; border-radius: 10px; color: white; ">Sign
-                        In</button>
+                            <button type="submit"
+                                style="background-color: #1AAEF4; padding: 8px; width: 100%; margin-top: 15px; border-radius: 10px; color: white; ">Sign
+                                In</button>
 
                 </form>
 
