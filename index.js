@@ -36,9 +36,7 @@ app.use(flash());
 //db connect
 dbConnect();
 
-export default function handler(req, res) {
-    res.status(200).json({ message: "Hello from Vercel API!" });
-  }
+
 //cors
 
 const corsOptions = {
