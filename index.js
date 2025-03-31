@@ -416,6 +416,8 @@ app.get("/admin/add-ourStats", async (req, res) => {
 app.listen(PORT, () => {
     console.log("Hi i am listening on PORT", PORT);
 })
-
+app.get('/', (req, res) => {
+    res.json({ message: 'Hello from Vercel Backend!' });
+});
 
 
